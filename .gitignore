@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Temporary Files
+.temp
+.tmp
+.cache
+
+# Generated Outputs
+dist
+.next
+
+# Secrets Sssshhh
+.env

@@ -1,0 +1,27 @@
+{
+  "name": "@rbp/monorepo",
+  "private": true,
+  "packageManager": "yarn@3.2.3",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@duckies/eslint-config": "0.2.5",
+    "eslint": "8.23.0",
+    "eslint-config-prettier": "8.5.0",
+    "prettier": "2.7.1",
+    "typescript": "4.7.4"
+  },
+  "resolutions": {
+    "@duckies/eslint-config": "portal:/home/john/github/personal/eslint-config/packages/all",
+    "@duckies/eslint-config-base": "portal:/home/john/github/personal/eslint-config/packages/base",
+    "@duckies/eslint-config-react": "portal:/home/john/github/personal/eslint-config/packages/react",
+    "@duckies/stylelint-config-scss": "portal:/home/john/github/personal/eslint-config/packages/scss",
+    "@duckies/eslint-config-ts": "portal:/home/john/github/personal/eslint-config/packages/typescript",
+    "@duckies/eslint-config-vue": "portal:/home/john/github/personal/eslint-config/packages/vue"
+  }
+}
