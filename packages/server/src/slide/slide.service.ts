@@ -4,7 +4,7 @@ import { PrismaService } from '../common/database/prisma.service'
 
 @Injectable()
 export class SlideService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   create(data: Prisma.SlideCreateInput) {
     return this.prisma.slide.create({ data })
@@ -16,11 +16,15 @@ export class SlideService {
     })
   }
 
-  findAll(data: Prisma.SlideFindManyArgs = {}) {
-    return this.prisma.slide.findMany(data)
+  findAll(where: Prisma.SlideWhereInput) {
+    return this.prisma.slide.findMany({ where })
   }
 
   update(data: Prisma.SlideUpdateArgs) {
     return this.prisma.slide.update(data)
+  }
+
+  remove(where: Prisma.SlideWhereUniqueInput) {
+    return this.prisma.slide.delete({ where })
   }
 }

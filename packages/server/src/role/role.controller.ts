@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { isNumber } from '@rbp/shared'
 import { CreateRoleDTO } from './dto/create-role.dto'
 import { RoleService } from './role.service'
 
@@ -23,7 +24,11 @@ export class RoleController {
   }
 
   @Get()
-  findAll() {
-    return this.roleService.findAll()
+  findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
+    return this.roleService.findAll(
+      {},
+      isNumber(take) ? take : undefined,
+      isNumber(skip) ? skip : undefined
+    )
   }
 }

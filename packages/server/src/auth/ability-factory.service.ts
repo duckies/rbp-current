@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common'
 import type { Subjects as CASLSubjects } from '@casl/prisma'
 import { PrismaAbility } from '@casl/prisma'
+import { Injectable } from '@nestjs/common'
 import type {
   Action as CASLAction,
   Identity,
@@ -36,7 +36,7 @@ export class AbilityFactory {
         subject: p.subject,
         inverted: p.inverted,
         reason: p.reason || undefined,
-        conditions: p.conditions as any,
+        conditions: (p.conditions as any) || undefined,
       }))
     )
   }

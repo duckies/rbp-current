@@ -27,6 +27,8 @@
   },
   "devDependencies": {
     "@nestjs/cli": "9.1.1",
+    "@nestjs/testing": "9.0.11",
+    "@rbp/shared": "workspace:*",
     "@types/express": "4.17.13",
     "@types/jsonwebtoken": "8.5.9",
     "@types/node": "18.7.13",
@@ -35,6 +37,7 @@
     "ts-loader": "9.3.1",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.0",
-    "typescript": "4.7.4"
+    "typescript": "4.7.4",
+    "vitest": "0.22.1"
   }
 }

@@ -14,7 +14,12 @@ export class RoleService {
     return this.prisma.role.findUniqueOrThrow(data)
   }
 
-  findAll() {
-    return this.prisma.role.findMany({ include: { permissions: true } })
+  findAll(where: Prisma.RoleWhereInput = {}, take?: number, skip?: number) {
+    return this.prisma.role.findMany({
+      where,
+      take,
+      skip,
+      include: { permissions: true },
+    })
   }
 }

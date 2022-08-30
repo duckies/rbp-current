@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import type { Prisma } from '@prisma/client'
 import got from 'got-cjs'
+import type { EnvironmentVariables } from '../../app.config'
 import { PrismaService } from '../../common/database/prisma.service'
 import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface'
 import { DiscordUser } from '../interfaces/discord-user.interface'
@@ -9,7 +10,7 @@ import { DiscordUser } from '../interfaces/discord-user.interface'
 @Injectable()
 export class DiscordProvider {
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: ConfigService<EnvironmentVariables, true>,
     private readonly prisma: PrismaService
   ) {}
 

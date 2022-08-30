@@ -1,11 +1,19 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common'
 import { Auth } from '../auth/decorators'
 import { CreateSlideDTO } from './dto/create-slide.dto'
 import { SlideService } from './slide.service'
 
 @Controller('slide')
 export class SlideController {
-  constructor(private readonly slideService: SlideService) {}
+  constructor(private slideService: SlideService) {}
 
   @Auth('Create', 'Slide')
   @Post()
@@ -19,8 +27,8 @@ export class SlideController {
   }
 
   @Get()
-  findAll() {
-    return this.slideService.findAll()
+  findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
+    return this.slideService.findAll({})
   }
 
   @Auth('Update', 'Slide')

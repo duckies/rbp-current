@@ -1,4 +1,5 @@
 import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import { isArray } from '@rbp/shared'
 import { Abilities, Action, Subject } from '../ability-factory.service'
 import { AUTH_ABILITY_KEY } from '../auth.constants'
 import { JWTGuard } from '../guards'
@@ -13,7 +14,7 @@ export function Auth(
 ): MethodDecorator {
   if (
     !actionOrAbilities ||
-    (Array.isArray(actionOrAbilities) && actionOrAbilities.length === 0)
+    (isArray(actionOrAbilities) && actionOrAbilities.length === 0)
   ) {
     return UseGuards(JWTGuard)
   }
