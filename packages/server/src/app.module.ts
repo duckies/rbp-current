@@ -6,6 +6,7 @@ import { PermissionModule } from './permission/permission.module'
 import { RoleModule } from './role/role.module'
 import { SlideModule } from './slide/slide.module'
 import { validate } from './app.config'
+import { BotModule } from './bot/bot.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { validate } from './app.config'
     }),
     DatabaseModule,
     AuthModule,
+    BotModule,
     PermissionModule,
     RoleModule,
     SlideModule,

@@ -36,6 +36,9 @@ export class EnvironmentVariables {
   DISCORD_REDIRECT!: string
 
   @IsString()
+  DISCORD_BOT_TOKEN!: string
+
+  @IsString()
   BLIZZARD_ID!: string
 
   @IsString()
