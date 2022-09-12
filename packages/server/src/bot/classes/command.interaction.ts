@@ -5,16 +5,17 @@ import {
 import { CommandMetadata } from '../decorators/command.decorator'
 import { GroupMetadata } from '../decorators/group.decorator'
 import { SubGroupMetadata } from '../decorators/sub-group.decorator'
-import { CommandOption } from '../interfaces'
+import { ApplicationCommandOption } from '../interfaces'
+import { ApplicationCommand } from '../interfaces/application-command.interface'
 import { SubCommandGroup } from './sub-command-group.interaction'
 import { SubCommand } from './sub-command.interaction'
 
-export class Command {
+export class Command implements ApplicationCommand {
   public readonly type = ApplicationCommandType.ChatInput
   public readonly name: string
   public readonly description: string
   public readonly methodRef?: Function
-  public readonly options = new Map<string, CommandOption>()
+  public readonly options = new Map<string, ApplicationCommandOption>()
 
   constructor(name: string, description: string, method?: Function) {
     this.name = name

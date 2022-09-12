@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from 'discord.js'
+import type { ChatInputCommandInteraction } from 'discord.js'
 import { Command } from '../decorators/command.decorator'
 import { Group } from '../decorators/group.decorator'
 import { UseGroups } from '../decorators/use-groups.decorator'

@@ -39,9 +39,7 @@ export class BotService extends Client implements OnModuleInit {
   private getChatInputCommandPath(interaction: ChatInputCommandInteraction) {
     const subCommandGroup = interaction.options.getSubcommandGroup()
     const subCommand = interaction.options.getSubcommand()
-    const path: string[] = []
-
-    path.push(interaction.commandName)
+    const path: string[] = [interaction.commandName]
 
     if (subCommandGroup) {
       path.push(subCommandGroup)

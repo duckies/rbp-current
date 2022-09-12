@@ -3,8 +3,10 @@ import {
   ApplicationCommandOptionType,
 } from 'discord.js'
 
-export interface CommandOption<T extends ApplicationCommandOptionType = any> {
+export interface ApplicationCommandOption<
+  T extends ApplicationCommandOptionType = any
+> {
   type: T
-  options: Map<string, CommandOption>
+  options: Map<string, ApplicationCommandOption>
   toJSON: () => APIApplicationCommandOption
 }

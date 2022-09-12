@@ -3,14 +3,14 @@ import {
   ApplicationCommandOptionType,
 } from 'discord.js'
 import { SubGroupMetadata } from '../decorators/sub-group.decorator'
-import { CommandOption } from '../interfaces'
+import { ApplicationCommandOption } from '../interfaces'
 import { SubCommand } from './sub-command.interaction'
 
-export class SubCommandGroup implements CommandOption {
+export class SubCommandGroup implements ApplicationCommandOption {
   public readonly type = ApplicationCommandOptionType.SubcommandGroup
   public readonly name: string
   public readonly description: string
-  public readonly options = new Map<string, CommandOption>()
+  public readonly options = new Map<string, ApplicationCommandOption>()
 
   constructor(name: string, description: string) {
     this.name = name
