@@ -1,11 +1,7 @@
 {
   "name": "@rbp/monorepo",
   "private": true,
-  "packageManager": "yarn@3.2.3",
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "lint": "eslint .",
     "test": "vitest"
@@ -19,13 +15,5 @@
     "typescript": "4.7.4",
     "unplugin-swc": "1.3.2",
     "vitest": "0.23.2"
-  },
-  "resolutions": {
-    "@duckies/eslint-config": "portal:/home/john/github/personal/eslint-config/packages/all",
-    "@duckies/eslint-config-base": "portal:/home/john/github/personal/eslint-config/packages/base",
-    "@duckies/eslint-config-react": "portal:/home/john/github/personal/eslint-config/packages/react",
-    "@duckies/stylelint-config-scss": "portal:/home/john/github/personal/eslint-config/packages/scss",
-    "@duckies/eslint-config-ts": "portal:/home/john/github/personal/eslint-config/packages/typescript",
-    "@duckies/eslint-config-vue": "portal:/home/john/github/personal/eslint-config/packages/vue"
   }
 }

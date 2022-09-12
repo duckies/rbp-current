@@ -1,6 +1,5 @@
 {
   "name": "@rbp/server",
-  "private": true,
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
