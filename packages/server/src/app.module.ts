@@ -11,12 +11,7 @@ import { SlideModule } from './slide/slide.module'
 
 @Module({
   imports: [
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    //   validate,
-    // }),
     ConfigModule.forRoot({
-      isGlobal: true,
       schema: EnvironmentVariables,
       envSeparator: '__',
     }),

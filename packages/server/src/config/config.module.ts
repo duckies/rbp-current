@@ -1,8 +1,7 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import type { DynamicModule, Provider } from '@nestjs/common'
-import { Module } from '@nestjs/common'
-import { isArray, isObject } from '@rbp/shared'
+import { DynamicModule, Module, Provider } from '@nestjs/common'
+import { isArray, isBoolean, isObject } from '@rbp/shared'
 import { plainToInstance } from 'class-transformer'
 import { validateSync } from 'class-validator'
 import dotenv from 'dotenv'
@@ -30,9 +29,11 @@ export class ConfigModule {
     const validatedConfig = this.validate(options.schema, config)
     const providers = this.getProviders(options.schema, validatedConfig)
 
+    this.assignVariablesToProcess(validatedConfig)
+
     return {
       module: ConfigModule,
-      global: options.isGlobal,
+      global: isBoolean(options.isGlobal) ? options.isGlobal : true,
       providers,
       exports: providers,
     }
@@ -40,7 +41,7 @@ export class ConfigModule {
 
   private static loadEnvFile(options: ConfigModuleOptions): Dictionary {
     const envFileName = options.envFileName || '.env'
-    const envFilePath = resolve(process.cwd(), envFileName)
+    const envFilePath = resolve(__dirname, '../../', envFileName)
 
     if (fs.existsSync(envFilePath)) {
       return dotenv.parse(fs.readFileSync(envFilePath))
@@ -57,6 +58,7 @@ export class ConfigModule {
       enableImplicitConversion: true,
       exposeDefaultValues: true,
     })
+
     const errors = validateSync(validatedConfig, {
       forbidUnknownValues: true,
       whitelist: true,
@@ -103,5 +105,11 @@ export class ConfigModule {
 
     helper(object)
     return providers
+  }
+
+  private static assignVariablesToProcess(config: Dictionary) {
+    const keys = Object.keys(config).filter((key) => !(key in process.env))
+
+    keys.forEach((key) => (process.env[key] = config[key]))
   }
 }
