@@ -17,8 +17,8 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "types": ["vitest", "vitest/globals"]
+    "skipDefaultLibCheck": true
+    // "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/dist"]
 }

@@ -1,10 +1,11 @@
-import { plainToInstance } from 'class-transformer'
+import { Type } from 'class-transformer'
 import {
+  IsDefined,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
-  validateSync,
+  ValidateNested,
 } from 'class-validator'
 
 enum Environment {
@@ -12,6 +13,31 @@ enum Environment {
   Production = 'production',
   Test = 'test',
   Provision = 'provision',
+}
+
+export class DiscordConfig {
+  @IsString()
+  ID!: string
+
+  @IsString()
+  SECRET!: string
+
+  @IsString()
+  REDIRECT!: string
+
+  @IsString()
+  BOT_TOKEN!: string
+}
+
+export class BlizzardConfig {
+  @IsString()
+  ID!: string
+
+  @IsString()
+  SECRET!: string
+
+  @IsString()
+  REDIRECT!: string
 }
 
 export class EnvironmentVariables {
@@ -26,40 +52,13 @@ export class EnvironmentVariables {
   @IsString()
   JWT_SECRET!: string
 
-  @IsString()
-  DISCORD_ID!: string
+  @IsDefined()
+  @Type(() => DiscordConfig)
+  @ValidateNested()
+  DISCORD!: DiscordConfig
 
-  @IsString()
-  DISCORD_SECRET!: string
-
-  @IsString()
-  DISCORD_REDIRECT!: string
-
-  @IsString()
-  DISCORD_BOT_TOKEN!: string
-
-  @IsString()
-  BLIZZARD_ID!: string
-
-  @IsString()
-  BLIZZARD_SECRET!: string
-
-  @IsString()
-  BLIZZARD_REDIRECT!: string
-}
-
-export function validate(config: Record<string, unknown>) {
-  const validatedConfig = plainToInstance(EnvironmentVariables, config, {
-    enableImplicitConversion: true,
-  })
-  const errors = validateSync(validatedConfig, {
-    skipMissingProperties: false,
-    whitelist: true,
-  })
-
-  if (errors.length > 0) {
-    throw new Error(errors.toString())
-  }
-
-  return validatedConfig
+  @IsDefined()
+  @Type(() => BlizzardConfig)
+  @ValidateNested()
+  BLIZZARD!: BlizzardConfig
 }

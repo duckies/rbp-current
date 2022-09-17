@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
+import { FormService } from '../form-field/form.service'
 import { FormController } from './form.controller'
-import { FormService } from './form.service'
 
 @Module({
   controllers: [FormController],

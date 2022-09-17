@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { sign, verify } from 'jsonwebtoken'
 import { EnvironmentVariables } from '../app.config'
 import { Provider } from './interfaces/provider.interface'
@@ -9,7 +8,7 @@ import { DiscordProvider } from './providers/discord.provider'
 @Injectable()
 export class AuthService {
   constructor(
-    private config: ConfigService<EnvironmentVariables, true>,
+    private config: EnvironmentVariables,
     private discordProvider: DiscordProvider,
     private blizzardProvider: BlizzardProvider
   ) {}
@@ -24,12 +23,12 @@ export class AuthService {
   }
 
   signJWT(payload: object) {
-    return sign(payload, this.config.get('JWT_SECRET'), {
+    return sign(payload, this.config.JWT_SECRET, {
       expiresIn: '30 days',
     })
   }
 
   verifyJWT<T = any>(token: string) {
-    return verify(token, this.config.get('JWT_SECRET')) as T
+    return verify(token, this.config.JWT_SECRET) as T
   }
 }

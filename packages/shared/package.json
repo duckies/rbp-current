@@ -8,7 +8,6 @@
     "start": "node ./dist/index"
   },
   "devDependencies": {
-    "typescript": "4.7.4",
-    "vitest": "0.23.2"
+    "typescript": "4.7.4"
   }
 }

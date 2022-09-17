@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { EnvironmentVariables } from '../../app.config'
+import { BlizzardConfig } from '../../app.config'
 import { PrismaService } from '../../common/database/prisma.service'
 import { HttpService } from '../../common/http/http.service'
 import { BlizzardTokenResponse } from '../interfaces/blizzard-token-response.interface'
@@ -9,7 +8,7 @@ import { BlizzardUser } from '../interfaces/blizzard-user.interface'
 @Injectable()
 export class BlizzardProvider {
   constructor(
-    private config: ConfigService<EnvironmentVariables, true>,
+    private config: BlizzardConfig,
     private prisma: PrismaService,
     private http: HttpService
   ) {}
@@ -31,11 +30,11 @@ export class BlizzardProvider {
       {
         responseType: 'json',
         form: {
-          client_id: this.config.get('BLIZZARD_ID'),
-          client_secret: this.config.get('BLIZZARD_SECRET'),
+          client_id: this.config.ID,
+          client_secret: this.config.SECRET,
           grant_type: 'authorization_code',
           code,
-          redirect_uri: this.config.get('BLIZZARD_REDIRECT'),
+          redirect_uri: this.config.REDIRECT,
         },
       }
     )

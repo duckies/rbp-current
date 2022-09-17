@@ -1,15 +1,16 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
   Post,
   Query,
 } from '@nestjs/common'
+import { FormService } from '../form-field/form.service'
 import { CreateFormDTO } from './dto/create-form.dto'
 import { UpdateFormDTO } from './dto/update-form.dto'
-import { FormService } from './form.service'
 
 @Controller('form')
 export class FormController {
@@ -33,5 +34,10 @@ export class FormController {
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateFormDTO: UpdateFormDTO) {
     return this.formService.update(id, updateFormDTO)
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: number) {
+    return this.formService.delete(id)
   }
 }

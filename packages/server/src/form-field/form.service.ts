@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
-import { CreateFormDTO } from './dto/create-form.dto'
-import { UpdateFormDTO } from './dto/update-form.dto'
+import { CreateFormDTO } from '../form/dto/create-form.dto'
+import { UpdateFormDTO } from '../form/dto/update-form.dto'
 
 @Injectable()
 export class FormService {

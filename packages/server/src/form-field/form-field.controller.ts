@@ -8,7 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common'
-import { CreateFormFieldDTO } from './dto/create-form-field.dto'
+import { CreateFormFieldBaseDTO } from './dto/create-form-field.dto'
 import { UpdateFormFieldDTO } from './dto/update-form-field.dto'
 import { FormFieldService } from './form-field.service'
 
@@ -19,7 +19,7 @@ export class FormFieldController {
   @Post('form/:formId')
   create(
     @Param('formId') formId: number,
-    @Body() createFormFieldDTO: CreateFormFieldDTO
+    @Body() createFormFieldDTO: CreateFormFieldBaseDTO
   ) {
     return this.formFieldService.create(formId, createFormFieldDTO)
   }

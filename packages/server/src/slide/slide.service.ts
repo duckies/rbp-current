@@ -16,8 +16,8 @@ export class SlideService {
     })
   }
 
-  findAll(where: Prisma.SlideWhereInput) {
-    return this.prisma.slide.findMany({ where })
+  findAll() {
+    return this.prisma.slide.findMany()
   }
 
   update(data: Prisma.SlideUpdateArgs) {

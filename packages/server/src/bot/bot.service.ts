@@ -1,5 +1,4 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import {
   ApplicationCommandType,
   ChatInputCommandInteraction,
@@ -8,6 +7,7 @@ import {
   Interaction,
   InteractionType,
 } from 'discord.js'
+import { DiscordConfig } from '../app.config'
 import { BotRegistry } from './bot.registry'
 import { CommandNotFoundException } from './exceptions/command-not-found.exception'
 
@@ -16,7 +16,7 @@ export class BotService extends Client implements OnModuleInit {
   private readonly logger = new Logger('BotService')
 
   constructor(
-    private readonly config: ConfigService,
+    private readonly config: DiscordConfig,
     private readonly registery: BotRegistry
   ) {
     super({
@@ -28,7 +28,7 @@ export class BotService extends Client implements OnModuleInit {
     this.on('ready', this.onReady.bind(this))
     this.on('interactionCreate', this.onInteraction.bind(this))
 
-    this.login(this.config.get('DISCORD_BOT_TOKEN'))
+    this.login(this.config.BOT_TOKEN)
   }
 
   onReady(client: Client) {

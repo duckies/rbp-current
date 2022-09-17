@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { isBoolean, isNumber, isString } from './types'
 
 describe('Type Utils', () => {

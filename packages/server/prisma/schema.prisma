@@ -118,5 +118,6 @@ enum FieldType {
   Checkbox
   Radio
   Select
+  Combobox
   Textarea
 }

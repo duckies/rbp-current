@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-} from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
 import { Auth } from '../auth/decorators'
 import { CreateSlideDTO } from './dto/create-slide.dto'
 import { SlideService } from './slide.service'
@@ -27,8 +19,8 @@ export class SlideController {
   }
 
   @Get()
-  findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
-    return this.slideService.findAll({})
+  findAll() {
+    return this.slideService.findAll()
   }
 
   @Auth('Update', 'Slide')
