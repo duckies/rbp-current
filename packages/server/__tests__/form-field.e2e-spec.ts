@@ -9,7 +9,7 @@ import { FormFieldModule } from '../src/form-field/form-field.module'
 
 class FormFieldVariables {
   @IsString()
-  DATABASE_URL!: string
+  DATABASE_URL = 'mysql://root:prisma@localhost:3307/tests'
 }
 
 describe('FormField (e2e)', () => {

@@ -4,7 +4,7 @@ import { PrismaService } from '../common/database/prisma.service'
 
 @Injectable()
 export class SlideService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   create(data: Prisma.SlideCreateInput) {
     return this.prisma.slide.create({ data })
