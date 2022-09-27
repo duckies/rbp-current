@@ -8,9 +8,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common'
-import { FormService } from '../form-field/form.service'
-import { CreateFormDTO } from './dto/create-form.dto'
-import { UpdateFormDTO } from './dto/update-form.dto'
+import { FormService } from './form.service'
+import { CreateFormDTO, UpdateFormDTO } from './dto'
 
 @Controller('form')
 export class FormController {
