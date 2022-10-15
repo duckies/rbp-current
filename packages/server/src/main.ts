@@ -1,25 +1,27 @@
-import { ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { EnvironmentVariables } from './app.config';
+import { AppModule } from './app.module';
 import {
   JsonWebTokenExceptionFilter,
   NotBeforeExceptionFilter,
   TokenExpiredExceptionFilter,
-} from './auth/exception-filters'
-import { PrismaService } from './common/database/prisma.service'
+} from './auth/exception-filters';
+import { PrismaService } from './common/database/prisma.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule);
+  const config = app.get(EnvironmentVariables);
 
   // Ensures nest shuts down when prisma receives a shutdown signal.
-  const prisma = app.get(PrismaService)
-  await prisma.enableShutdownHooks(app)
+  const prisma = app.get(PrismaService);
+  await prisma.enableShutdownHooks(app);
 
   app.useGlobalFilters(
     new NotBeforeExceptionFilter(),
     new JsonWebTokenExceptionFilter(),
     new TokenExpiredExceptionFilter()
-  )
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -27,8 +29,10 @@ async function bootstrap() {
       whitelist: true,
       transform: true,
     })
-  )
+  );
 
-  await app.listen(3000)
+  app.enableCors();
+
+  await app.listen(config.PORT);
 }
-bootstrap()
+bootstrap();

@@ -14,11 +14,9 @@
     "sourceMap": true,
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
-    "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
-    // "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/dist"]
 }

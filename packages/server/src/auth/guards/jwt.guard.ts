@@ -1,11 +1,12 @@
-import { IncomingHttpHeaders } from 'http'
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
-import type { User } from '@prisma/client'
-import type { Request } from 'express'
-import { UserService } from '../../user/user.service'
-import { AuthService } from '../auth.service'
+import { IncomingHttpHeaders } from 'http';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import type { Request } from 'express';
+import { Provider } from '@prisma/client';
+import { UserService } from '../../user/user.service';
+import { AuthService } from '../auth.service';
+import { IdentityDTO, UserDTO } from '../../app.types';
 
-export type RequestWithAuth = Request & { user: User }
+export type RequestWithAuth = Request & { user: UserDTO };
 
 @Injectable()
 export class JWTGuard implements CanActivate {
@@ -15,24 +16,39 @@ export class JWTGuard implements CanActivate {
   ) {}
 
   getBearerTokenFromHeader(headers: IncomingHttpHeaders) {
-    return headers.authorization?.split(' ')[1]
+    return headers.authorization?.split(' ')[1];
   }
 
   async canActivate(ctx: ExecutionContext) {
-    const request = ctx.switchToHttp().getRequest<RequestWithAuth>()
-    const token = this.getBearerTokenFromHeader(request.headers)
+    const request = ctx.switchToHttp().getRequest<RequestWithAuth>();
+    const token = this.getBearerTokenFromHeader(request.headers);
 
     if (typeof token === 'string') {
-      const { id }: { id: number } = this.authService.verifyJWT(token)
+      const { id }: { id: number } = this.authService.verifyJWT(token);
 
-      const user = await this.userService.find({ where: { id } })
+      const user = await this.userService.repository.findUnique({
+        where: { id },
+        include: { identities: true },
+      });
 
       if (user) {
-        request.user = user
-        return true
+        const { identities, ...meta } = user;
+
+        request.user = {
+          ...meta,
+          ...identities.reduce(
+            (obj, identity) => ({
+              ...obj,
+              [identity.provider.toLowerCase()]: identity,
+            }),
+            {}
+          ),
+        } as UserDTO;
+
+        return true;
       }
     }
 
-    return false
+    return false;
   }
 }

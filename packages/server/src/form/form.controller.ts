@@ -8,6 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common'
+import { isNumber } from '@rbp/shared'
 import { FormService } from './form.service'
 import { CreateFormDTO, UpdateFormDTO } from './dto'
 
@@ -27,7 +28,10 @@ export class FormController {
 
   @Get()
   findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
-    return this.formService.findAll({ take, skip })
+    return this.formService.findAll({
+      take: isNumber(take) ? take : undefined,
+      skip: isNumber(skip) ? skip : undefined,
+    })
   }
 
   @Patch(':id')

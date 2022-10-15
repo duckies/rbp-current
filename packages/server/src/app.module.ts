@@ -5,6 +5,7 @@ import { BotModule } from './bot/bot.module'
 import { DatabaseModule } from './common/database/database.module'
 import { ConfigModule } from './config/config.module'
 import { FormFieldModule } from './form-field/form-field.module'
+import { FormModule } from './form/form.module'
 import { PermissionModule } from './permission/permission.module'
 import { RoleModule } from './role/role.module'
 import { SlideModule } from './slide/slide.module'
@@ -21,6 +22,7 @@ import { SlideModule } from './slide/slide.module'
     PermissionModule,
     RoleModule,
     SlideModule,
+    FormModule,
     FormFieldModule,
   ],
 })

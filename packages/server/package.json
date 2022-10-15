@@ -1,6 +1,7 @@
 {
   "name": "@rbp/server",
   "license": "MIT",
+  "types": "dist/src/app.types.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -42,5 +43,10 @@
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.0",
     "typescript": "4.7.4"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["webpack"]
+    }
   }
 }

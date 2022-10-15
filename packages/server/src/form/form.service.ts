@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import type { Prisma } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
+import { PrismaService } from '../common/database/prisma.service'
 import { CreateFormDTO, UpdateFormDTO } from './dto'
 
 @Injectable()
 export class FormService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   create(createFormDTO: CreateFormDTO) {
     return this.prisma.form.create({ data: createFormDTO })
@@ -14,7 +14,7 @@ export class FormService {
   findOne(id: number) {
     return this.prisma.form.findUniqueOrThrow({
       where: { id },
-      select: { fields: true },
+      include: { fields: true },
     })
   }
 

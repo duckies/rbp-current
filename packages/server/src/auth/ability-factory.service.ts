@@ -1,4 +1,4 @@
-import type { Subjects as CASLSubjects } from '@casl/prisma'
+import type { Subjects as CASLSubjects, PrismaQuery } from '@casl/prisma'
 import { PrismaAbility } from '@casl/prisma'
 import { Injectable } from '@nestjs/common'
 import type {
@@ -27,7 +27,7 @@ export type AppAbility = PrismaAbility<Abilities>
 export class AbilityFactory {
   constructor(private readonly userService: UserService) {}
 
-  async forUser(user: User) {
+  async forUser(user: User): Promise<PrismaAbility<Abilities>> {
     const permissions = await this.userService.getPermissions(user.id)
 
     return new PrismaAbility<Abilities>(

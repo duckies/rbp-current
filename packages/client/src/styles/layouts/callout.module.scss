@@ -1,0 +1,34 @@
+.callout {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 3rem 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(18, 18, 18, 0.529), 60%, transparent);
+    z-index: 10;
+  }
+}
+
+.window {
+  position: relative;
+  height: 25rem;
+  text-align: center;
+
+}

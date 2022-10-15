@@ -1,0 +1,25 @@
+.label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.container {
+  position: relative;
+  margin-top: 0.25rem;
+  @include rounded("md");
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: .5rem 0.75rem;
+  @include rounded("md");
+
+  &:focus {
+    outline: 2px solid pink;
+    outline-offset: 2px;
+    border: 1px solid pink;
+  }
+}
