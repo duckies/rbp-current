@@ -24,7 +24,7 @@
 /// for use in in the `alpha` function.
 ///
 /// @author Claudia Romano
-/// @link https://css-tricks.com/snippets/sass/str-replace-function/
+/// @link https://codyhouse.co/blog/post/how-to-combine-sass-color-functions-and-css-variables
 @mixin define-color-hsl($color, $hue, $saturation, $lightness) {
   #{$color}: str.unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
   #{$color}-h: #{$hue};
