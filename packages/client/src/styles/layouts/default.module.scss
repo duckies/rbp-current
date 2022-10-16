@@ -1,6 +1,6 @@
 .layout {
-  min-height: 100vh;
   position: relative;
+  min-height: 100vh;
 
   &__background {
     position: absolute;
@@ -8,22 +8,21 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 5;
+    z-index: -1;
 
-    &:before {
-      content: '';
+    &::before {
+      content: "";
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      background: linear-gradient(to top, rgba(12, 12, 13, 1), rgba(12, 12, 13, 0.15));
       z-index: 10;
+      background: linear-gradient(to top, rgb(12 12 13 / 100%), rgb(12 12 13 / 35%));
     }
   }
 
   &__content {
     position: relative;
-    z-index: 15;
   }
 }

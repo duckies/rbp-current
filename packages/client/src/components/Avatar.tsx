@@ -4,6 +4,7 @@ import css from 'styles/components/avatar.module.scss';
 
 export interface AvatarProps {
   user: UserDTO;
+  size?: number;
 }
 
 export function getAvatar(user: UserDTO) {
@@ -15,7 +16,7 @@ export function getAvatar(user: UserDTO) {
   return `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
 }
 
-export function Avatar({ user }: AvatarProps) {
+export function Avatar({ user, size = 40 }: AvatarProps) {
   const avatar = getAvatar(user);
 
   return (
@@ -23,9 +24,10 @@ export function Avatar({ user }: AvatarProps) {
       <Image
         className="avatar__image"
         src={avatar}
+        objectFit="cover"
         alt="Discord Avatar"
-        width={35}
-        height={35}
+        height={size}
+        width={size}
       />
     </div>
   );

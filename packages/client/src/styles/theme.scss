@@ -1,0 +1,15 @@
+:root {
+  --surface-bg-opacity: 1;
+  --surface-hover-opacity: 1;
+  --surface-hover: rgb(234 234 234 / var(--surface-hover-opacity));
+  --text-on-surface: #fff;
+
+  @include define-color-hsl(--color-primary, 220, 89%, 56%);
+  @include define-color-hsl(--surface-bg, 0, 0%, 9%);
+}
+
+.dark {
+  --surface-bg: #1e1a1d;
+  --surface-hover: #2a252a;
+  --text-on-surface: rgb(246 246 246);
+}

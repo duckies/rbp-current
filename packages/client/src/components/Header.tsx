@@ -1,11 +1,18 @@
 import { useAuth } from '../hooks/stores/useAuth';
 import { Avatar } from './Avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './Dropdown';
+import { Button } from './Button';
 import { login } from 'hooks/auth';
 import DiscordLogo from 'components/icons/Discord';
 import Logo from 'components/icons/Logo';
 import Link from 'components/Link';
 import NavLink from 'components/NavLink';
-import styles from 'styles/components/Header.module.scss';
+import styles from 'styles/components/header.module.scss';
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -37,16 +44,28 @@ export default function Header() {
         <div className={styles.header__end}>
           {isAuthenticated ? (
             <>
-              <Avatar user={user} />
-              <button onClick={() => logout(undefined)}>Logout</button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="icon">
+                    <Avatar user={user} />
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent sideOffset={5} collisionPadding={5}>
+                  <DropdownMenuItem onClick={() => logout()}>
+                    Logout
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    Discord <DiscordLogo />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           ) : (
-            <button onClick={() => login()}>Login</button>
+            <Button variant="outline" onClick={login}>
+              Login
+            </Button>
           )}
-
-          <Link className={styles.action} to="https://discord.gg/rbp">
-            <DiscordLogo />
-          </Link>
         </div>
       </div>
     </header>

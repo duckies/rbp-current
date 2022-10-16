@@ -1,9 +1,10 @@
-@use 'sass:map';
-@use '_variables' as *;
+@use "sass:map" as map;
+@use "sass:string" as str;
+@use "_variables" as *;
 
 @mixin breakpoint($breakpoint) {
-  @if map-has-key($grid-breakpoints, $breakpoint) {
-    @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+  @if map.has-key($grid-breakpoints, $breakpoint) {
+    @media (min-width: map.get($grid-breakpoints, $breakpoint)) {
       @content;
     }
   } @else {
@@ -13,8 +14,54 @@
 
 @mixin rounded($breakpoint: "base") {
   @if map-has-key($rounded-breakpoints, $breakpoint) {
-    border-radius: map-get($rounded-breakpoints, $breakpoint);
+    border-radius: map.get($rounded-breakpoints, $breakpoint);
   } @else {
     @warn "No rounded breakpoint named #{$breakpoint}";
   }
+}
+
+/// Creates variables for a HSL color and its components
+/// for use in in the `alpha` function.
+///
+/// @author Claudia Romano
+/// @link https://css-tricks.com/snippets/sass/str-replace-function/
+@mixin define-color-hsl($color, $hue, $saturation, $lightness) {
+  #{$color}: str.unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
+  #{$color}-h: #{$hue};
+  #{$color}-s: #{$saturation};
+  #{$color}-l: #{$lightness};
+}
+
+/// Replace `$search` with `$replace` in `$string`
+///
+/// @author Kitty Giraudel
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: "") {
+  $index: str.index($string, $search);
+
+  @if $index {
+    $start: str.slice($string, 1, $index - 1);
+    $remaining: str.slice($string, $index + str.length($search));
+    $recursive: str-replace($remaining, $search, $replace);
+
+    @return $start + $replace + $recursive;
+  }
+
+  @return $string;
+}
+
+/// Returns a hsla color with the given alpha value.
+///
+/// @author Kitty Giraudel
+@function alpha($color, $opacity) {
+  $color: str-replace($color, "var(");
+  $color: str-replace($color, ")");
+  $color-h: var(#{$color + "-h"});
+  $color-s: var(#{$color + "-s"});
+  $color-l: var(#{$color + "-l"});
+
+  @return hsla($color-h, $color-s, $color-l, $opacity);
 }

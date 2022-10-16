@@ -1,5 +1,5 @@
 import Container from 'components/Container';
-import styles from 'styles/components/Hero.module.scss';
+import styles from 'styles/components/hero.module.scss';
 
 export interface HeroProps {
   children: React.ReactNode;

@@ -5,7 +5,6 @@ $grid-breakpoints: (
   "xl": 1280px,
   "2xl": 1536px
 );
-
 $rounded-breakpoints: (
   "sm": 0.125rem,
   "base": 0.25rem,
@@ -14,5 +13,6 @@ $rounded-breakpoints: (
   "xl": 0.75rem,
   "2xl": 1rem,
   "3xl": 1.5rem,
-  "full": 9999px
+  "full": 9999px,
+  "round": 100%
 );

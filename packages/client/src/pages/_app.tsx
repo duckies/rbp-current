@@ -5,11 +5,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useState } from 'react';
-import 'styles/_reset.scss';
+import 'styles/global.scss';
 import { AuthProvider } from '../hooks/stores/useAuth';
 
 type MyAppProps = AppProps<{
@@ -39,7 +39,7 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
           <Component {...pageProps} />
         </AuthProvider>
       </Hydrate>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

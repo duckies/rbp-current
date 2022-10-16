@@ -1,4 +1,3 @@
 .avatar {
-  overflow: hidden;
-  @include rounded('full')
+  display: flex;
 }

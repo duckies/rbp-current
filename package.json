@@ -10,7 +10,8 @@
     "test:ui": "vitest --ui"
   },
   "devDependencies": {
-    "@duckies/eslint-config": "0.2.5",
+    "@duckies/eslint-config": "0.2.6",
+    "@duckies/stylelint-config-scss": "0.2.6",
     "@swc/core": "1.2.244",
     "@types/supertest": "2.0.12",
     "@vitest/ui": "0.23.2",
