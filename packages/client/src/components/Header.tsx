@@ -1,33 +1,33 @@
-import { useAuth } from '../hooks/stores/useAuth';
-import { Avatar } from './Avatar';
+import { useAuth } from "../hooks/stores/useAuth";
+import { Avatar } from "./Avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './Dropdown';
-import { Button } from './Button';
-import { login } from 'hooks/auth';
-import DiscordLogo from 'components/icons/Discord';
-import Logo from 'components/icons/Logo';
-import Link from 'components/Link';
-import NavLink from 'components/NavLink';
-import styles from 'styles/components/header.module.scss';
+} from "./Dropdown";
+import { Button } from "./Button";
+import css from "styles/components/header.module.scss";
+import { login } from "hooks/auth";
+import DiscordLogo from "components/icons/Discord";
+import Logo from "components/icons/Logo";
+import Link from "components/Link";
+import NavLink from "components/NavLink";
 
 export default function Header() {
   const { user, logout } = useAuth();
   const isAuthenticated = !!user;
 
   return (
-    <header className={styles.header}>
-      <div className={styles.header__container}>
-        <div className={styles.header__start}>
-          <Link className={styles.header__logo} to="/">
+    <header className={css.header}>
+      <div className={css.header__container}>
+        <div className={css.header__start}>
+          <Link className={css.header__logo} to="/">
             <Logo size={37} />
           </Link>
         </div>
 
-        <nav className={styles.header__center}>
+        <nav className={css.header__center}>
           <ul>
             <li>
               <NavLink to="/">Home</NavLink>
@@ -41,7 +41,7 @@ export default function Header() {
           </ul>
         </nav>
 
-        <div className={styles.header__end}>
+        <div className={css.header__end}>
           {isAuthenticated ? (
             <>
               <DropdownMenu>

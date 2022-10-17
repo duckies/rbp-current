@@ -1,0 +1,13 @@
+:root {
+  --text-color: #fff;
+}
+
+body {
+  overflow: overlay;
+  color: var(--text-color);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}

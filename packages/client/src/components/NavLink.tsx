@@ -1,7 +1,7 @@
-import { clsx } from 'clsx';
-import { useRouter } from 'next/router';
-import Link, { type LinkProps } from './Link';
-import styles from 'styles/components/NavLink.module.scss';
+import { clsx } from "clsx";
+import { useRouter } from "next/router";
+import Link, { type LinkProps } from "./Link";
+import css from "styles/components/navlink.module.scss";
 
 export interface NavLinkProps extends LinkProps {}
 
@@ -17,8 +17,8 @@ export default function NavLink({
     <Link
       to={to}
       className={clsx(
-        styles.navLink,
-        isActive && styles['navLink--active'],
+        css["nav-link"],
+        isActive && css["nav-link--active"],
         className
       )}
       {...props}

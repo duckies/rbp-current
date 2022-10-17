@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import css from 'styles/components/forms/Textfield.module.scss';
+import { useState } from "react";
+import css from "styles/components/forms/textfield.module.scss";
 
 export interface TextfieldProps {
   id: string | number;
@@ -7,7 +7,7 @@ export interface TextfieldProps {
 }
 
 export default function Textfield(props: TextfieldProps) {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>("");
   const id = `textfield-${props.id}`;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

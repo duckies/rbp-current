@@ -1,24 +1,5 @@
-@use "sass:map" as map;
+@use "sass:map";
 @use "sass:string" as str;
-@use "_variables" as *;
-
-@mixin breakpoint($breakpoint) {
-  @if map.has-key($grid-breakpoints, $breakpoint) {
-    @media (min-width: map.get($grid-breakpoints, $breakpoint)) {
-      @content;
-    }
-  } @else {
-    @warn "No media breakpoint named #{$breakpoint}";
-  }
-}
-
-@mixin rounded($breakpoint: "base") {
-  @if map-has-key($rounded-breakpoints, $breakpoint) {
-    border-radius: map.get($rounded-breakpoints, $breakpoint);
-  } @else {
-    @warn "No rounded breakpoint named #{$breakpoint}";
-  }
-}
 
 /// Creates variables for a HSL color and its components
 /// for use in in the `alpha` function.

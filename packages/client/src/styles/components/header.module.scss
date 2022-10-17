@@ -9,7 +9,7 @@
 
   &__container {
     @include breakpoint("sm") {
-      padding-right: 1.5rem;
+      padding-right: var(--space-md);
       padding-left: 1.5rem;
     }
 
@@ -61,18 +61,6 @@
   &__end {
     justify-content: flex-end;
   }
-}
-
-.action--btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  background-color: rgb(208 51 98);
-  color: #fff;
-  font-weight: 500;
-  white-space: nowrap;
 }
 
 .action {

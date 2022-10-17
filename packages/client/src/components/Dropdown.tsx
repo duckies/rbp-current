@@ -1,11 +1,11 @@
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import type {
   DropdownMenuItemProps,
   DropdownMenuSubContentProps,
-} from '@radix-ui/react-dropdown-menu';
-import React, { createElement } from 'react';
-import clsx from 'clsx';
-import css from 'styles/components/dropdown.module.scss';
+} from "@radix-ui/react-dropdown-menu";
+import React, { createElement } from "react";
+import clsx from "clsx";
+import css from "styles/components/dropdown.module.scss";
 
 export type DropdownContentProps = DropdownMenuSubContentProps &
   React.HTMLAttributes<HTMLDivElement>;
@@ -44,4 +44,4 @@ export const DropdownMenuItem = Item;
 // CheckboxItem?
 export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
-DropdownMenuContent.displayName = 'DropdownMenuContent';
+DropdownMenuContent.displayName = "DropdownMenuContent";

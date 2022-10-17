@@ -1,0 +1,10 @@
+$spacing-factors: (
+  sm: 0.125,
+  md: 1.25
+);
+
+@mixin gen-spacing-factors() {
+  @each $size, $factor in $spacing-factors {
+    --space-#{$size}: calc(var(--space-unit) * #{$factor});
+  }
+}

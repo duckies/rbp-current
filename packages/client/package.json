@@ -2,6 +2,7 @@
   "name": "@rbp/client",
   "license": "MIT",
   "scripts": {
+    "clean": "rimraf .next",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -12,8 +13,6 @@
     "@tanstack/react-query": "4.12.0",
     "@tanstack/react-query-devtools": "4.12.0",
     "clsx": "1.2.1",
-    "jotai": "1.8.4",
-    "ky": "0.31.3",
     "next": "12.3.1",
     "nookies": "2.5.2",
     "react": "18.2.0",
@@ -24,11 +23,12 @@
     "@rbp/server": "workspace:*",
     "@rbp/shared": "workspace:*",
     "@types/node": "18.7.13",
+    "@types/prettier": "2.7.1",
     "@types/react": "18.0.21",
-    "autoprefixer": "10.4.12",
     "eslint": "8.23.0",
     "eslint-config-next": "12.3.1",
-    "postcss": "8.4.17",
+    "prettier": "2.7.1",
+    "rimraf": "3.0.2",
     "stylelint": "14.14.0",
     "typescript": "4.7.4"
   }

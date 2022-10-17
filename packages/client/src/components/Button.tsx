@@ -1,18 +1,18 @@
-import clsx from 'clsx';
-import React from 'react';
-import css from 'styles/components/button.module.scss';
+import clsx from "clsx";
+import React from "react";
+import css from "styles/components/button.module.scss";
 
-export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  variant?: 'icon' | 'outline';
+export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+  variant?: "icon" | "outline";
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, ...props }, forwardedRef) => {
     return (
       <button
-        className={clsx(className, css.button, {
-          [css.icon]: props.variant === 'icon',
-          [css.outline]: props.variant === 'outline',
+        className={clsx(css.button, className, {
+          [css.icon]: props.variant === "icon",
+          [css.outline]: props.variant === "outline",
         })}
         {...props}
         ref={forwardedRef}
@@ -21,4 +21,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";

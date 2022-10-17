@@ -1,12 +1,11 @@
 .card {
-  background-color: var(--surface-dark);
   padding: 2rem 1.5rem;
-  @include rounded("md");
+  background-color: var(--surface-dark);
 
   h1 {
+    font-weight: 600;
     font-size: 2rem;
     line-height: 2.25rem;
-    font-weight: 600;
   }
 
   p {

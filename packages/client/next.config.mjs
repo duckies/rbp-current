@@ -1,18 +1,13 @@
 /**
- * @template {import('next').NextConfig}
- * @param {T} config - A generic parameter that flows through to the return type
- * @constraint {{import('next').NextConfig}}
+ * @type {import('next').NextConfig}
  */
-function defineNextConfig(config) {
-  return config;
-}
-
-export default defineNextConfig({
+export default {
   reactStrictMode: true,
+  swcMinify: true,
   sassOptions: {
-    prependData: `@import "src/styles/shared.scss";`,
+    additionalData: `@use "src/styles/shared" as *;`,
   },
   images: {
-    domains: ['cdn.discordapp.com'],
+    domains: ["cdn.discordapp.com"],
   },
-});
+};

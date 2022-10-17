@@ -1,16 +1,16 @@
-import type { UserDTO } from '@rbp/server';
-import type { DehydratedState } from '@tanstack/react-query';
+import type { UserDTO } from "@rbp/server";
+import type { DehydratedState } from "@tanstack/react-query";
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import { useState } from 'react';
-import 'styles/global.scss';
-import { AuthProvider } from '../hooks/stores/useAuth';
+import type { AppProps } from "next/app";
+import "styles/global.scss";
+import Head from "next/head";
+import { useState } from "react";
+import { AuthProvider } from "../hooks/stores/useAuth";
 
 type MyAppProps = AppProps<{
   dehydratedState?: DehydratedState;
