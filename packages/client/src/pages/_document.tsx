@@ -1,4 +1,4 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
@@ -13,7 +13,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&amp;family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap"
         />
       </Head>
-      <body className="dark">
+      <body data-theme="dark">
         <Main />
         <NextScript />
       </body>

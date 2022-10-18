@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/stores/useAuth";
 import { Avatar } from "./Avatar";
 import {
@@ -7,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "./Dropdown";
 import { Button } from "./Button";
+import { MoonIcon } from "./icons/MoonIcon";
+import { SunIcon } from "./icons/SunIcon";
 import css from "styles/components/header.module.scss";
 import { login } from "hooks/auth";
 import DiscordLogo from "components/icons/Discord";
@@ -16,7 +19,14 @@ import NavLink from "components/NavLink";
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const isAuthenticated = !!user;
+
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
+  useEffect(() => {
+    document.body.dataset.theme = theme;
+  }, [theme]);
 
   return (
     <header className={css.header}>
@@ -66,6 +76,10 @@ export default function Header() {
               Login
             </Button>
           )}
+
+          <Button variant="icon" onClick={toggleTheme}>
+            {theme === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
         </div>
       </div>
     </header>

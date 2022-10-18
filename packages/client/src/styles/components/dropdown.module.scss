@@ -2,8 +2,8 @@
   position: relative;
   min-width: 150px;
   padding: 0.5rem;
-
-  // background-color: alpha(--surface-bg, 0.85);
+  border-radius: var(--space-sm);
+  background-color: alpha(--surface-bg, 0.85);
   box-shadow:
     0 10px 38px -10px rgb(22 23 24 / 35%),
     0 10px 20px -15px rgb(22 23 24 / 20%);

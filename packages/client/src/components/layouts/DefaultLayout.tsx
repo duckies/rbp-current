@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Footer } from "../Footer";
 import background from "public/images/login-screen.webp";
 import Header from "components/Header";
 import styles from "styles/layouts/default.module.scss";
@@ -23,6 +24,8 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
         </div>
 
         <div className={styles.layout__content}>{children}</div>
+
+        <Footer />
       </div>
     </>
   );

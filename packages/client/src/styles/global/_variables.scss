@@ -1,7 +1,5 @@
 @use "../shared";
 
 :root {
-  --space-unit: 1rem;
-
   @include shared.gen-spacing-factors;
 }
