@@ -1,5 +1,4 @@
-import { useState } from "react";
-import css from "styles/components/forms/textfield.module.scss";
+import { useState } from 'react';
 
 export interface TextfieldProps {
   id: string | number;
@@ -7,7 +6,7 @@ export interface TextfieldProps {
 }
 
 export default function Textfield(props: TextfieldProps) {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>('');
   const id = `textfield-${props.id}`;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,16 +15,16 @@ export default function Textfield(props: TextfieldProps) {
 
   return (
     <div>
-      <label className={css.label} htmlFor={id}>
+      <label className="block font-medium text-sm" htmlFor={id}>
         {props.label}
       </label>
-      <div className={css.container}>
+      <div className="relative mt-1">
         <input
+          className="block w-full px-3 py-2 focus:border-pink outline-pink outline-offset2"
           type="text"
           id={id}
           value={value}
           onChange={handleChange}
-          className={css.input}
         />
       </div>
     </div>

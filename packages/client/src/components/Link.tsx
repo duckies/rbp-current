@@ -1,31 +1,33 @@
 import NextLink from 'next/link';
 
-export interface LinkProps {
+export interface LinkProps extends React.ComponentPropsWithoutRef<'a'> {
   to: string;
   children?: React.ReactNode;
   className?: string;
 }
 
-export default function Link(props: LinkProps) {
-  const isExternal =
-    props.to.startsWith('http') || props.to.startsWith('mailto:');
+export default function Link({ to, className, children, ...props }: LinkProps) {
+  const isExternal = to.startsWith('http') || to.startsWith('mailto:');
 
   if (!isExternal) {
     return (
-      <NextLink href={props.to}>
-        <a className={props.className}>{props.children}</a>
+      <NextLink href={to}>
+        <a className={className} {...props}>
+          {children}
+        </a>
       </NextLink>
     );
   }
 
   return (
     <a
-      href={props.to}
+      href={to}
       rel="noreferrer noopener"
       target="_blank"
-      className={props.className}
+      className={className}
+      {...props}
     >
-      {props.children}
+      {children}
     </a>
   );
 }

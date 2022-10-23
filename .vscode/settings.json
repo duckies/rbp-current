@@ -4,5 +4,6 @@
     "packages/client",
     "packages/shared"
   ],
-  "dotenv.enableAutocloaking": true
+  "dotenv.enableAutocloaking": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

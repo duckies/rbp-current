@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import css from "styles/components/container.module.scss";
+import clsx from 'clsx';
 
 export interface ContainerProps {
   className?: string;
@@ -7,5 +6,14 @@ export interface ContainerProps {
 }
 
 export default function Container({ className, children }: ContainerProps) {
-  return <div className={clsx(css.container, className)}>{children}</div>;
+  return (
+    <div
+      className={clsx(
+        'max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
 }

@@ -1,13 +1,9 @@
-/**
- * @type {import('next').NextConfig}
- */
-export default {
+import { defineNextConfig } from './src/lib/utils/config.mjs';
+
+export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
-  sassOptions: {
-    additionalData: `@use "src/styles/shared" as *;`,
-  },
   images: {
-    domains: ["cdn.discordapp.com"],
+    domains: ['cdn.discordapp.com'],
   },
-};
+});

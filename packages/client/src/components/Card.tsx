@@ -1,9 +1,13 @@
-import css from "styles/components/card.module.scss";
+import clsx from 'clsx';
 
-export interface CardProps {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-export default function Card({ children }: CardProps) {
-  return <div className={css.card}>{children}</div>;
+export default function Card({ className, children, ...props }: CardProps) {
+  return (
+    <div className={clsx('p-5', className)} {...props}>
+      {children}
+    </div>
+  );
 }

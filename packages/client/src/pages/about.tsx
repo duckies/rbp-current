@@ -1,5 +1,5 @@
 import Textfield from 'components/forms/Textfield';
-import { DefaultLayout } from 'components/layouts/DefaultLayout';
+import { DefaultLayout } from 'layouts/Default';
 
 export default function AboutPage() {
   return (

@@ -1,16 +1,15 @@
-import Container from "./Container";
-import css from "styles/components/footer.module.scss";
+import Container from './Container';
 
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className={css.footer}>
-      <Container className={css.content}>
+    <footer>
+      <Container>
         <div>First</div>
 
         <div>Second</div>
 
         <div>Third</div>
-        <div className={css.bottom}>Credits or whatever</div>
+        <div>Credits or whatever</div>
       </Container>
     </footer>
   );

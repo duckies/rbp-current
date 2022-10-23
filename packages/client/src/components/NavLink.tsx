@@ -1,7 +1,7 @@
-import { clsx } from "clsx";
-import { useRouter } from "next/router";
-import Link, { type LinkProps } from "./Link";
-import css from "styles/components/navlink.module.scss";
+import { clsx } from 'clsx';
+import { useRouter } from 'next/router';
+import Ripple from 'material-ripple-effects';
+import Link, { type LinkProps } from './Link';
 
 export interface NavLinkProps extends LinkProps {}
 
@@ -11,16 +11,18 @@ export default function NavLink({
   className,
   ...props
 }: LinkProps) {
+  const ripple = new Ripple();
   const isActive = useRouter().pathname === to;
 
   return (
     <Link
       to={to}
       className={clsx(
-        css["nav-link"],
-        isActive && css["nav-link--active"],
+        'inline-block px-2 py-4 rounded-sm font-medium transition-colors hover:bg-gray-600 overflow-hidden',
+        isActive && 'font-semibold bg-gray-700',
         className
       )}
+      onMouseDown={(e) => ripple.create(e, 'light')}
       {...props}
     >
       {children}
