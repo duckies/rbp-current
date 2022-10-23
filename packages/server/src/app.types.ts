@@ -10,9 +10,9 @@ export * from './auth/interfaces';
 
 export interface IdentityDTO<T extends Provider>
   extends Omit<Identity, 'accessToken' | 'refreshToken'> {
-  provider: T;
+  provider: T
 }
 
 export interface UserDTO extends User {
-  discord: IdentityDTO<'Discord'>;
+  discord: IdentityDTO<'Discord'>
 }

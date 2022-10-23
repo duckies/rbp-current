@@ -52,7 +52,8 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {isAuthenticated ? (
+          {isAuthenticated
+            ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -71,11 +72,12 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) : (
+              )
+            : (
             <Button variant="outline" onClick={login}>
               Login
             </Button>
-          )}
+              )}
 
           <Button variant="icon" size="small" onClick={toggleTheme}>
             {theme === 'light' ? <MoonIcon /> : <SunIcon />}

@@ -1,13 +1,13 @@
 export interface HeroTitleProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export interface HeroCaptionProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export interface HeroProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function HeroTitle({ children }: HeroTitleProps) {

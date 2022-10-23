@@ -1,5 +1,5 @@
 export interface LogoProps {
-  size?: number;
+  size?: number
 }
 
 export default function Logo({ size = 35 }: LogoProps) {

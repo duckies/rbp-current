@@ -13,8 +13,8 @@ import { useState } from 'react';
 import { AuthProvider } from '../hooks/stores/useAuth';
 
 type MyAppProps = AppProps<{
-  dehydratedState?: DehydratedState;
-  user?: UserDTO;
+  dehydratedState?: DehydratedState
+  user?: UserDTO
 }>;
 
 export default function MyApp({ Component, pageProps }: MyAppProps) {
@@ -26,7 +26,7 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
             refetchOnWindowFocus: false,
           },
         },
-      })
+      }),
   );
 
   return (

@@ -20,9 +20,9 @@ export default function NavLink({
       className={clsx(
         'inline-block px-2 py-4 rounded-sm font-medium transition-colors hover:bg-gray-600 overflow-hidden',
         isActive && 'font-semibold bg-gray-700',
-        className
+        className,
       )}
-      onMouseDown={(e) => ripple.create(e, 'light')}
+      onMouseDown={e => ripple.create(e, 'light')}
       {...props}
     >
       {children}

@@ -1,10 +1,9 @@
 import { IncomingHttpHeaders } from 'http';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import type { Request } from 'express';
-import { Provider } from '@prisma/client';
 import { UserService } from '../../user/user.service';
 import { AuthService } from '../auth.service';
-import { IdentityDTO, UserDTO } from '../../app.types';
+import { UserDTO } from '../../app.types';
 
 export type RequestWithAuth = Request & { user: UserDTO };
 

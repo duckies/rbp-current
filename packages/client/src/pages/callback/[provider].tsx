@@ -4,23 +4,23 @@ import type { Provider } from '@rbp/server';
 import nookies from 'nookies';
 import Card from 'components/Card';
 import background from 'public/images/login-screen.webp';
-import css from 'styles/layouts/callout.module.scss';
 import { callback } from 'hooks/auth';
 
 export default function CallbackPage() {
   return (
-    <div className={css.callout}>
-      <div className={css.background}>
+    <div>
+      <div>
         <Image
           src={background}
           layout="fill"
           priority
           objectFit="cover"
           objectPosition="60% 50%"
+          alt=""
         />
       </div>
 
-      <Card className={css.window}>
+      <Card>
         <h1>Really Bad Players</h1>
         <p>Logging you in...</p>
       </Card>

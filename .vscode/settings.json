@@ -1,9 +1,8 @@
 {
   "eslint.workingDirectories": [
-    "packages/server",
-    "packages/client",
-    "packages/shared"
+    "./packages/client",
+    "./packages/server",
+    "./packages/shared"
   ],
-  "dotenv.enableAutocloaking": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "dotenv.enableAutocloaking": true
 }

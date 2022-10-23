@@ -1,3 +1,3 @@
 module.exports = {
-  "extends": ["@duckies", "next/core-web-vitals", "prettier"],
-}
+  extends: ['next/core-web-vitals', '@duckies'],
+};

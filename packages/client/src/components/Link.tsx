@@ -1,9 +1,9 @@
 import NextLink from 'next/link';
 
 export interface LinkProps extends React.ComponentPropsWithoutRef<'a'> {
-  to: string;
-  children?: React.ReactNode;
-  className?: string;
+  to: string
+  children?: React.ReactNode
+  className?: string
 }
 
 export default function Link({ to, className, children, ...props }: LinkProps) {

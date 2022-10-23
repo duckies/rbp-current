@@ -18,7 +18,7 @@ export default function ApplyPage() {
       </Hero>
 
       <Container>
-        {data?.fields.map((field) => (
+        {data?.fields.map(field => (
           <Card key={field.id}>
             <Textfield id={field.id} label={field.label} />
           </Card>

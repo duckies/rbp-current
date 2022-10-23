@@ -20,7 +20,7 @@ async function bootstrap() {
   app.useGlobalFilters(
     new NotBeforeExceptionFilter(),
     new JsonWebTokenExceptionFilter(),
-    new TokenExpiredExceptionFilter()
+    new TokenExpiredExceptionFilter(),
   );
 
   app.useGlobalPipes(
@@ -28,7 +28,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       whitelist: true,
       transform: true,
-    })
+    }),
   );
 
   app.enableCors();

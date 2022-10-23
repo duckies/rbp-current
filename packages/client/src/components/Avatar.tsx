@@ -3,8 +3,8 @@ import type { ImageProps } from 'next/future/image';
 import Image from 'next/future/image';
 
 export interface AvatarProps extends Omit<ImageProps, 'src' | 'alt'> {
-  user: UserDTO;
-  size?: number;
+  user: UserDTO
+  size?: number
 }
 
 export function getAvatar(user: UserDTO) {

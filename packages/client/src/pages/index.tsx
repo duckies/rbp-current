@@ -10,8 +10,8 @@ import BlogPostCard from 'components/BlogPost';
 // TODO: Move this elsewhere
 
 export interface HomePageProps {
-  token: string | null;
-  posts: BlogPost[];
+  token: string | null
+  posts: BlogPost[]
 }
 
 export default function HomePage({ posts }: HomePageProps) {
@@ -25,7 +25,7 @@ export default function HomePage({ posts }: HomePageProps) {
 
         <section className="grid grid-flow-col  gap-4">
           <div className="col-span-4 flex flex-col gap-4">
-            {posts.map((post) => (
+            {posts.map(post => (
               <BlogPostCard key={post.slug} {...post} />
             ))}
           </div>
@@ -52,7 +52,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       };
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
   }
 

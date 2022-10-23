@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common'
-import { PermissionController } from './permission.controller'
+import { Module } from '@nestjs/common';
+import { PermissionController } from './permission.controller';
 
 @Module({
   controllers: [PermissionController],

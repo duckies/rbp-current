@@ -1,6 +1,6 @@
-import { Action, Subject } from '@prisma/client'
+import { Action, Subject } from '@prisma/client';
 
-export const AUTH_ABILITY_KEY = Symbol('Auth Abilities')
+export const AUTH_ABILITY_KEY = Symbol('Auth Abilities');
 
 export const Subjects: Subject[] = [
   'Identity',
@@ -9,7 +9,7 @@ export const Subjects: Subject[] = [
   'Slide',
   'User',
   'all',
-]
+];
 
 export const Actions: Action[] = [
   'Manage',
@@ -17,4 +17,4 @@ export const Actions: Action[] = [
   'Read',
   'Update',
   'Delete',
-]
+];

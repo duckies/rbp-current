@@ -8,15 +8,15 @@ import { logout } from '../auth';
 import { getMe } from 'lib/auth';
 
 export interface AuthContextValue {
-  user?: UserDTO;
-  error: unknown;
-  status: 'error' | 'success';
-  refetch: any;
+  user?: UserDTO
+  error: unknown
+  status: 'error' | 'success'
+  refetch: any
   logout: UseMutateFunction<
     void,
     unknown,
     GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | undefined
-  >;
+  >
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -32,8 +32,8 @@ export function useAuth() {
 }
 
 export interface AuthProviderProps {
-  initialState?: { user?: UserDTO };
-  children: React.ReactNode;
+  initialState?: { user?: UserDTO }
+  children: React.ReactNode
 }
 
 export function AuthProvider({
@@ -54,7 +54,7 @@ export function AuthProvider({
       onSuccess: () => {
         queryClient.setQueryData(['user'], null);
       },
-    }
+    },
   );
 
   const value = useMemo(
@@ -65,7 +65,7 @@ export function AuthProvider({
       refetch,
       logout: logoutMutation.mutate,
     }),
-    [data, error, status, refetch, logoutMutation.mutate]
+    [data, error, status, refetch, logoutMutation.mutate],
   );
 
   return createElement(AuthContext.Provider, { value }, children);

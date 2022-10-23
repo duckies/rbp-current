@@ -4,21 +4,21 @@ import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 
 export interface MarkdownMetadata {
-  title: string;
-  description: string;
-  date: Date;
+  title: string
+  description: string
+  date: Date
 }
 
 export interface BlogPost {
-  slug: string;
-  metadata: MarkdownMetadata;
+  slug: string
+  metadata: MarkdownMetadata
 }
 
 export const BLOG_POST_FOLDER = path.join(process.cwd(), './src/content/blog');
 export const BLOG_POST_FILES = fs
   .readdirSync(BLOG_POST_FOLDER)
-  .filter((fileName) => /\.mdx?$/.test(fileName))
-  .map((fileName) => ({
+  .filter(fileName => /\.mdx?$/.test(fileName))
+  .map(fileName => ({
     slug: fileName.replace(/\.mdx?$/, ''),
     fileName,
   }));

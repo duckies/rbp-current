@@ -1,7 +1,7 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common'
-import { PrismaService } from '../common/database/prisma.service'
-import { CreatePermissionDTO } from './dto/create-permission.dto'
-import { UpdatePermissionDTO } from './dto/update-permission.dto'
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { PrismaService } from '../common/database/prisma.service';
+import { CreatePermissionDTO } from './dto/create-permission.dto';
+import { UpdatePermissionDTO } from './dto/update-permission.dto';
 
 @Controller('permission')
 export class PermissionController {
@@ -17,7 +17,7 @@ export class PermissionController {
             },
           },
         }
-      : {}
+      : {};
 
     return this.prisma.permission.create({
       data: {
@@ -28,15 +28,15 @@ export class PermissionController {
         conditions: createPermissionDTO.conditions,
         ...roleConnect,
       },
-    })
+    });
   }
 
   @Patch(':id')
   update(
     @Param('id') id: number,
-    @Body() { conditions, roleName, ...body }: UpdatePermissionDTO
+    @Body() { conditions, roleName, ...body }: UpdatePermissionDTO,
   ) {
-    const role = roleName ? { role: { connect: { name: roleName } } } : {}
+    const role = roleName ? { role: { connect: { name: roleName } } } : {};
     return this.prisma.permission.update({
       where: { id },
       data: {
@@ -44,6 +44,6 @@ export class PermissionController {
         ...role,
         conditions,
       },
-    })
+    });
   }
 }

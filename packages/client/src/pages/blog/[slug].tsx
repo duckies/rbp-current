@@ -5,8 +5,8 @@ import { BLOG_POST_FILES, getBlogPost } from 'lib/utils/mdx';
 import { DefaultLayout } from 'layouts/Default';
 
 export interface BlogPostPageProps {
-  source: MDXRemoteSerializeResult;
-  frontMatter: Record<string, any>;
+  source: MDXRemoteSerializeResult
+  frontMatter: Record<string, any>
 }
 
 export default function BlogPostPage({ source }: BlogPostPageProps) {

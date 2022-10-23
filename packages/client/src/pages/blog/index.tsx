@@ -6,7 +6,7 @@ import Card from 'components/Card';
 import Link from 'components/Link';
 
 export interface BlogIndexPageProps {
-  posts: BlogPost[];
+  posts: BlogPost[]
 }
 
 export default function BlogIndexPage({ posts }: BlogIndexPageProps) {

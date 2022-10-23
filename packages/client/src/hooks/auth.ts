@@ -14,7 +14,7 @@ export function login() {
   });
 
   window.location.href = new URL(
-    `https://discord.com/oauth2/authorize?${params}`
+    `https://discord.com/oauth2/authorize?${params}`,
   ).toString();
 }
 
@@ -24,6 +24,6 @@ export function logout(ctx?: GetServerSidePropsContext) {
 
 export function callback(provider: Provider, code: string) {
   return $get<{ user: User; token: string }>(
-    `/callback/${provider}?code=${code}`
+    `/callback/${provider}?code=${code}`,
   );
 }

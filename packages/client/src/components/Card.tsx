@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
 export default function Card({ className, children, ...props }: CardProps) {

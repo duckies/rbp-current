@@ -1,9 +1,9 @@
-import { BadRequestException, GoneException, Injectable } from '@nestjs/common'
-import { FieldType } from '@prisma/client'
-import { isArray, isBoolean, isString } from '@rbp/shared'
-import { PrismaService } from '../common/database/prisma.service'
-import { FormFieldEntity } from '../form-field/interfaces/form-field-entity.dto'
-import { CreateFormSubmissionDTO } from './dto/create-form-submission.dto'
+import { BadRequestException, GoneException, Injectable } from '@nestjs/common';
+import { FieldType } from '@prisma/client';
+import { isArray, isBoolean, isString } from '@rbp/shared';
+import { PrismaService } from '../common/database/prisma.service';
+import { FormFieldEntity } from '../form-field/interfaces/form-field-entity.dto';
+import { CreateFormSubmissionDTO } from './dto/create-form-submission.dto';
 
 @Injectable()
 export class FormSubmissionService {
@@ -14,65 +14,70 @@ export class FormSubmissionService {
       case FieldType.Text:
       case FieldType.Textarea:
         if (!isString(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a string`)
+          throw new BadRequestException(`Field "${field.id}" must be a string`);
         }
-        break
+        break;
       case FieldType.Select: {
-        const possibleValues = field.options.options.map((o) => o.value)
+        const possibleValues = field.options.options.map(o => o.value);
 
         if (isArray(response)) {
           if (!field.options.multiple) {
             throw new BadRequestException(
-              `Field "${field.id}" only accepts one response`
-            )
-          } else if (!response.every((r) => possibleValues.includes(r)))
+              `Field "${field.id}" only accepts one response`,
+            );
+          }
+          else if (!response.every(r => possibleValues.includes(r))) {
             throw new BadRequestException(
-              `Field "${field.id}" has an invalid response`
-            )
-        } else if (!isString(response) || !possibleValues.includes(response)) {
-          throw new BadRequestException(
-            `Field "${field.id}" has an invalid response`
-          )
+              `Field "${field.id}" has an invalid response`,
+            );
+          }
         }
-        break
+        else if (!isString(response) || !possibleValues.includes(response)) {
+          throw new BadRequestException(
+            `Field "${field.id}" has an invalid response`,
+          );
+        }
+        break;
       }
       case FieldType.Combobox:
         if (isArray(response) && !field.options.multiple) {
           throw new BadRequestException(
-            `Field "${field.id}" only accepts one response`
-          )
-        } else if (!isString(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a string`)
+            `Field "${field.id}" only accepts one response`,
+          );
         }
-        break
+        else if (!isString(response)) {
+          throw new BadRequestException(`Field "${field.id}" must be a string`);
+        }
+        break;
       case FieldType.Checkbox:
         if (!isBoolean(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a boolean`)
+          throw new BadRequestException(`Field "${field.id}" must be a boolean`);
         }
-        break
+        break;
     }
   }
 
   async create(
     formId: number,
-    createFormSubmissionDTO: CreateFormSubmissionDTO
+    createFormSubmissionDTO: CreateFormSubmissionDTO,
   ) {
     const form = await this.prisma.form.findFirstOrThrow({
       where: { id: formId },
       include: { fields: true },
-    })
+    });
 
     if (form.closed) {
-      throw new GoneException()
+      throw new GoneException();
     }
 
     for (const field of form.fields) {
-      const response = createFormSubmissionDTO.responses[field.id]
+      const response = createFormSubmissionDTO.responses[field.id];
 
       if (field.required && !response) {
-        throw new BadRequestException(`Field "${field.id}" is required`)
-      } else if (response) {
-        this.validateFieldResponse(field as FormFieldEntity, response)
+        throw new BadRequestException(`Field "${field.id}" is required`);
+      }
+      else if (response) {
+        this.validateFieldResponse(field as FormFieldEntity, response);
       }
     }
 
@@ -81,6 +86,6 @@ export class FormSubmissionService {
         formId,
         ...createFormSubmissionDTO,
       },
-    })
+    });
   }
 }

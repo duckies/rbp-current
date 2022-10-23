@@ -5,7 +5,7 @@ import Header from 'components/Header';
 import Container from 'components/Container';
 
 export interface DefaultLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function DefaultLayout({ children }: DefaultLayoutProps) {

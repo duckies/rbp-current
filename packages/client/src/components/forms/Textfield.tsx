@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 export interface TextfieldProps {
-  id: string | number;
-  label: string;
+  id: string | number
+  label: string
 }
 
 export default function Textfield(props: TextfieldProps) {

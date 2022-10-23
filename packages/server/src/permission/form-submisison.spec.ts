@@ -1,18 +1,18 @@
-import { BadRequestException, INestApplication } from '@nestjs/common'
-import { Test } from '@nestjs/testing'
-import { beforeAll, describe, expect, it } from 'vitest'
-import { DatabaseModule } from '../common/database/database.module'
-import { PrismaService } from '../common/database/prisma.service'
+import { BadRequestException, INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { DatabaseModule } from '../common/database/database.module';
+import { PrismaService } from '../common/database/prisma.service';
 import {
   TextFormFieldEntity,
   TextareaFormFieldEntity,
-} from '../form-field/interfaces/form-field-entity.dto'
-import { FormSubmissionModule } from '../form-submission/form-submission.module'
-import { FormSubmissionService } from '../form-submission/form-submission.service'
+} from '../form-field/interfaces/form-field-entity.dto';
+import { FormSubmissionModule } from '../form-submission/form-submission.module';
+import { FormSubmissionService } from '../form-submission/form-submission.service';
 
 describe('FormSubmission', () => {
-  let app: INestApplication
-  let service: FormSubmissionService
+  let app: INestApplication;
+  let service: FormSubmissionService;
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
@@ -24,12 +24,12 @@ describe('FormSubmission', () => {
           findFirstOrThrow: () => Promise.resolve({ id: 1 }),
         },
       })
-      .compile()
+      .compile();
 
-    app = moduleFixture.createNestApplication()
-    service = moduleFixture.get(FormSubmissionService)
-    await app.init()
-  })
+    app = moduleFixture.createNestApplication();
+    service = moduleFixture.get(FormSubmissionService);
+    await app.init();
+  });
 
   it('should expect string response for text fields', () => {
     const field: TextFormFieldEntity = {
@@ -42,19 +42,19 @@ describe('FormSubmission', () => {
       order: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }
+    };
 
     // @ts-expect-error Testing private method.
-    service.validateFieldResponse(field, 'John Doe')
+    service.validateFieldResponse(field, 'John Doe');
     // @ts-expect-error Testing private method.
     expect(() => service.validateFieldResponse(field, true)).toThrowError(
-      BadRequestException
-    )
+      BadRequestException,
+    );
     // @ts-expect-error Testing private method.
     expect(() => service.validateFieldResponse(field, 1)).toThrowError(
-      BadRequestException
-    )
-  })
+      BadRequestException,
+    );
+  });
 
   it('should expect string response for textarea fields', () => {
     const field: TextareaFormFieldEntity = {
@@ -67,9 +67,9 @@ describe('FormSubmission', () => {
       order: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }
+    };
 
     // @ts-expect-error Testing private method.
-    service.validateFieldResponse(field, 'John Doe')
-  })
-})
+    service.validateFieldResponse(field, 'John Doe');
+  });
+});

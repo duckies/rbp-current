@@ -4,18 +4,18 @@ import { isString } from '@rbp/shared';
 import config from 'lib/config';
 
 export type RequestOptions = RequestInit & {
-  context?: GetServerSidePropsContext;
+  context?: GetServerSidePropsContext
   /**
    * If true, the request will be made with the user's token cookie.
    */
-  authenticate?: boolean;
+  authenticate?: boolean
 };
 
 export type RequestMethodOptions = Omit<RequestOptions, 'method'>;
 
 export async function $fetch<T = unknown>(
   url: URL | string,
-  options: RequestOptions = {}
+  options: RequestOptions = {},
 ) {
   // TODO: Where do we check if the user is authenticated?
   if (options.authenticate) {
@@ -45,28 +45,28 @@ export async function $fetch<T = unknown>(
 
 export function $get<T = unknown>(
   url: string | URL,
-  options: RequestMethodOptions = {}
+  options: RequestMethodOptions = {},
 ) {
   return $fetch<T>(url, options);
 }
 
 export function $post<T = unknown>(
   url: string | URL,
-  options: RequestMethodOptions = {}
+  options: RequestMethodOptions = {},
 ) {
   return $fetch<T>(url, { ...options, method: 'POST' });
 }
 
 export function $patch<T = unknown>(
   url: string | URL,
-  options: RequestMethodOptions = {}
+  options: RequestMethodOptions = {},
 ) {
   return $fetch<T>(url, { ...options, method: 'PATCH' });
 }
 
 export function $delete<T = unknown>(
   url: string,
-  options: RequestMethodOptions = {}
+  options: RequestMethodOptions = {},
 ) {
   return $fetch<T>(url, { ...options, method: 'DELETE' });
 }

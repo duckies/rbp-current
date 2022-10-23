@@ -2,12 +2,12 @@ declare interface AppConfig {
   /**
    * Base url for server requests.
    */
-  API_URL: string;
+  API_URL: string
 
   /**
    * Discord authorization client id.
    */
-  DISCORD_CLIENT_ID: string;
+  DISCORD_CLIENT_ID: string
 }
 
 const config: AppConfig = {

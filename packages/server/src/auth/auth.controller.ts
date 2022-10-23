@@ -9,7 +9,7 @@ export class AuthController {
   @Get('callback/:provider')
   async callback(
     @Param('provider') provider: Provider,
-    @Query('code') code: string
+    @Query('code') code: string,
   ) {
     const user = await this.authService.handleCallback(provider, code);
 

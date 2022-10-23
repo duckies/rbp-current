@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
-import { isNumber } from '@rbp/shared'
-import { CreateRoleDTO } from './dto/create-role.dto'
-import { RoleService } from './role.service'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { isNumber } from '@rbp/shared';
+import { CreateRoleDTO } from './dto/create-role.dto';
+import { RoleService } from './role.service';
 
 @Controller('role')
 export class RoleController {
@@ -12,7 +12,7 @@ export class RoleController {
     return this.roleService.create({
       name,
       user: userId ? { connect: { id: userId } } : {},
-    })
+    });
   }
 
   @Get(':name')
@@ -20,7 +20,7 @@ export class RoleController {
     return this.roleService.findOne({
       where: { name },
       include: { permissions: true },
-    })
+    });
   }
 
   @Get()
@@ -28,7 +28,7 @@ export class RoleController {
     return this.roleService.findAll(
       {},
       isNumber(take) ? take : undefined,
-      isNumber(skip) ? skip : undefined
-    )
+      isNumber(skip) ? skip : undefined,
+    );
   }
 }
