@@ -12,18 +12,18 @@ export interface HeroProps {
 
 export function HeroTitle({ children }: HeroTitleProps) {
   return (
-    <h1 className="font-semibold text-4xl text-center sm:text-5xl lg:text-6xl lg:text-left">
+    <h1 className="f:40 f:semibold t:center t:left@lg">
       {children}
     </h1>
   );
 }
 
 export function HeroCaption({ children }: HeroCaptionProps) {
-  return <span className="text-lg text-gray-200">{children}</span>;
+  return <p className="f:20 f:gray-80 t:center t:left@lg">{children}</p>;
 }
 
-export default function Hero(props: HeroProps) {
-  return <section className="py-[7rem]">{props.children}</section>;
+export default function Hero({ children }: HeroProps) {
+  return <section className="py:80 @slide-in|250ms">{children}</section>;
 }
 
 Hero.Title = HeroTitle;

@@ -13,8 +13,8 @@ export default function ApplyPage() {
   return (
     <DefaultLayout>
       <Hero>
-        <h1>Application</h1>
-        <p>We&apos;re always recruiting the best of the worst.</p>
+        <Hero.Title>Application</Hero.Title>
+        <Hero.Caption>We&apos;re always recruiting the best of the worst.</Hero.Caption>
       </Hero>
 
       <Container>

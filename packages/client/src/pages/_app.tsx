@@ -8,14 +8,19 @@ import {
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 import 'styles/global.css';
+import '@master/css';
+import 'components/common/LoadingBar/loading-bar.css';
 import Head from 'next/head';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { AuthProvider } from '../hooks/stores/useAuth';
 
 type MyAppProps = AppProps<{
   dehydratedState?: DehydratedState
   user?: UserDTO
 }>;
+
+const LoadingBar = dynamic(() => import('components/common/LoadingBar'), { ssr: false });
 
 export default function MyApp({ Component, pageProps }: MyAppProps) {
   const [queryClient] = useState(
@@ -30,16 +35,19 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <AuthProvider initialState={{ user: pageProps.user }}>
-          <Head>
-            <title>Really Bad Players</title>
-          </Head>
-          <Component {...pageProps} />
-        </AuthProvider>
-      </Hydrate>
-      {/* <ReactQueryDevtools /> */}
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <AuthProvider initialState={{ user: pageProps.user }}>
+            <Head>
+              <title>Really Bad Players</title>
+            </Head>
+            <Component {...pageProps} />
+          </AuthProvider>
+        </Hydrate>
+        {/* <ReactQueryDevtools /> */}
+      </QueryClientProvider>
+      <LoadingBar />
+    </>
   );
 }

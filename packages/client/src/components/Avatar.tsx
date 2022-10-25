@@ -16,16 +16,17 @@ export function getAvatar(user: UserDTO) {
   return `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
 }
 
-export function Avatar({ user, size = 40 }: AvatarProps) {
+export function Avatar({ user, size = 40, ...props }: AvatarProps) {
   const avatar = getAvatar(user);
 
   return (
     <Image
       src={avatar}
-      className="object-cover"
+      className="object:cover"
       alt="Discord Avatar"
       height={size}
       width={size}
+      {...props}
     />
   );
 }

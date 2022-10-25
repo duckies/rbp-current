@@ -1,38 +1,52 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXRemote } from 'next-mdx-remote';
-import { BLOG_POST_FILES, getBlogPost } from 'lib/utils/mdx';
+import { getMDXComponent } from 'mdx-bundler/client';
+import React from 'react';
 import { DefaultLayout } from 'layouts/Default';
+import type { MarkdownMetadata } from 'lib/mdx';
+import { getMarkdownContent, getMarkdownFilesByType } from 'lib/mdx';
+import { Paper } from 'components/common/Paper';
+import Hero from 'components/Hero';
 
 export interface BlogPostPageProps {
-  source: MDXRemoteSerializeResult
-  frontMatter: Record<string, any>
+  code: string
+  meta: MarkdownMetadata
 }
 
-export default function BlogPostPage({ source }: BlogPostPageProps) {
+export default function BlogPostPage({ code, meta }: BlogPostPageProps) {
+  const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
     <DefaultLayout>
-      <MDXRemote {...source} />
+      <div className="prose">
+        <Hero>
+          <Hero.Title>{meta.title || 'Blog Post'}</Hero.Title>
+          <Hero.Caption>{meta.description || 'Blog Description' }</Hero.Caption>
+        </Hero>
+
+        <Paper className="p-6 bg-zinc-900">
+          <Component />
+        </Paper>
+      </div>
     </DefaultLayout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { source, metadata } = await getBlogPost(params!.slug as string);
+  const slug = params!.slug as string;
+  const { code, meta } = await getMarkdownContent('posts', slug);
 
   return {
     props: {
-      source,
-      metadata,
+      code,
+      meta,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = BLOG_POST_FILES.map(({ slug }) => ({ params: { slug } }));
+  const folder = getMarkdownFilesByType('posts');
 
   return {
-    paths,
+    paths: folder.map(({ slug }) => ({ params: { slug } })),
     fallback: false,
   };
 };

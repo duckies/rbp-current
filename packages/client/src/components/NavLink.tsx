@@ -18,11 +18,11 @@ export default function NavLink({
     <Link
       to={to}
       className={clsx(
-        'inline-block px-2 py-4 rounded-sm font-medium transition-colors hover:bg-gray-600 overflow-hidden',
-        isActive && 'font-semibold bg-gray-700',
+        'inline-flex px:12 py:8 r:10 f:18 ~background-color|250ms|ease-in-out bg:gray-20:hover',
+        isActive ? 'f:semibold f:gray-90 f:gray-10:@dark' : 'f:normal f:gray-70 f:gray-60:@dark',
         className,
       )}
-      onMouseDown={e => ripple.create(e, 'light')}
+      onMouseDown={e => ripple.create(e, 'dark')}
       {...props}
     >
       {children}

@@ -1,29 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "fonts.css";
+@import "keyframes.css";
 
-@font-face {
-  font-family: 'Wotfard';
-  src: url('/fonts/wotfard/wotfard-regular-webfont.woff2');
-  font-style: normal;
-  font-weight: 400;
-  font-display: fallback;
+:root {
+  --font-sans: Wotfard, system-ui, --apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-serif: ui-serif, serif;
 }
 
-@font-face {
-  font-family: 'Wotfard';
-  src: url('/fonts/wotfard/wotfard-medium-webfont.woff2');
-  font-style: normal;
-  font-weight: 500;
-  font-display: fallback;
+* {
+  text-rendering: geometricPrecision;
 }
 
-@font-face {
-  font-family: 'Wotfard';
-  src: url('/fonts/wotfard/wotfard-semibold-webfont.woff2');
-  font-style: normal;
-  font-weight: 600;
-  font-display: fallback;
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }
 
 html:focus-within {
@@ -31,34 +22,102 @@ html:focus-within {
 }
 
 body {
-  height: 100%;
-  text-rendering: optimizeSpeed;
-  line-height: 1.75;
-  @apply text-white;
+  height: 100vh;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  background-color: #000;
+  color: #fff;
 }
 
-#__next {
-  display: flex;
-  flex-direction: column;
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
 }
 
-/* Remove default margin */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+hr {
+  height: 0;
+  color: inherit;
+}
+
 body,
+blockquote,
+dl,
+dd,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-p,
+hr,
 figure,
-blockquote,
-dl,
-dd {
+p,
+button,
+optgroup,
+select,
+textarea,
+pre {
   margin: 0;
 }
 
-/* Make images easier to work with */
+td,
+legend,
+textarea,
+input,
+fieldset {
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
 img,
 picture,
 video,
@@ -68,10 +127,9 @@ svg {
   max-width: 100%;
 }
 
-/* Inherit fonts for inputs and buttons */
 input,
 button,
 textarea,
 select {
-  font: inherit;
+  all: unset;
 }

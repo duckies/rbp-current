@@ -1,15 +1,12 @@
-export interface LogoProps {
-  size?: number
-}
+export interface LogoProps extends React.ComponentPropsWithoutRef<'svg'> {}
 
-export default function Logo({ size = 35 }: LogoProps) {
+export default function Logo(props: LogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 311.02 292.76"
       fill="none"
-      height={size}
-      width={size}
+      {...props}
     >
       <path
         fill="currentColor"

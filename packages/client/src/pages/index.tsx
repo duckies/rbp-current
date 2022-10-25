@@ -3,18 +3,8 @@ import nookies from 'nookies';
 import { getMe } from '../lib/auth';
 import Hero from 'components/Hero';
 import { DefaultLayout } from 'layouts/Default';
-import type { BlogPost } from 'lib/utils/mdx';
-import { getBlogPosts } from 'lib/utils/mdx';
-import BlogPostCard from 'components/BlogPost';
 
-// TODO: Move this elsewhere
-
-export interface HomePageProps {
-  token: string | null
-  posts: BlogPost[]
-}
-
-export default function HomePage({ posts }: HomePageProps) {
+export default function HomePage() {
   return (
     <DefaultLayout>
       <main>
@@ -25,9 +15,9 @@ export default function HomePage({ posts }: HomePageProps) {
 
         <section className="grid grid-flow-col  gap-4">
           <div className="col-span-4 flex flex-col gap-4">
-            {posts.map(post => (
+            {/* {posts.map(post => (
               <BlogPostCard key={post.slug} {...post} />
-            ))}
+            ))} */}
           </div>
 
           <aside className="col-span-1">
@@ -41,14 +31,14 @@ export default function HomePage({ posts }: HomePageProps) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { token } = nookies.get(ctx);
-  const posts = getBlogPosts();
+  // const posts = getBlogPosts();
 
   try {
     if (token) {
       return {
         props: {
           user: await getMe(ctx),
-          posts,
+          // posts,
         },
       };
     }
@@ -59,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      posts,
+      // posts,
     },
   };
 };

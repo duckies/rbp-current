@@ -4,6 +4,7 @@ import type { UseMutateFunction } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, createElement, useContext, useMemo } from 'react';
 import type { GetServerSidePropsContext, PreviewData } from 'next';
+import nookies from 'nookies';
 import { logout } from '../auth';
 import { getMe } from 'lib/auth';
 
@@ -46,6 +47,7 @@ export function AuthProvider({
     initialData: initialState.user,
     retry: 0,
     staleTime: 1000 * 60 * 60 * 8, // Refetch after 8 hours
+    enabled: !!(nookies.get(null).token),
   });
 
   const logoutMutation = useMutation(
