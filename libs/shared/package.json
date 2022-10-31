@@ -1,0 +1,16 @@
+{
+  "name": "@rbp/shared",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json -w",
+    "start": "node ./dist/index"
+  },
+  "dependencies": {
+    "deepmerge-ts": "4.2.2"
+  },
+  "devDependencies": {
+    "typescript": "4.7.4"
+  }
+}

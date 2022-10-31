@@ -1,0 +1,13 @@
+{
+  "name": "@rbp/battle.net",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch"
+  },
+  "devDependencies": {
+    "@rbp/http": "workspace:*",
+    "@rbp/shared": "workspace:*"
+  }
+}

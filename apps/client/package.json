@@ -1,0 +1,50 @@
+{
+  "name": "@rbp/client",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf .next",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/form": "5.6.2",
+    "@master/css": "1.37.2",
+    "@radix-ui/react-dropdown-menu": "1.0.0",
+    "@radix-ui/react-label": "2.0.0",
+    "@react-aria/listbox": "3.7.0",
+    "@react-aria/utils": "3.14.0",
+    "@tanstack/react-query": "4.12.0",
+    "@tanstack/react-query-devtools": "4.12.0",
+    "class-variance-authority": "0.2.4",
+    "clsx": "1.2.1",
+    "cva": "npm:class-variance-authority@0.2.4",
+    "gray-matter": "4.0.3",
+    "next": "13.0.0",
+    "next-remote-watch": "2.0.0",
+    "nookies": "2.5.2",
+    "nprogress": "0.2.0",
+    "react": "18.2.0",
+    "react-aria": "3.20.0",
+    "react-dom": "18.2.0",
+    "react-stately": "3.18.0"
+  },
+  "devDependencies": {
+    "@rbp/server": "workspace:*",
+    "@rbp/shared": "workspace:*",
+    "@react-types/shared": "3.15.0",
+    "@types/node": "18.7.13",
+    "@types/nprogress": "0.2.0",
+    "@types/react": "18.0.21",
+    "autoprefixer": "10.4.12",
+    "esbuild": "0.14.54",
+    "eslint": "8.26.0",
+    "eslint-config-next": "12.3.1",
+    "material-ripple-effects": "2.0.1",
+    "mdx-bundler": "9.0.1",
+    "postcss": "8.4.18",
+    "rimraf": "3.0.2",
+    "typescript": "4.8.4"
+  }
+}
