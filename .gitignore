@@ -21,4 +21,4 @@ dist
 
 # Secrets Sssshhh
 .env
-.env.test
+.env.*
