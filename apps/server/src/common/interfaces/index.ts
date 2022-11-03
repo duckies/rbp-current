@@ -1,1 +1,1 @@
-export * from './utilities.interface'
+export * from './utilities.interface';

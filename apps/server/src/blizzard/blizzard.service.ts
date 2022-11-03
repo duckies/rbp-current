@@ -3,7 +3,7 @@ import Queue from 'p-queue';
 import { WoWClient } from '@rbp/battle.net';
 import { BlizzardConfig } from '../app.config';
 import { HttpService } from '../common/http/http.service';
-import { CharacterDTO } from './dto/character.dto';
+import { FindCharacterDTO } from '../character/dto/character.dto';
 
 @Injectable()
 export class BlizzardService {
@@ -26,7 +26,7 @@ export class BlizzardService {
     });
   }
 
-  async getCharacter({ name, realm, region }: CharacterDTO) {
-    return (await this.client.profile.getCharacterProfileSummary({ name, realm, region })).body;
+  async getCharacter(findCharacterDTO: FindCharacterDTO) {
+    return this.client.profile.getCharacterProfileSummary(findCharacterDTO).json();
   }
 }

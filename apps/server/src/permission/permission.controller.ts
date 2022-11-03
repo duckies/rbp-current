@@ -1,49 +1,24 @@
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
-import { PrismaService } from '../common/database/prisma.service';
 import { CreatePermissionDTO } from './dto/create-permission.dto';
 import { UpdatePermissionDTO } from './dto/update-permission.dto';
+import { PermissionService } from './permission.service';
 
 @Controller('permission')
 export class PermissionController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly permisisonService: PermissionService) { }
 
   @Post()
-  create(@Body() createPermissionDTO: CreatePermissionDTO) {
-    const roleConnect = createPermissionDTO.roleName
-      ? {
-          role: {
-            connect: {
-              name: createPermissionDTO.roleName,
-            },
-          },
-        }
-      : {};
-
-    return this.prisma.permission.create({
-      data: {
-        action: createPermissionDTO.action,
-        subject: createPermissionDTO.subject,
-        inverted: createPermissionDTO.inverted,
-        reason: createPermissionDTO.reason,
-        conditions: createPermissionDTO.conditions,
-        ...roleConnect,
-      },
-    });
+  public create(
+    @Body() createPermissionDTO: CreatePermissionDTO,
+  ) {
+    return this.permisisonService.create(createPermissionDTO);
   }
 
   @Patch(':id')
-  update(
+  public update(
     @Param('id') id: number,
-    @Body() { conditions, roleName, ...body }: UpdatePermissionDTO,
+    @Body() CreatePermissionDTO: UpdatePermissionDTO,
   ) {
-    const role = roleName ? { role: { connect: { name: roleName } } } : {};
-    return this.prisma.permission.update({
-      where: { id },
-      data: {
-        ...body,
-        ...role,
-        conditions,
-      },
-    });
+    return this.permisisonService.update(id, CreatePermissionDTO);
   }
 }

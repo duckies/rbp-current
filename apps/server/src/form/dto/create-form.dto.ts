@@ -1,10 +1,10 @@
-import { IsBoolean, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class CreateFormDTO {
   @IsString()
-  title!: string
+  title!: string;
 
   @IsOptional()
   @IsBoolean()
-  closed?: boolean
+  closed?: boolean;
 }

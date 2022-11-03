@@ -1,11 +1,11 @@
-import { FieldType } from '@prisma/client'
+import { FieldType } from '../../entities';
 
 export interface FieldBase {
   type: FieldType
 }
 
 export interface TextField extends FieldBase {
-  type: 'Text'
+  type: FieldType.Text
   options: {
     minLength?: number
     maxLength?: number
@@ -13,14 +13,14 @@ export interface TextField extends FieldBase {
 }
 
 export interface RadioField extends FieldBase {
-  type: 'Radio'
+  type: FieldType.Radio
   options: {
     items: { label: string; value: string }[]
   }
 }
 
 export interface SelectField extends FieldBase {
-  type: 'Select'
+  type: FieldType.Select
   options: {
     multiple?: boolean
     items: { label: string; value: string }[]
@@ -28,5 +28,5 @@ export interface SelectField extends FieldBase {
 }
 
 export interface CheckboxField extends FieldBase {
-  type: 'Checkbox'
+  type: FieldType.Checkbox
 }

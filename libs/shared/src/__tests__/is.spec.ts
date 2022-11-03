@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isBoolean, isNumber, isString } from './types';
+import { isBoolean, isNumber, isPOJO, isString } from '../is';
 
 describe('Type Utils', () => {
   it('should find numbers', () => {
@@ -30,5 +30,19 @@ describe('Type Utils', () => {
     expect(isBoolean(null)).toBe(false);
     expect(isBoolean(undefined)).toBe(false);
     expect(isBoolean({})).toBe(false);
+  });
+
+  it('should find pojo\'s', () => {
+    const noop = () => { };
+
+    expect(isPOJO({})).toBe(true);
+    expect(isPOJO({ a: 1, b: [1, 2, 3] })).toBe(true);
+    expect(isPOJO([])).toBe(false);
+    expect(isPOJO(null)).toBe(false);
+    expect(isPOJO(undefined)).toBe(false);
+    expect(isPOJO('apple')).toBe(false);
+    expect(isPOJO(123)).toBe(false);
+    expect(isPOJO(noop)).toBe(false);
+    expect(isPOJO(new Date())).toBe(false);
   });
 });

@@ -1,90 +1,50 @@
+import { SqlEntityManager } from '@mikro-orm/knex';
 import { BadRequestException, GoneException, Injectable } from '@nestjs/common';
-import { FieldType } from '@prisma/client';
-import { isArray, isBoolean, isString } from '@rbp/shared';
-import { PrismaService } from '../common/database/prisma.service';
-import { FormFieldEntityDTO } from '../form-field/interfaces/form-field-entity.dto';
+import { Form } from '../entities';
+import { FormSubmission } from '../entities/form-submission.entity';
 import { CreateFormSubmissionDTO } from './dto/create-form-submission.dto';
 
 @Injectable()
 export class FormSubmissionService {
-  constructor(private readonly prisma: PrismaService) {}
+  public readonly repository;
 
-  private validateFieldResponse(field: FormFieldEntityDTO, response: unknown) {
-    switch (field.type) {
-      case FieldType.Text:
-        if (!isString(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a string`);
-        }
-        break;
-      case FieldType.Select: {
-        const possibleValues = field.options.items.map(o => o.value);
-
-        if (isArray(response)) {
-          if (!field.options.multiple) {
-            throw new BadRequestException(
-              `Field "${field.id}" only accepts one response`,
-            );
-          }
-          else if (!response.every(r => possibleValues.includes(r))) {
-            throw new BadRequestException(
-              `Field "${field.id}" has an invalid response`,
-            );
-          }
-        }
-        else if (!isString(response) || !possibleValues.includes(response)) {
-          throw new BadRequestException(
-            `Field "${field.id}" has an invalid response`,
-          );
-        }
-        break;
-      }
-      case FieldType.Combobox:
-        if (isArray(response) && !field.options.multiple) {
-          throw new BadRequestException(
-            `Field "${field.id}" only accepts one response`,
-          );
-        }
-        else if (!isString(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a string`);
-        }
-        break;
-      case FieldType.Checkbox:
-        if (!isBoolean(response)) {
-          throw new BadRequestException(`Field "${field.id}" must be a boolean`);
-        }
-        break;
-    }
+  constructor(private readonly em: SqlEntityManager) {
+    this.repository = em.getRepository(FormSubmission);
   }
 
   async create(
     formId: number,
-    createFormSubmissionDTO: CreateFormSubmissionDTO,
+    { responses }: CreateFormSubmissionDTO,
   ) {
-    const form = await this.prisma.form.findFirstOrThrow({
-      where: { id: formId },
-      include: { fields: true },
-    });
+    const form = await this.em.findOneOrFail(Form, formId);
 
     if (form.closed) {
       throw new GoneException();
     }
 
     for (const field of form.fields) {
-      const response = createFormSubmissionDTO.responses[field.id];
+      const answer = responses[field.id];
 
-      if (field.required && !response) {
+      if (field.required && answer === undefined) {
         throw new BadRequestException(`Field "${field.id}" is required`);
       }
-      else if (response) {
-        this.validateFieldResponse(field as FormFieldEntityDTO, response);
+
+      if (!field.isAnswerValid(answer)) {
+        throw new BadRequestException(`Field "${field.id}" is invalid`);
       }
     }
 
-    return this.prisma.formSubmission.create({
-      data: {
-        formId,
-        ...createFormSubmissionDTO,
-      },
-    });
+    const fieldIds = form.fields.getIdentifiers();
+    const invalidFields = Object.keys(responses).filter(key => !fieldIds.includes(key));
+
+    if (invalidFields.length > 0) {
+      throw new BadRequestException(`Unknown fields: ${invalidFields.join(', ')}`);
+    }
+
+    const submission = this.em.create(FormSubmission, { responses, form });
+
+    await this.em.persist(submission).flush();
+
+    return submission;
   }
 }

@@ -1,36 +1,19 @@
-import type { Subjects as CASLSubjects } from '@casl/prisma';
-import { PrismaAbility } from '@casl/prisma';
+import { Ability } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import type {
-  Action as CASLAction,
-  Identity,
-  Permission,
-  Role,
-  Slide,
-  User,
-} from '@prisma/client';
+import { Actions, Subjects, User } from '../entities';
 import { UserService } from '../user/user.service';
 
-export type Action = CASLAction;
-export type Subject = CASLSubjects<{
-  User: User
-  Identity: Identity
-  Role: Role
-  Permission: Permission
-  Slide: Slide
-}>;
-
-export type Abilities = [Action, Subject];
-export type AppAbility = PrismaAbility<Abilities>;
+export type Abilities = [Actions, Subjects];
+export type AppAbility = Ability<Abilities>;
 
 @Injectable()
 export class AbilityFactory {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
-  async forUser(user: User): Promise<PrismaAbility<Abilities>> {
+  async forUser(user: User): Promise<AppAbility> {
     const permissions = await this.userService.getPermissions(user.id);
 
-    return new PrismaAbility<Abilities>(
+    return new Ability<Abilities>(
       permissions.map(p => ({
         action: p.action,
         subject: p.subject,

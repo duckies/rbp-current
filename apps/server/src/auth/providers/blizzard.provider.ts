@@ -1,17 +1,18 @@
-import { Injectable } from '@nestjs/common'
-import { BlizzardConfig } from '../../app.config'
-import { PrismaService } from '../../common/database/prisma.service'
-import { HttpService } from '../../common/http/http.service'
-import { BlizzardTokenResponse } from '../interfaces/blizzard-token-response.interface'
-import { BlizzardUser } from '../interfaces/blizzard-user.interface'
+import { SqlEntityManager } from '@mikro-orm/knex';
+import { Injectable } from '@nestjs/common';
+import { BlizzardConfig } from '../../app.config';
+import { HttpService } from '../../common/http/http.service';
+import { User } from '../../entities';
+import { BlizzardTokenResponse } from '../interfaces/blizzard-token-response.interface';
+import { BlizzardUser } from '../interfaces/blizzard-user.interface';
 
 @Injectable()
 export class BlizzardProvider {
   constructor(
     private config: BlizzardConfig,
-    private prisma: PrismaService,
-    private http: HttpService
-  ) {}
+    private em: SqlEntityManager,
+    private http: HttpService,
+  ) { }
 
   getProfile(accessToken: string, region = 'us') {
     return this.http.$get<BlizzardUser>(
@@ -20,8 +21,8 @@ export class BlizzardProvider {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      }
-    )
+      },
+    );
   }
 
   async authorize(code: string) {
@@ -36,37 +37,17 @@ export class BlizzardProvider {
           code,
           redirect_uri: this.config.REDIRECT,
         },
-      }
-    )
+      },
+    );
   }
 
   async handleCallback(code: string) {
-    const tokens = await this.authorize(code)
-    const profile = await this.getProfile(tokens.access_token)
+    const tokens = await this.authorize(code);
+    const profile = await this.getProfile(tokens.access_token);
 
-    const identity = await this.prisma.identity.update({
-      where: {
-        id_provider: {
-          id: profile.id.toString(),
-          provider: 'Blizzard',
-        },
-      },
-      data: {
-        id: profile.id.toString(),
-        provider: 'Blizzard',
-        identifier: profile.battletag,
-        accessToken: tokens.access_token,
-        expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
-      },
-      include: {
-        user: {
-          include: {
-            identities: true,
-          },
-        },
-      },
-    })
+    // How do we connect Battle.net social auth to the Discord user?
 
-    return identity.user
+    // return identity.user;
+    return profile;
   }
 }

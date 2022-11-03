@@ -8,17 +8,16 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { isNumber } from '@rbp/shared';
 import { CreateFormFieldDTO } from './dto/create-form-field.dto';
 import { UpdateFormFieldDTO } from './dto/update-form-field.dto';
 import { FormFieldService } from './form-field.service';
 
 @Controller('form-field')
 export class FormFieldController {
-  constructor(private readonly formFieldService: FormFieldService) {}
+  constructor(private readonly formFieldService: FormFieldService) { }
 
   @Post('form/:formId')
-  create(
+  private create(
     @Param('formId') formId: number,
     @Body() createFormFieldDTO: CreateFormFieldDTO,
   ) {
@@ -26,28 +25,25 @@ export class FormFieldController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.formFieldService.findOne(id);
+  private findOne(@Param('id') id: string) {
+    return this.formFieldService.repository.findOneOrFail(id);
   }
 
   @Get()
-  findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
-    take = isNumber(take) ? take : undefined;
-    skip = isNumber(skip) ? skip : undefined;
-
-    return this.formFieldService.findAll(take, skip);
+  findAll(@Query('limit') limit?: number, @Query('offset') offset?: number) {
+    return this.formFieldService.repository.findAll({ limit, offset });
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateFormFieldDTO: UpdateFormFieldDTO,
   ) {
     return this.formFieldService.update(id, updateFormFieldDTO);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
+  delete(@Param('id') id: string) {
     return this.formFieldService.delete(id);
   }
 }

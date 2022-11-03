@@ -8,17 +8,19 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "lint": "eslint ./src/**/*.ts --fix",
-    "prisma": "prisma",
-    "prisma:test": "dotenv -e .env.test -- prisma",
-    "test:setup": "prisma:test migrate reset --force"
+    "test:setup": "prisma:test migrate reset --force",
+    "mikro-orm": "mikro-orm"
   },
   "dependencies": {
     "@casl/ability": "6.1.1",
-    "@casl/prisma": "1.1.0",
+    "@mikro-orm/core": "5.5.0",
+    "@mikro-orm/knex": "5.5.0",
+    "@mikro-orm/mysql": "5.5.0",
+    "@mikro-orm/nestjs": "5.1.2",
+    "@mikro-orm/sql-highlighter": "1.0.1",
     "@nestjs/common": "9.0.11",
     "@nestjs/core": "9.0.11",
     "@nestjs/platform-express": "9.0.11",
-    "@prisma/client": "4.2.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
     "discord.js": "14.3.0",
@@ -26,14 +28,18 @@
     "got-cjs": "12.3.1",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
+    "mysql2": "2.3.3",
     "p-queue": "6.6.2",
     "pino": "8.7.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "7.5.6"
+    "rxjs": "7.5.6",
+    "uuid": "9.0.0",
+    "zod": "3.19.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "9.1.1",
+    "@mikro-orm/cli": "5.5.0",
+    "@nestjs/cli": "9.1.5",
     "@nestjs/testing": "9.0.11",
     "@rbp/battle.net": "workspace:*",
     "@rbp/shared": "workspace:*",
@@ -41,12 +47,19 @@
     "@types/jsonwebtoken": "8.5.9",
     "@types/lodash": "4.14.185",
     "@types/node": "18.7.13",
+    "@types/uuid": "8.3.4",
     "pino-pretty": "9.1.1",
-    "prisma": "4.2.1",
     "source-map-support": "0.5.21",
     "ts-loader": "9.3.1",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.0",
     "typescript": "4.7.4"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/src/mikro-orm.config.js"
+    ]
   }
 }

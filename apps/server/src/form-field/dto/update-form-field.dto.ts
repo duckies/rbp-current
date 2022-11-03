@@ -1,22 +1,16 @@
-import { FieldType, Prisma } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
-  IsArray,
-  IsBoolean,
+  IsDefined,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
-  Min,
-  ValidateIf,
-  ValidateNested,
+  Min, ValidateNested,
 } from 'class-validator';
-import { ItemsDTO } from './field-options.dto';
+import { FieldType } from '../../entities';
+import { UpdateCharacterFieldOptionsDTO, UpdateCheckboxFieldOptionsDTO, UpdateComboboxFieldOptionsDTO, UpdateFieldOptionsDTO, UpdateNumberFieldOptionsDTO, UpdateRadioFieldOptionsDTO, UpdateSelectFieldOptionsDTO, UpdateTextFieldOptionsDTO } from './update-field-options.dto';
 
-export class UpdateFormFieldDTO implements Prisma.JsonObject {
-  @IsEnum(FieldType)
-  type!: FieldType;
-
+export class UpdateFormFieldDTO {
   @IsOptional()
   @IsString()
   label?: string;
@@ -25,26 +19,39 @@ export class UpdateFormFieldDTO implements Prisma.JsonObject {
   @IsString()
   description?: string;
 
-  @IsOptional()
-  @IsBoolean()
-  required?: boolean;
+  /**
+   * This is **not** mutable, but is required
+   * because I'm not some TypeScript wizard.
+   */
+  @IsEnum(FieldType)
+  type!: FieldType;
 
   @IsOptional()
   @IsNumber()
   @Min(1)
   order?: number;
 
-  @ValidateIf(o => [FieldType.Select].includes(o.type))
-  @IsOptional()
-  @IsArray()
+  @IsDefined()
   @ValidateNested()
-  @Type(() => ItemsDTO)
-  options?: ItemsDTO[] & Prisma.JsonArray;
-
-  @ValidateIf(o => [FieldType.Select].includes(o.type))
-  @IsOptional()
-  @IsBoolean()
-  multiple?: boolean;
-
-  [key: string]: Prisma.JsonValue | undefined
+  @Type(({ object }: any) => {
+    switch (object.type) {
+      case FieldType.Text:
+        return UpdateTextFieldOptionsDTO;
+      case FieldType.Select:
+        return UpdateSelectFieldOptionsDTO;
+      case FieldType.Number:
+        return UpdateNumberFieldOptionsDTO;
+      case FieldType.Character:
+        return UpdateCharacterFieldOptionsDTO;
+      case FieldType.Checkbox:
+        return UpdateCheckboxFieldOptionsDTO;
+      case FieldType.Radio:
+        return UpdateRadioFieldOptionsDTO;
+      case FieldType.Combobox:
+        return UpdateComboboxFieldOptionsDTO;
+      default:
+        throw new Error(`Unknown field type: ${object.type}`);
+    }
+  })
+  options!: UpdateFieldOptionsDTO;
 }

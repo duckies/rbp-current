@@ -1,20 +1,20 @@
-import { Action, Subject } from '@prisma/client';
+import { Action, Subject } from '../entities';
 
 export const AUTH_ABILITY_KEY = Symbol('Auth Abilities');
 
 export const Subjects: Subject[] = [
-  'Identity',
-  'Permission',
-  'Role',
-  'Slide',
-  'User',
-  'all',
+  Subject.Identity,
+  Subject.Permission,
+  Subject.Role,
+  Subject.Slide,
+  Subject.User,
+  Subject.all,
 ];
 
 export const Actions: Action[] = [
-  'Manage',
-  'Create',
-  'Read',
-  'Update',
-  'Delete',
+  Action.Manage,
+  Action.Create,
+  Action.Read,
+  Action.Update,
+  Action.Delete,
 ];

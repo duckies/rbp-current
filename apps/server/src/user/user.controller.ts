@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { Auth, AuthUser } from '../auth/decorators';
+import { User } from '../entities';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   @Auth()
   @Get('me')
@@ -15,11 +15,11 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.userService.findOne({ where: { id } });
+    return this.userService.repository.findOneOrFail(id);
   }
 
   @Get()
   find() {
-    return this.userService.findAll();
+    return this.userService.repository.findAll();
   }
 }

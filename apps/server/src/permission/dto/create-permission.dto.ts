@@ -1,35 +1,28 @@
-import { Model, PrismaQuery } from '@casl/prisma'
-import { Action, Permission, Prisma, Subject } from '@prisma/client'
-import { IsBoolean, IsIn, IsJSON, IsOptional, IsString } from 'class-validator'
-import { Actions, Subjects } from '../../auth/auth.constants'
-
-export type PermissionConditions = PrismaQuery<
-  Model<Permission, 'Permission'>
-> &
-  Prisma.JsonObject
+import { IsBoolean, IsIn, IsJSON, IsOptional, IsString } from 'class-validator';
+import { Actions, Subjects } from '../../auth/auth.constants';
+import { Action, Subject } from '../../entities';
 
 export class CreatePermissionDTO {
   @IsString()
   @IsIn(Subjects)
-  subject!: Subject
+  subject!: Subject;
 
   @IsString()
   @IsIn(Actions)
-  action!: Action
+  action!: Action;
 
   @IsOptional()
   @IsBoolean()
-  inverted?: boolean
+  inverted?: boolean;
 
   @IsOptional()
   @IsString()
-  reason?: string
+  reason?: string;
 
   @IsOptional()
   @IsJSON()
-  conditions?: PermissionConditions
+  conditions?: Record<string, any>;
 
-  @IsOptional()
   @IsString()
-  roleName?: string
+  role!: string;
 }

@@ -1,32 +1,37 @@
+import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import type { Prisma } from '@prisma/client';
-import { PrismaService } from '../common/database/prisma.service';
+import { Form } from '../entities';
 import { CreateFormDTO, UpdateFormDTO } from './dto';
 
 @Injectable()
 export class FormService {
-  constructor(private readonly prisma: PrismaService) {}
+  public readonly repository;
 
-  create(createFormDTO: CreateFormDTO) {
-    return this.prisma.form.create({ data: createFormDTO });
+  constructor(private readonly em: SqlEntityManager) {
+    this.repository = em.getRepository(Form);
   }
 
-  findOne(id: number) {
-    return this.prisma.form.findUniqueOrThrow({
-      where: { id },
-      include: { fields: true },
-    });
+  public async create(createFormDTO: CreateFormDTO) {
+    const form = this.em.create(Form, createFormDTO);
+
+    await this.em.persist(form).flush();
+
+    return form;
   }
 
-  findAll(data: Prisma.FormFindManyArgs = {}) {
-    return this.prisma.form.findMany(data);
+  public async update(id: number, updateFormDTO: UpdateFormDTO) {
+    const form = await this.em.findOneOrFail(Form, id);
+
+    this.em.assign(form, updateFormDTO);
+
+    await this.em.persist(form).flush();
+
+    return form;
   }
 
-  update(id: number, updateFormDTO: UpdateFormDTO) {
-    return this.prisma.form.update({ where: { id }, data: updateFormDTO });
-  }
+  public delete(id: number) {
+    const form = this.em.findOneOrFail(Form, id, { populate: true });
 
-  delete(id: number) {
-    return this.prisma.form.delete({ where: { id } });
+    return this.em.removeAndFlush(form);
   }
 }

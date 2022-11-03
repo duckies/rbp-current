@@ -41,7 +41,7 @@ export class ConfigModule {
 
   private static loadEnvFile(options: ConfigModuleOptions): Dictionary {
     const envFileName = options.envFileName || '.env';
-    const envFilePath = resolve(__dirname, '../../', envFileName);
+    const envFilePath = resolve(process.cwd(), envFileName);
 
     if (fs.existsSync(envFilePath)) {
       return dotenv.parse(fs.readFileSync(envFilePath));

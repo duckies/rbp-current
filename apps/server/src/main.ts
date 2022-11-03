@@ -7,15 +7,13 @@ import {
   NotBeforeExceptionFilter,
   TokenExpiredExceptionFilter,
 } from './auth/exception-filters';
-import { PrismaService } from './common/database/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(EnvironmentVariables);
 
-  // Ensures nest shuts down when prisma receives a shutdown signal.
-  const prisma = app.get(PrismaService);
-  await prisma.enableShutdownHooks(app);
+  // Ensures database connections are closed on shutdown.
+  app.enableShutdownHooks();
 
   app.useGlobalFilters(
     new NotBeforeExceptionFilter(),

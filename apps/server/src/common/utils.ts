@@ -1,6 +1,5 @@
 /**
- * Funnels concurrent execution of the same function
- * to the same promise.
+ * Funnels concurrent execution of a function to a single promise.
  */
 export function funnel<T, F extends (...args: any[]) => Promise<T>>(fn: F): F {
   let promise: Promise<T> | undefined;

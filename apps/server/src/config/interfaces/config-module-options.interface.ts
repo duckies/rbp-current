@@ -1,4 +1,4 @@
-import { Constructor } from '../../common/interfaces'
+import { Constructor } from '../../common/interfaces';
 
 export interface ConfigModuleOptions {
   /**

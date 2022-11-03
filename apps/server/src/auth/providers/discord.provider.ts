@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common'
-import type { Prisma } from '@prisma/client'
-import got from 'got-cjs'
-import { DiscordConfig } from '../../app.config'
-import { PrismaService } from '../../common/database/prisma.service'
-import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface'
-import { DiscordUser } from '../interfaces/discord-user.interface'
+import { SqlEntityManager } from '@mikro-orm/knex';
+import { Injectable } from '@nestjs/common';
+import got from 'got-cjs';
+import { DiscordConfig } from '../../app.config';
+import { Identity, Provider, User } from '../../entities';
+import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface';
+import { DiscordUser } from '../interfaces/discord-user.interface';
 
 @Injectable()
 export class DiscordProvider {
   constructor(
     private readonly config: DiscordConfig,
-    private readonly prisma: PrismaService
-  ) {}
+    private readonly em: SqlEntityManager,
+  ) { }
 
   async getProfile(accessToken: string) {
     return got.get<DiscordUser>('https://discord.com/api/users/@me', {
@@ -19,7 +19,7 @@ export class DiscordProvider {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    })
+    });
   }
 
   async authorize(code: string) {
@@ -34,49 +34,45 @@ export class DiscordProvider {
           code,
           redirect_uri: this.config.REDIRECT,
         },
-      }
-    )
+      },
+    );
   }
 
   async handleCallback(code: string) {
-    const { body: tokens } = await this.authorize(code)
-    const { body: profile } = await this.getProfile(tokens.access_token)
+    const { body: tokens } = await this.authorize(code);
+    const { body: profile } = await this.getProfile(tokens.access_token);
 
-    const properties: Omit<Prisma.IdentityCreateInput, 'user'> = {
+    const identity = await this.em.findOne(Identity, [profile.id, Provider.Discord], { populate: ['user'] });
+
+    if (!identity) {
+      const user = this.em.create(User, {
+        identities: [{
+          provider: Provider.Discord,
+          id: profile.id,
+          identifier: `${profile.username}#${profile.discriminator}`,
+          avatar: profile.avatar,
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+          expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
+        }],
+      });
+
+      await this.em.persist(user).flush();
+
+      return user;
+    }
+
+    this.em.assign(identity, {
       id: profile.id,
-      provider: 'Discord',
       identifier: `${profile.username}#${profile.discriminator}`,
       avatar: profile.avatar,
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
       expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
-    }
+    });
 
-    const identity = await this.prisma.identity.upsert({
-      where: {
-        id_provider: {
-          id: profile.id,
-          provider: 'Discord',
-        },
-      },
-      create: {
-        ...properties,
-        user: {
-          create: {},
-        },
-      },
-      update: {
-        ...properties,
-      },
-      include: {
-        user: {
-          include: {
-            identities: true,
-          },
-        },
-      },
-    })
+    await this.em.flush();
 
-    return identity.user
+    return identity.user;
   }
 }

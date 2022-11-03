@@ -1,51 +1,20 @@
+import { SqlEntityManager } from '@mikro-orm/mysql';
 import { Injectable } from '@nestjs/common';
-import type { Prisma } from '@prisma/client';
-import { PrismaService } from '../common/database/prisma.service';
+import { User } from '../entities';
 
 @Injectable()
 export class UserService {
   public readonly repository;
 
-  constructor(public prisma: PrismaService) {
-    this.repository = prisma.user;
+  constructor(private readonly em: SqlEntityManager) {
+    this.repository = em.getRepository(User);
   }
 
-  async create(data: Prisma.UserCreateArgs) {
-    return this.prisma.user.create(data);
-  }
-
-  async findOne(data: Prisma.UserFindUniqueOrThrowArgs) {
-    return this.prisma.user.findUniqueOrThrow({
-      ...data,
-      include: {
-        identities: true,
-        roles: {
-          include: {
-            permissions: true,
-          },
-        },
-      },
+  public async getPermissions(id: number) {
+    const user = await this.repository.findOneOrFail(id, {
+      populate: ['roles.permissions'],
     });
-  }
 
-  async findAll(data: Prisma.UserFindManyArgs = {}) {
-    return this.prisma.user.findMany(data);
-  }
-
-  async getPermissions(id: number) {
-    return this.prisma.permission.findMany({
-      where: {
-        role: {
-          every: {
-            user: {
-              every: {
-                id,
-              },
-            },
-          },
-        },
-      },
-      include: { role: true },
-    });
+    return user.roles.getItems().flatMap(role => role.permissions.getItems());
   }
 }

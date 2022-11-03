@@ -1,7 +1,8 @@
-import { Prisma } from '@prisma/client'
-
-export type Responses = Record<number, unknown> & Prisma.InputJsonObject
+import type { Dictionary } from '@rbp/shared';
+import { IsNotEmptyObject, IsObject } from 'class-validator';
 
 export class CreateFormSubmissionDTO {
-  responses!: Responses
+  @IsObject()
+  @IsNotEmptyObject()
+  responses!: Record<string, unknown>;
 }

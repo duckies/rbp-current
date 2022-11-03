@@ -1,4 +1,3 @@
-import { FieldType } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsDefined,
@@ -9,7 +8,8 @@ import {
   Min,
   ValidateNested,
 } from 'class-validator';
-import { BaseOptionsDTO, CharacterFieldOptionsDTO, FieldOptionsDTO, SelectFieldOptionsDTO, TextFieldOptionsDTO } from './field-options.dto';
+import { FieldType } from '../../entities';
+import { CreateCharacterFieldOptionsDTO, CreateFieldOptionsDTO, CreateSelectFieldOptionsDTO, CreateTextFieldOptionsDTO } from './create-field-options.dto';
 
 export class CreateFormFieldDTO {
   @IsString()
@@ -31,15 +31,15 @@ export class CreateFormFieldDTO {
   @Type(({ object }: any) => {
     switch (object.type) {
       case FieldType.Text:
-        return TextFieldOptionsDTO;
+        return CreateTextFieldOptionsDTO;
       case FieldType.Select:
-        return SelectFieldOptionsDTO;
+        return CreateSelectFieldOptionsDTO;
       case FieldType.Character:
-        return CharacterFieldOptionsDTO;
+        return CreateCharacterFieldOptionsDTO;
       default:
-        return BaseOptionsDTO;
+        throw new Error(`Unknown field type: ${object.type}`);
     }
   })
-  options!: FieldOptionsDTO;
+  options!: CreateFieldOptionsDTO;
 }
 

@@ -1,30 +1,38 @@
+import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PrismaService } from '../common/database/prisma.service';
+import { Slide } from '../entities';
+import { CreateSlideDTO } from './dto/create-slide.dto';
+import { UpdateSlideDTO } from './dto/update-slide.dto';
 
 @Injectable()
 export class SlideService {
-  constructor(private readonly prisma: PrismaService) {}
+  public readonly repository;
 
-  create(data: Prisma.SlideCreateInput) {
-    return this.prisma.slide.create({ data });
+  constructor(private readonly em: SqlEntityManager) {
+    this.repository = em.getRepository(Slide);
   }
 
-  findOne(where: Prisma.SlideWhereInput) {
-    return this.prisma.slide.findFirstOrThrow({
-      where,
-    });
+  public async create(createSlideDTO: CreateSlideDTO) {
+    const slide = this.repository.create(createSlideDTO);
+
+    await this.em.persist(slide).flush();
+
+    return slide;
   }
 
-  findAll() {
-    return this.prisma.slide.findMany();
+  public async update(id: number, updateSlideDTO: UpdateSlideDTO) {
+    const slide = await this.repository.findOneOrFail(id);
+
+    this.repository.assign(slide, updateSlideDTO);
+
+    await this.repository.flush();
+
+    return slide;
   }
 
-  update(data: Prisma.SlideUpdateArgs) {
-    return this.prisma.slide.update(data);
-  }
+  public async delete(id: number) {
+    const slide = await this.repository.findOneOrFail(id);
 
-  remove(where: Prisma.SlideWhereUniqueInput) {
-    return this.prisma.slide.delete({ where });
+    return this.repository.remove(slide).flush();
   }
 }

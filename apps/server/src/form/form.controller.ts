@@ -14,7 +14,7 @@ import { CreateFormDTO, UpdateFormDTO } from './dto';
 
 @Controller('form')
 export class FormController {
-  constructor(private readonly formService: FormService) {}
+  constructor(private readonly formService: FormService) { }
 
   @Post()
   create(@Body() createFormDTO: CreateFormDTO) {
@@ -23,14 +23,14 @@ export class FormController {
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.formService.findOne(id);
+    return this.formService.repository.findOneOrFail(id);
   }
 
   @Get()
   findAll(@Query('take') take?: number, @Query('skip') skip?: number) {
-    return this.formService.findAll({
-      take: isNumber(take) ? take : undefined,
-      skip: isNumber(skip) ? skip : undefined,
+    return this.formService.repository.findAll({
+      limit: isNumber(take) ? take : undefined,
+      offset: isNumber(skip) ? skip : undefined,
     });
   }
 

@@ -1,32 +1,31 @@
-import { Action, Subject } from '@prisma/client'
-import { IsBoolean, IsIn, IsJSON, IsOptional, IsString } from 'class-validator'
-import { Actions, Subjects } from '../../auth/auth.constants'
-import { PermissionConditions } from './create-permission.dto'
+import { IsBoolean, IsIn, IsJSON, IsOptional, IsString } from 'class-validator';
+import { Actions, Subjects } from '../../auth/auth.constants';
+import { Action, Subject } from '../../entities';
 
 export class UpdatePermissionDTO {
   @IsOptional()
   @IsString()
   @IsIn(Subjects)
-  subject?: Subject
+  subject?: Subject;
 
   @IsOptional()
   @IsString()
   @IsIn(Actions)
-  action?: Action
+  action?: Action;
 
   @IsOptional()
   @IsBoolean()
-  inverted?: boolean
+  inverted?: boolean;
 
   @IsOptional()
   @IsString()
-  reason?: string
+  reason?: string;
 
   @IsOptional()
   @IsJSON()
-  conditions?: PermissionConditions
+  conditions?: Record<string, any>;
 
   @IsOptional()
   @IsString()
-  roleName?: string
+  role?: string;
 }

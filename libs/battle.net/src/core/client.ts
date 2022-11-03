@@ -4,7 +4,7 @@ import type {
   ClientDefaults,
   ClientOptions,
 } from './interfaces/client-options.interface';
-import type { Resource } from './interfaces/resource-options.interface';
+import type { ResourceRequest } from './interfaces/resource-options.interface';
 import type { Locale } from './regions';
 import { RegionalLocalesMap } from './regions';
 
@@ -70,7 +70,7 @@ export abstract class BattleNetClient {
     }
   }
 
-  public get<T = unknown>({ path, namespace, params, ...options }: Resource): CancelableRequest<Response<T>> {
+  public get<T = unknown>({ path, namespace, params, ...options }: ResourceRequest): CancelableRequest<Response<T>> {
     const region = options.advanced?.region || this.defaults.region;
     const locale = this.getRegionLocaleOrDefault(options.advanced?.locale);
 

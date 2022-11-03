@@ -1,31 +1,32 @@
-import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
-import { isArray } from '@rbp/shared'
-import { Abilities, Action, Subject } from '../ability-factory.service'
-import { AUTH_ABILITY_KEY } from '../auth.constants'
-import { JWTGuard } from '../guards'
-import { PermissionGuard } from '../guards/permission.guard'
+import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common';
+import { isArray } from '@rbp/shared';
+import { Action, Actions, Subject, Subjects } from '../../entities';
+import { Abilities } from '../ability-factory.service';
+import { AUTH_ABILITY_KEY } from '../auth.constants';
+import { JWTGuard } from '../guards';
+import { PermissionGuard } from '../guards/permission.guard';
 
-export function Auth(): MethodDecorator
-export function Auth(action: Action, subject: Subject): MethodDecorator
-export function Auth(abilities: Abilities[]): MethodDecorator
+export function Auth(): MethodDecorator;
+export function Auth(action: Actions, subject: Subjects): MethodDecorator;
+export function Auth(abilities: Abilities[]): MethodDecorator;
 export function Auth(
-  actionOrAbilities?: Action | Abilities[],
-  subject?: Subject
+  actionOrAbilities?: Actions | Abilities[],
+  subject?: Subjects,
 ): MethodDecorator {
   if (
-    !actionOrAbilities ||
-    (isArray(actionOrAbilities) && actionOrAbilities.length === 0)
+    !actionOrAbilities
+    || (isArray(actionOrAbilities) && actionOrAbilities.length === 0)
   ) {
-    return UseGuards(JWTGuard)
+    return UseGuards(JWTGuard);
   }
 
   const abilities: Abilities[] = Array.isArray(actionOrAbilities)
     ? actionOrAbilities
-    : [[actionOrAbilities, subject!]]
+    : [[actionOrAbilities, subject!]];
 
   return applyDecorators(
     UseGuards(JWTGuard),
     SetMetadata(AUTH_ABILITY_KEY, abilities),
-    UseGuards(PermissionGuard)
-  )
+    UseGuards(PermissionGuard),
+  );
 }

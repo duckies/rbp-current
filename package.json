@@ -26,11 +26,15 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack"
-      ]
+      ],
+      "allowedVersions": {
+        "vite": "3.2.1"
+      }
     }
   },
   "prettier": {
     "singleQuote": true,
-    "semi": true
+    "semi": true,
+    "trailingComma": "all"
   }
 }

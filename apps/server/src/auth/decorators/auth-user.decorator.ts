@@ -1,6 +1,5 @@
-import { ExecutionContext, createParamDecorator } from '@nestjs/common'
-import { User } from '@prisma/client'
-import { Request } from 'express'
+import { ExecutionContext, createParamDecorator } from '@nestjs/common';
+import { RequestWithAuth } from '../guards';
 
 /**
  * Parameter decorator for retrieving the currently
@@ -9,7 +8,7 @@ import { Request } from 'express'
  */
 export const AuthUser = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest<Request>()
-    return (request as Request & { user: User }).user
+    const request = ctx.switchToHttp().getRequest<RequestWithAuth>();
+    return request.user;
   },
-)
+);

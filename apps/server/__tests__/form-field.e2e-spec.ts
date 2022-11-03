@@ -3,7 +3,6 @@ import { Test } from '@nestjs/testing';
 import { IsString } from 'class-validator';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { DatabaseModule } from '../src/common/database/database.module';
 import { ConfigModule } from '../src/config/config.module';
 import { FormFieldModule } from '../src/form-field/form-field.module';
 
@@ -24,7 +23,7 @@ describe('FormField (e2e)', () => {
             schema: FormFieldVariables,
             envFileName: '.env.test',
           }),
-          DatabaseModule,
+          // OrmModule,
           FormFieldModule,
         ],
       }).compile();

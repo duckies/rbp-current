@@ -1,8 +1,21 @@
-import { Module } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
+import { WoWClient } from '@rbp/battle.net';
 import { HttpModule } from '../common/http/http.module';
 import { RateLimiterModule } from '../common/rate-limiter/rate-limiter.module';
 import { BlizzardController } from './blizzard.controller';
 import { BlizzardService } from './blizzard.service';
+
+const clientProvider: Provider = {
+  provide: WoWClient,
+  useValue: new WoWClient({
+    clientId: process.env.BLIZZARD__ID!,
+    clientSecret: process.env.BLIZZARD__SECRET!,
+    defaults: {
+      region: 'us',
+      locale: 'en_US',
+    },
+  }),
+};
 
 @Module({
   imports: [
@@ -15,7 +28,7 @@ import { BlizzardService } from './blizzard.service';
     }),
   ],
   controllers: [BlizzardController],
-  providers: [BlizzardService],
-  exports: [BlizzardService],
+  providers: [BlizzardService, clientProvider],
+  exports: [BlizzardService, clientProvider],
 })
 export class BlizzardModule { }

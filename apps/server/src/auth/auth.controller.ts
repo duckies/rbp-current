@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Provider } from '../entities';
 import { AuthService } from './auth.service';
-import { Provider } from './interfaces/provider.interface';
 
 @Controller()
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Get('callback/:provider')
   async callback(

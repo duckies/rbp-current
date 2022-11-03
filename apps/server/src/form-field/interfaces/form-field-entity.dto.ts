@@ -1,31 +1,31 @@
-import type { FieldType, FormField } from '@prisma/client';
-import { BaseOptionsDTO, CharacterFieldOptionsDTO, ComboboxFieldOptionsDTO, SelectFieldOptionsDTO, TextFieldOptionsDTO } from '../dto/field-options.dto';
+import { FieldType, FormField } from '../../entities';
+import { BaseCreateOptionsDTO, CreateCharacterFieldOptionsDTO, CreateComboboxFieldOptionsDTO, CreateSelectFieldOptionsDTO, CreateTextFieldOptionsDTO } from '../dto/create-field-options.dto';
 
 type FormFieldEntityBaseDTO = Omit<FormField, 'options'>;
 
 export type TextFieldEntityDTO = FormFieldEntityBaseDTO & {
   type: typeof FieldType.Text
-  options?: TextFieldOptionsDTO
+  options?: CreateTextFieldOptionsDTO
 };
 
 export type CheckboxFormFieldEntity = FormFieldEntityBaseDTO & {
   type: typeof FieldType.Checkbox
-  options?: BaseOptionsDTO
+  options?: BaseCreateOptionsDTO
 };
 
 export type SelectFormFieldEntity = FormFieldEntityBaseDTO & {
   type: typeof FieldType.Select
-  options: SelectFieldOptionsDTO
+  options: CreateSelectFieldOptionsDTO
 };
 
 export type ComboboxFormFieldEntity = FormFieldEntityBaseDTO & {
   type: typeof FieldType.Combobox
-  options: ComboboxFieldOptionsDTO
+  options: CreateComboboxFieldOptionsDTO
 };
 
 export type CharacterFieldEntity = FormFieldEntityBaseDTO & {
   type: typeof FieldType.Character
-  options?: CharacterFieldOptionsDTO
+  options?: CreateCharacterFieldOptionsDTO
 };
 
 export type FormFieldEntityDTO =

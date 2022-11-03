@@ -8,7 +8,7 @@ export interface AdvancedOptions {
   ifModifiedSince?: Date
 }
 
-export interface Resource<T = never> {
+export interface ResourceRequest<T = never> {
   path: string
   namespace?: Namespace
   params?: T
