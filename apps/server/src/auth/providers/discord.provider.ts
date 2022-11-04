@@ -2,7 +2,8 @@ import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
 import got from 'got-cjs';
 import { DiscordConfig } from '../../app.config';
-import { Identity, Provider, User } from '../../entities';
+import { User } from '../../user/user.entity';
+import { Identity, Provider } from '../identity/identity.entity';
 import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface';
 import { DiscordUser } from '../interfaces/discord-user.interface';
 

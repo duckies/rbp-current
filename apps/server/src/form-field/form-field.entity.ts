@@ -1,4 +1,10 @@
-import { Entity, Enum, ManyToOne, OptionalProps, Property } from '@mikro-orm/core';
+import {
+  Entity,
+  Enum,
+  ManyToOne,
+  OptionalProps,
+  Property,
+} from '@mikro-orm/core';
 import { RealmSlug, RealmSlugs, Region, Regions } from '@rbp/battle.net';
 import {
   isArray,
@@ -9,13 +15,12 @@ import {
   isStringArray,
 } from '@rbp/shared';
 import { v4 as uuidv4 } from 'uuid';
+import { Form } from '../form/form.entity';
 import {
-  CreateCharacterFieldOptionsDTO,
-  CreateComboboxFieldOptionsDTO,
-  CreateFieldOptionsDTO,
+  CreateCharacterFieldOptionsDTO, CreateFieldOptionsDTO,
   CreateRadioFieldOptionsDTO,
-} from '../form-field/dto/create-field-options.dto';
-import { Form } from './form.entity';
+} from './dto/create-field-options.dto';
+import { FieldDiscriminator } from './interfaces/form-field.interface';
 
 export enum FieldType {
   Text = 'text',
@@ -46,7 +51,7 @@ export class FormField {
   @Property({ default: false })
   required?: boolean;
 
-  @Property({ nullable: true, type: 'jsonb' })
+  @Property({ nullable: true, type: 'json' })
   options?: CreateFieldOptionsDTO;
 
   @Property({ type: 'smallint' })
@@ -67,27 +72,31 @@ export class FormField {
    * 😠 I'm not smart enough to find a reasonable type discriminator for this.
    */
   public isAnswerValid(answer: unknown): boolean {
-    switch (this.type) {
+    // 🤔 Is there some better way to describe the class as a discriminated union?
+    const field = this as FieldDiscriminator;
+
+    switch (field.type) {
       case FieldType.Text:
-        return isString(answer);
+        return isString(answer) && answer.length > 0;
       case FieldType.Number:
         return isNumber(answer);
-      case FieldType.Checkbox:
+      case FieldType.Checkbox: {
+        if (field.options?.noFalse) {
+          return answer === true;
+        }
+
         return isBoolean(answer);
+      }
       case FieldType.Radio:
         return (
           isString(answer)
-          && (this.options as CreateRadioFieldOptionsDTO).items.some(
-            i => i.value === answer,
-          )
+          && field.options.items.some(i => i.value === answer)
         );
-      case FieldType.Select:
+      case FieldType.Select: {
         if (isString(answer)) {
-          return (this.options as CreateRadioFieldOptionsDTO).items.some(
-            i => i.value === answer,
-          );
+          return field.options.items.some(i => i.value === answer);
         }
-        else if (isArray(answer)) {
+        else if (isArray(answer) && answer.length && field.options.multiple) {
           return answer.every(a =>
             (this.options as CreateRadioFieldOptionsDTO).items.some(
               i => i.value === a,
@@ -95,21 +104,23 @@ export class FormField {
           );
         }
         return false;
+      }
       case FieldType.Character:
-        return this.isCharacterAnswerValid(this.options || {}, answer);
+        return this.isCharacterAnswerValid(field.options || {}, answer);
       case FieldType.Combobox: {
-        const options = this.options as CreateComboboxFieldOptionsDTO;
-
         if (isString(answer)) {
           return (
-            options.custom || options.items.some(i => i.value === answer)
+            field.options.custom
+            || field.options.items.some(i => i.value === answer)
           );
         }
         else if (isStringArray(answer)) {
           return (
-            !!options.multiple
-            && (!!options.custom
-              || answer.every(a => options.items.some(i => i.value === a)))
+            !!field.options.multiple
+            && (!!field.options.custom
+              || answer.every(a =>
+                field.options.items.some(i => i.value === a),
+              ))
           );
         }
 
@@ -118,12 +129,20 @@ export class FormField {
     }
   }
 
+  /**
+   * I am unhappy with hacking together object validation instead of using a
+   * library such as `zod`, but I don't want to add another dependency. In theory
+   * I can cobble together something with `class-validator` but it would need
+   * to fetch the fields from the database, which is not ideal.
+   */
   private isValidCharacter(
     answer: unknown,
   ): answer is { name: string; realm: RealmSlug; region: Region; main?: true } {
     return (
       isPOJO(answer)
       && isString(answer.name)
+      && answer.name.length >= 2 && answer.name.length <= 12
+      && !answer.name.includes(' ')
       && RealmSlugs.includes(answer.realm as any)
       && Regions.includes(answer.region as any)
       && (answer.main === undefined || answer.main === true)
@@ -135,6 +154,11 @@ export class FormField {
     answer: unknown,
   ) {
     const answers = isArray(answer) ? answer : [answer];
+
+    // No characters!
+    if (answers.length === 0) {
+      return false;
+    }
 
     // A. Check if multiple characters are allowed.
     if (!options.multiple && answers.length > 1) {

@@ -1,8 +1,9 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { Permission, Role } from '../entities';
+import { Role } from '../role/role.entity';
 import { CreatePermissionDTO } from './dto/create-permission.dto';
 import { UpdatePermissionDTO } from './dto/update-permission.dto';
+import { Permission } from './permission.entity';
 
 @Injectable()
 export class PermissionService {

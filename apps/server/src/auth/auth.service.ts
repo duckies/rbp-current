@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { sign, verify } from 'jsonwebtoken';
 import { EnvironmentVariables } from '../app.config';
-import { Provider } from '../entities';
+import { Provider } from './identity/identity.entity';
 import { BlizzardProvider } from './providers/blizzard.provider';
 import { DiscordProvider } from './providers/discord.provider';
 

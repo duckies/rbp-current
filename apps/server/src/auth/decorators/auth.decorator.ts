@@ -1,6 +1,6 @@
 import { SetMetadata, UseGuards, applyDecorators } from '@nestjs/common';
 import { isArray } from '@rbp/shared';
-import { Action, Actions, Subject, Subjects } from '../../entities';
+import { Actions, Subjects } from '../../permission/permission.entity';
 import { Abilities } from '../ability-factory.service';
 import { AUTH_ABILITY_KEY } from '../auth.constants';
 import { JWTGuard } from '../guards';

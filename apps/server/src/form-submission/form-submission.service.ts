@@ -1,8 +1,8 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { BadRequestException, GoneException, Injectable } from '@nestjs/common';
-import { Form } from '../entities';
-import { FormSubmission } from '../entities/form-submission.entity';
+import { Form } from '../form/form.entity';
 import { CreateFormSubmissionDTO } from './dto/create-form-submission.dto';
+import { FormSubmission } from './form-submission.entity';
 
 @Injectable()
 export class FormSubmissionService {

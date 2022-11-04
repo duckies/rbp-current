@@ -1,6 +1,7 @@
 import { Ability } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { Actions, Subjects, User } from '../entities';
+import { Actions, Subjects } from '../permission/permission.entity';
+import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 
 export type Abilities = [Actions, Subjects];

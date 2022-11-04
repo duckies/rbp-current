@@ -1,5 +1,5 @@
 import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { FormField } from './form-field.entity';
+import { FormField } from '../form-field/form-field.entity';
 
 @Entity()
 export class Form {

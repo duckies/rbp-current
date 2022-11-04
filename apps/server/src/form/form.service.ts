@@ -1,7 +1,7 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { Form } from '../entities';
 import { CreateFormDTO, UpdateFormDTO } from './dto';
+import { Form } from './form.entity';
 
 @Injectable()
 export class FormService {

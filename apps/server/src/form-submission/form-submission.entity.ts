@@ -1,5 +1,5 @@
 import { Entity, ManyToOne, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
-import { Form } from './form.entity';
+import { Form } from '../form/form.entity';
 
 @Entity()
 export class FormSubmission {

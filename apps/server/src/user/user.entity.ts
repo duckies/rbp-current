@@ -1,6 +1,6 @@
 import { Collection, Entity, ManyToMany, OneToMany, PrimaryKey } from '@mikro-orm/core';
-import { Identity } from './identity.entity';
-import { Role } from './role.entity';
+import { Identity } from '../auth/identity/identity.entity';
+import { Role } from '../role/role.entity';
 
 @Entity()
 export class User {

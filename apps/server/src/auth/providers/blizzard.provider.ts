@@ -2,7 +2,6 @@ import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
 import { BlizzardConfig } from '../../app.config';
 import { HttpService } from '../../common/http/http.service';
-import { User } from '../../entities';
 import { BlizzardTokenResponse } from '../interfaces/blizzard-token-response.interface';
 import { BlizzardUser } from '../interfaces/blizzard-user.interface';
 

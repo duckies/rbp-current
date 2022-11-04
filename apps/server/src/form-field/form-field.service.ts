@@ -1,8 +1,9 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Form, FormField } from '../entities';
+import { Form } from '../form/form.entity';
 import { CreateFormFieldDTO } from './dto/create-form-field.dto';
 import { UpdateFormFieldDTO } from './dto/update-form-field.dto';
+import { FormField } from './form-field.entity';
 
 @Injectable()
 export class FormFieldService {

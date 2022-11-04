@@ -1,4 +1,4 @@
-import { Action, Subject } from '../entities';
+import { Action, Subject } from '../permission/permission.entity';
 
 export const AUTH_ABILITY_KEY = Symbol('Auth Abilities');
 

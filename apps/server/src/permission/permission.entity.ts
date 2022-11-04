@@ -1,5 +1,5 @@
 import { Entity, Enum, ManyToOne, PrimaryKey, Property, Unique } from '@mikro-orm/core';
-import { Role } from './role.entity';
+import { Role } from '../role/role.entity';
 
 export enum Subject {
   User = 'user',

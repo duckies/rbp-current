@@ -1,7 +1,7 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { Role } from '../entities';
 import { CreateRoleDTO } from './dto/create-role.dto';
+import { Role } from './role.entity';
 
 @Injectable()
 export class RoleService {

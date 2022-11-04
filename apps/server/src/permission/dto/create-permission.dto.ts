@@ -1,6 +1,6 @@
 import { IsBoolean, IsIn, IsJSON, IsOptional, IsString } from 'class-validator';
 import { Actions, Subjects } from '../../auth/auth.constants';
-import { Action, Subject } from '../../entities';
+import { Action, Subject } from '../permission.entity';
 
 export class CreatePermissionDTO {
   @IsString()

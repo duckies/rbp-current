@@ -1,8 +1,8 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { Slide } from '../entities';
 import { CreateSlideDTO } from './dto/create-slide.dto';
 import { UpdateSlideDTO } from './dto/update-slide.dto';
+import { Slide } from './slide.entity';
 
 @Injectable()
 export class SlideService {

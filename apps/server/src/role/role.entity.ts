@@ -1,6 +1,6 @@
 import { Collection, Entity, ManyToMany, OneToMany, PrimaryKeyType, Property } from '@mikro-orm/core';
-import { Permission } from './permission.entity';
-import { User } from './user.entity';
+import { Permission } from '../permission/permission.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Role {

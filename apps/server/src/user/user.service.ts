@@ -1,6 +1,6 @@
 import { SqlEntityManager } from '@mikro-orm/mysql';
 import { Injectable } from '@nestjs/common';
-import { User } from '../entities';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {

@@ -7,7 +7,7 @@ import {
   IsString,
   Min, ValidateNested,
 } from 'class-validator';
-import { FieldType } from '../../entities';
+import { FieldType } from '../form-field.entity';
 import { UpdateCharacterFieldOptionsDTO, UpdateCheckboxFieldOptionsDTO, UpdateComboboxFieldOptionsDTO, UpdateFieldOptionsDTO, UpdateNumberFieldOptionsDTO, UpdateRadioFieldOptionsDTO, UpdateSelectFieldOptionsDTO, UpdateTextFieldOptionsDTO } from './update-field-options.dto';
 
 export class UpdateFormFieldDTO {

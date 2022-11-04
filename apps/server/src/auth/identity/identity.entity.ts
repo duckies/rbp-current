@@ -1,5 +1,5 @@
 import { Entity, Enum, ManyToOne, PrimaryKeyType, Property } from '@mikro-orm/core';
-import { User } from './user.entity';
+import { User } from '../../user/user.entity';
 
 export enum Provider {
   BattleNet = 'battle.net',

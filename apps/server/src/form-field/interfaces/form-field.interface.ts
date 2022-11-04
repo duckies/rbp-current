@@ -1,32 +1,54 @@
-import { FieldType } from '../../entities';
+import {
+  CreateCharacterFieldOptionsDTO,
+  CreateCheckboxFieldOptionsDTO,
+  CreateComboboxFieldOptionsDTO,
+  CreateNumberFieldOptionsDTO,
+  CreateRadioFieldOptionsDTO,
+  CreateSelectFieldOptionsDTO,
+  CreateTextFieldOptionsDTO,
+} from '../dto/create-field-options.dto';
+import { FieldType } from '../form-field.entity';
 
-export interface FieldBase {
-  type: FieldType
-}
-
-export interface TextField extends FieldBase {
+export interface TextField {
   type: FieldType.Text
-  options: {
-    minLength?: number
-    maxLength?: number
-  }
+  options?: CreateTextFieldOptionsDTO
 }
 
-export interface RadioField extends FieldBase {
+export interface NumberField {
+  type: FieldType.Number
+  options?: CreateNumberFieldOptionsDTO
+}
+
+export interface RadioField {
   type: FieldType.Radio
-  options: {
-    items: { label: string; value: string }[]
-  }
+  options: CreateRadioFieldOptionsDTO
 }
 
-export interface SelectField extends FieldBase {
+export interface SelectField {
   type: FieldType.Select
-  options: {
-    multiple?: boolean
-    items: { label: string; value: string }[]
-  }
+  options: CreateSelectFieldOptionsDTO
 }
 
-export interface CheckboxField extends FieldBase {
-  type: FieldType.Checkbox
+export interface ComboboxField {
+  type: FieldType.Combobox
+  options: CreateComboboxFieldOptionsDTO
 }
+
+export interface CheckboxField {
+  type: FieldType.Checkbox
+  options?: CreateCheckboxFieldOptionsDTO
+}
+
+export interface CharacterField {
+  type: FieldType.Character
+  options?: CreateCharacterFieldOptionsDTO
+}
+
+export type FieldDiscriminator =
+  | TextField
+  | NumberField
+  | RadioField
+  | SelectField
+  | ComboboxField
+  | CheckboxField
+  | CharacterField;
