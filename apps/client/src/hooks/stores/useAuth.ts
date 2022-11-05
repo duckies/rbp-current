@@ -1,15 +1,15 @@
 import type { ParsedUrlQuery } from 'querystring';
-import type { UserDTO } from '@rbp/server';
+import type { User } from '@rbp/server';
 import type { UseMutateFunction } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createContext, createElement, useContext, useMemo } from 'react';
+import { getMe } from 'lib/auth';
 import type { GetServerSidePropsContext, PreviewData } from 'next';
 import nookies from 'nookies';
+import { createContext, createElement, useContext, useMemo } from 'react';
 import { logout } from '../auth';
-import { getMe } from 'lib/auth';
 
 export interface AuthContextValue {
-  user?: UserDTO
+  user?: User
   error: unknown
   status: 'error' | 'success'
   refetch: any
@@ -33,7 +33,7 @@ export function useAuth() {
 }
 
 export interface AuthProviderProps {
-  initialState?: { user?: UserDTO }
+  initialState?: { user?: User }
   children: React.ReactNode
 }
 

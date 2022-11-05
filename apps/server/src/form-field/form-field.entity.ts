@@ -22,15 +22,17 @@ import {
 } from './dto/create-field-options.dto';
 import { FieldDiscriminator } from './interfaces/form-field.interface';
 
-export enum FieldType {
-  Text = 'text',
-  Number = 'number',
-  Checkbox = 'checkbox',
-  Radio = 'radio',
-  Select = 'select',
-  Combobox = 'combobox',
-  Character = 'character',
-}
+export const FieldTypes = [
+  'text',
+  'number',
+  'checkbox',
+  'radio',
+  'select',
+  'combobox',
+  'character',
+] as const;
+
+export type FieldType = typeof FieldTypes[number];
 
 @Entity()
 export class FormField {
@@ -42,7 +44,7 @@ export class FormField {
   @Property()
   label!: string;
 
-  @Enum(() => FieldType)
+  @Enum(() => FieldTypes)
   type!: FieldType;
 
   @Property({ nullable: true })
@@ -76,23 +78,23 @@ export class FormField {
     const field = this as FieldDiscriminator;
 
     switch (field.type) {
-      case FieldType.Text:
+      case 'text':
         return isString(answer) && answer.length > 0;
-      case FieldType.Number:
+      case 'number':
         return isNumber(answer);
-      case FieldType.Checkbox: {
+      case 'checkbox': {
         if (field.options?.noFalse) {
           return answer === true;
         }
 
         return isBoolean(answer);
       }
-      case FieldType.Radio:
+      case 'radio':
         return (
           isString(answer)
           && field.options.items.some(i => i.value === answer)
         );
-      case FieldType.Select: {
+      case 'select': {
         if (isString(answer)) {
           return field.options.items.some(i => i.value === answer);
         }
@@ -105,9 +107,9 @@ export class FormField {
         }
         return false;
       }
-      case FieldType.Character:
+      case 'character':
         return this.isCharacterAnswerValid(field.options || {}, answer);
-      case FieldType.Combobox: {
+      case 'combobox': {
         if (isString(answer)) {
           return (
             field.options.custom

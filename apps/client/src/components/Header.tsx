@@ -1,18 +1,18 @@
-import { useAuth } from '../hooks/stores/useAuth';
-import { Avatar } from './Avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from './Dropdown';
-import { Button } from './Button';
 import { login } from 'hooks/auth';
 import DiscordLogo from 'components/icons/Discord';
 import Logo from 'components/icons/Logo';
 import Link from 'components/Link';
 import NavLink from 'components/NavLink';
 import Container from 'components/Container';
+import { useAuth } from '../hooks/stores/useAuth';
+import { Button } from './Button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './Dropdown';
+import { Avatar } from './Avatar';
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -57,7 +57,7 @@ export default function Header() {
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent sideOffset={5} collisionPadding={5}>
-                    <DropdownMenuItem onClick={() => logout()}>
+                    <DropdownMenuItem>
                       Logout
                     </DropdownMenuItem>
                     <DropdownMenuItem>
@@ -70,7 +70,8 @@ export default function Header() {
               <Button variant="outline" onClick={login}>
                 Login
               </Button>
-            )}
+              )
+            }
         </div>
       </Container>
     </header>

@@ -1,72 +1,72 @@
-import { parseCookies } from 'nookies';
-import type { GetServerSidePropsContext } from 'next';
 import { isString } from '@rbp/shared';
 import config from 'lib/config';
 
-export type RequestOptions = RequestInit & {
-  context?: GetServerSidePropsContext
-  /**
-   * If true, the request will be made with the user's token cookie.
-   */
-  authenticate?: boolean
-};
+type RequestOptions = RequestInit & { bodyOnly?: boolean };
 
-export type RequestMethodOptions = Omit<RequestOptions, 'method'>;
+type OptionsOfUnknownResponseBody = RequestInit & { bodyOnly?: false };
+type OptionsOfJSONResponseBody = RequestInit & { bodyOnly: true };
 
-export async function $fetch<T = unknown>(
-  url: URL | string,
+type JSONResponseBodyHelperOptions = Omit<
+  OptionsOfJSONResponseBody,
+  'method' | 'bodyOnly'
+>;
+
+interface FetchFunction {
+  (
+    url: string | URL,
+    options?: OptionsOfUnknownResponseBody,
+  ): Promise<Response>
+  <T>(url: string | URL, options?: OptionsOfJSONResponseBody): Promise<T>
+}
+
+export const $fetch: FetchFunction = async <T>(
+  url: string | URL,
   options: RequestOptions = {},
-) {
-  // TODO: Where do we check if the user is authenticated?
-  if (options.authenticate) {
-    const { token } = parseCookies(options.context);
-
-    if (token) {
-      options.headers = {
-        ...options.headers,
-        Authorization: `Bearer ${token}`,
-      };
-    }
-  }
-
+) => {
   if (isString(url) && (url.startsWith('/') || !url.startsWith('http'))) {
     url = new URL(url, config.API_URL).toString();
   }
 
-  const response = await fetch(url, options);
-  const data = await response.json();
+  const pendingResponse = fetch(url, options);
 
-  if (!response.ok) {
-    throw data;
+  if (options.bodyOnly) {
+    const response = await pendingResponse;
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+
+    return data as T;
   }
 
-  return data as Promise<T>;
-}
+  return pendingResponse;
+};
 
-export function $get<T = unknown>(
+export async function $get<T>(
   url: string | URL,
-  options: RequestMethodOptions = {},
+  options: JSONResponseBodyHelperOptions = {},
 ) {
-  return $fetch<T>(url, options);
+  return $fetch<T>(url, { ...options, method: 'GET', bodyOnly: true });
 }
 
-export function $post<T = unknown>(
+export function $post<T>(
   url: string | URL,
-  options: RequestMethodOptions = {},
+  options: JSONResponseBodyHelperOptions = {},
 ) {
-  return $fetch<T>(url, { ...options, method: 'POST' });
+  return $fetch<T>(url, { ...options, method: 'POST', bodyOnly: true });
 }
 
-export function $patch<T = unknown>(
+export function $patch<T>(
   url: string | URL,
-  options: RequestMethodOptions = {},
+  options: JSONResponseBodyHelperOptions = {},
 ) {
-  return $fetch<T>(url, { ...options, method: 'PATCH' });
+  return $fetch<T>(url, { ...options, method: 'PATCH', bodyOnly: true });
 }
 
-export function $delete<T = unknown>(
+export function $delete<T>(
   url: string,
-  options: RequestMethodOptions = {},
+  options: JSONResponseBodyHelperOptions = {},
 ) {
-  return $fetch<T>(url, { ...options, method: 'DELETE' });
+  return $fetch<T>(url, { ...options, method: 'DELETE', bodyOnly: true });
 }

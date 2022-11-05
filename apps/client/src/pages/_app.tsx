@@ -1,25 +1,24 @@
-import type { UserDTO } from '@rbp/server';
+import '@master/css';
+import type { User } from '@rbp/server';
 import type { DehydratedState } from '@tanstack/react-query';
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import type { AppProps } from 'next/app';
-import 'styles/global.css';
-import '@master/css';
 import 'components/common/LoadingBar/loading-bar.css';
+import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
 import { SSRProvider } from 'react-aria';
-import { AuthProvider } from '../hooks/stores/useAuth';
+import 'styles/global.css';
 import 'styles/master.css';
+import { AuthProvider } from '../hooks/stores/useAuth';
 
 type MyAppProps = AppProps<{
   dehydratedState?: DehydratedState
-  user?: UserDTO
+  user?: User
 }>;
 
 const LoadingBar = dynamic(() => import('components/common/LoadingBar'), { ssr: false });
@@ -48,7 +47,6 @@ export default function MyApp({ Component, pageProps }: MyAppProps) {
               <Component {...pageProps} />
             </AuthProvider>
           </Hydrate>
-          {/* <ReactQueryDevtools /> */}
         </QueryClientProvider>
         <LoadingBar />
       </SSRProvider>

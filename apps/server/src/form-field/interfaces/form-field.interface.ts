@@ -7,44 +7,44 @@ import {
   CreateSelectFieldOptionsDTO,
   CreateTextFieldOptionsDTO,
 } from '../dto/create-field-options.dto';
-import { FieldType } from '../form-field.entity';
+import { FormField } from '../form-field.entity';
 
 export interface TextField {
-  type: FieldType.Text
+  type: 'text'
   options?: CreateTextFieldOptionsDTO
 }
 
 export interface NumberField {
-  type: FieldType.Number
+  type: 'number'
   options?: CreateNumberFieldOptionsDTO
 }
 
 export interface RadioField {
-  type: FieldType.Radio
+  type: 'radio'
   options: CreateRadioFieldOptionsDTO
 }
 
 export interface SelectField {
-  type: FieldType.Select
+  type: 'select'
   options: CreateSelectFieldOptionsDTO
 }
 
 export interface ComboboxField {
-  type: FieldType.Combobox
+  type: 'combobox'
   options: CreateComboboxFieldOptionsDTO
 }
 
 export interface CheckboxField {
-  type: FieldType.Checkbox
+  type: 'checkbox'
   options?: CreateCheckboxFieldOptionsDTO
 }
 
 export interface CharacterField {
-  type: FieldType.Character
+  type: 'character'
   options?: CreateCharacterFieldOptionsDTO
 }
 
-export type FieldDiscriminator =
+export type FieldOptionsDiscriminator =
   | TextField
   | NumberField
   | RadioField
@@ -52,3 +52,5 @@ export type FieldDiscriminator =
   | ComboboxField
   | CheckboxField
   | CharacterField;
+
+export type FieldDiscriminator = Omit<FormField, 'options'> & FieldOptionsDiscriminator;

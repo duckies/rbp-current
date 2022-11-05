@@ -15,9 +15,9 @@ export class AuthService {
 
   handleCallback(provider: Provider, code: string) {
     switch (provider) {
-      case Provider.Discord:
+      case 'discord':
         return this.discordProvider.handleCallback(code);
-      case Provider.BattleNet:
+      case 'battle.net':
         return this.blizzardProvider.handleCallback(code);
     }
   }

@@ -4,7 +4,6 @@ import type { Node } from '@react-types/shared';
 import { useListBox, useListBoxSection, useOption } from 'react-aria';
 import React from 'react';
 import { cva } from 'cva';
-import CheckIcon from 'components/icons/CheckIcon';
 
 interface ListBoxProps extends AriaListBoxOptions<unknown> {
   listBoxRef?: React.RefObject<HTMLUListElement>

@@ -1,13 +1,12 @@
 import { Type } from 'class-transformer';
 import {
-  IsDefined,
-  IsEnum,
+  IsDefined, IsIn,
   IsNumber,
   IsOptional,
   IsString,
   Min, ValidateNested,
 } from 'class-validator';
-import { FieldType } from '../form-field.entity';
+import { FieldType, FieldTypes } from '../form-field.entity';
 import { UpdateCharacterFieldOptionsDTO, UpdateCheckboxFieldOptionsDTO, UpdateComboboxFieldOptionsDTO, UpdateFieldOptionsDTO, UpdateNumberFieldOptionsDTO, UpdateRadioFieldOptionsDTO, UpdateSelectFieldOptionsDTO, UpdateTextFieldOptionsDTO } from './update-field-options.dto';
 
 export class UpdateFormFieldDTO {
@@ -23,7 +22,7 @@ export class UpdateFormFieldDTO {
    * This is **not** mutable, but is required
    * because I'm not some TypeScript wizard.
    */
-  @IsEnum(FieldType)
+  @IsIn(FieldTypes)
   type!: FieldType;
 
   @IsOptional()
@@ -35,19 +34,19 @@ export class UpdateFormFieldDTO {
   @ValidateNested()
   @Type(({ object }: any) => {
     switch (object.type) {
-      case FieldType.Text:
+      case 'text':
         return UpdateTextFieldOptionsDTO;
-      case FieldType.Select:
+      case 'select':
         return UpdateSelectFieldOptionsDTO;
-      case FieldType.Number:
+      case 'number':
         return UpdateNumberFieldOptionsDTO;
-      case FieldType.Character:
+      case 'character':
         return UpdateCharacterFieldOptionsDTO;
-      case FieldType.Checkbox:
+      case 'checkbox':
         return UpdateCheckboxFieldOptionsDTO;
-      case FieldType.Radio:
+      case 'radio':
         return UpdateRadioFieldOptionsDTO;
-      case FieldType.Combobox:
+      case 'combobox':
         return UpdateComboboxFieldOptionsDTO;
       default:
         throw new Error(`Unknown field type: ${object.type}`);

@@ -24,7 +24,7 @@ export default function LoadingBar({ delay = 100 }) {
       router.events.off('routeChangeComplete', done);
       router.events.off('routeChangeError', done);
     };
-  }, []);
+  });
 
   return <></>;
 }

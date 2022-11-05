@@ -1,10 +1,8 @@
 import { Entity, Enum, ManyToOne, PrimaryKeyType, Property } from '@mikro-orm/core';
 import { User } from '../../user/user.entity';
 
-export enum Provider {
-  BattleNet = 'battle.net',
-  Discord = 'discord',
-}
+export const Providers = ['battle.net', 'discord'];
+export type Provider = 'battle.net' | 'discord';
 
 @Entity()
 export class Identity {
@@ -13,7 +11,7 @@ export class Identity {
   @Property({ primary: true })
   id!: string;
 
-  @Enum({ items: () => Provider, primary: true })
+  @Enum({ items: () => Providers, primary: true })
   provider!: Provider;
 
   @Property()

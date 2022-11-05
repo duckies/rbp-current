@@ -1,14 +1,13 @@
 import { Type } from 'class-transformer';
 import {
-  IsDefined,
-  IsEnum,
+  IsDefined, IsIn,
   IsNumber,
   IsOptional,
   IsString,
   Min,
   ValidateNested,
 } from 'class-validator';
-import { FieldType } from '../form-field.entity';
+import { FieldType, FieldTypes } from '../form-field.entity';
 import { CreateCharacterFieldOptionsDTO, CreateFieldOptionsDTO, CreateSelectFieldOptionsDTO, CreateTextFieldOptionsDTO } from './create-field-options.dto';
 
 export class CreateFormFieldDTO {
@@ -19,7 +18,7 @@ export class CreateFormFieldDTO {
   @IsString()
   description?: string;
 
-  @IsEnum(FieldType)
+  @IsIn(FieldTypes)
   type!: FieldType;
 
   @IsNumber()
@@ -30,11 +29,11 @@ export class CreateFormFieldDTO {
   @ValidateNested()
   @Type(({ object }: any) => {
     switch (object.type) {
-      case FieldType.Text:
+      case 'text':
         return CreateTextFieldOptionsDTO;
-      case FieldType.Select:
+      case 'select':
         return CreateSelectFieldOptionsDTO;
-      case FieldType.Character:
+      case 'character':
         return CreateCharacterFieldOptionsDTO;
       default:
         throw new Error(`Unknown field type: ${object.type}`);

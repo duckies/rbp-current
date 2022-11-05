@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import got from 'got-cjs';
 import { DiscordConfig } from '../../app.config';
 import { User } from '../../user/user.entity';
-import { Identity, Provider } from '../identity/identity.entity';
+import { Identity } from '../identity/identity.entity';
 import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface';
 import { DiscordUser } from '../interfaces/discord-user.interface';
 
@@ -43,12 +43,12 @@ export class DiscordProvider {
     const { body: tokens } = await this.authorize(code);
     const { body: profile } = await this.getProfile(tokens.access_token);
 
-    const identity = await this.em.findOne(Identity, [profile.id, Provider.Discord], { populate: ['user'] });
+    const identity = await this.em.findOne(Identity, [profile.id, 'discord'], { populate: ['user'] });
 
     if (!identity) {
       const user = this.em.create(User, {
         identities: [{
-          provider: Provider.Discord,
+          provider: 'discord',
           id: profile.id,
           identifier: `${profile.username}#${profile.discriminator}`,
           avatar: profile.avatar,

@@ -3,12 +3,12 @@ import {
   CreateCharacterFieldOptionsDTO,
   CreateSelectFieldOptionsDTO,
 } from './dto/create-field-options.dto';
-import { FieldType, FormField } from './form-field.entity';
+import { FormField } from './form-field.entity';
 
 describe('FormField (Entity)', () => {
   it('should require string responses for text fields', () => {
     const field = new FormField();
-    field.type = FieldType.Text;
+    field.type = 'text';
 
     expect(field.isAnswerValid(null)).toBe(false);
     expect(field.isAnswerValid(undefined)).toBe(false);
@@ -22,7 +22,7 @@ describe('FormField (Entity)', () => {
 
   it('should require number responses for number fields', () => {
     const field = new FormField();
-    field.type = FieldType.Number;
+    field.type = 'number';
 
     expect(field.isAnswerValid(null)).toBe(false);
     expect(field.isAnswerValid(undefined)).toBe(false);
@@ -37,7 +37,7 @@ describe('FormField (Entity)', () => {
 
   it('should require boolean responses for checkbox fields', () => {
     const field = new FormField();
-    field.type = FieldType.Checkbox;
+    field.type = 'checkbox';
 
     expect(field.isAnswerValid(null)).toBe(false);
     expect(field.isAnswerValid(undefined)).toBe(false);
@@ -53,7 +53,7 @@ describe('FormField (Entity)', () => {
 
   it('should reject anything but `true` for `noFalse` checkbox fields', () => {
     const field = new FormField();
-    field.type = FieldType.Checkbox;
+    field.type = 'checkbox';
     field.options = { noFalse: true };
 
     expect(field.isAnswerValid(null)).toBe(false);
@@ -70,7 +70,7 @@ describe('FormField (Entity)', () => {
 
   it('should require a valid item selection for radio fields', () => {
     const field = new FormField();
-    field.type = FieldType.Radio;
+    field.type = 'radio';
     field.options = {
       items: [
         { label: 'Apple', value: 'apple' },
@@ -97,7 +97,7 @@ describe('FormField (Entity)', () => {
 
   it('should require a valid item selection for select fields', () => {
     const field = new FormField();
-    field.type = FieldType.Select;
+    field.type = 'select';
     field.options = {
       items: [
         { label: 'Apple', value: 'apple' },
@@ -125,7 +125,7 @@ describe('FormField (Entity)', () => {
 
   it('should require valid item selection(s) for multi-select fields', () => {
     const field = new FormField();
-    field.type = FieldType.Select;
+    field.type = 'select';
     field.options = {
       multiple: true,
       items: [
@@ -157,7 +157,7 @@ describe('FormField (Entity)', () => {
 
   it('should validate character field input shape', () => {
     const field = new FormField();
-    field.type = FieldType.Character;
+    field.type = 'character';
 
     const validAnswer = {
       name: 'Duckys',
@@ -179,7 +179,7 @@ describe('FormField (Entity)', () => {
 
   it('should enforce main character option', () => {
     const field = new FormField();
-    field.type = FieldType.Character;
+    field.type = 'character';
     field.options = { requireMain: true } as CreateCharacterFieldOptionsDTO;
 
     const validAnswer = {
@@ -197,7 +197,7 @@ describe('FormField (Entity)', () => {
 
   it('should validate multi-character field input shape', () => {
     const field = new FormField();
-    field.type = FieldType.Character;
+    field.type = 'character';
     field.options = { multiple: true } as CreateCharacterFieldOptionsDTO;
 
     const characters = [

@@ -1,4 +1,7 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+import { render } from '@master/css/render';
+import type { DocumentContext } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { StyleSheet } from '@master/css';
 
 const initScript = 'document.documentElement.classList.add(localStorage.getItem("theme") || "dark");';
 
@@ -25,17 +28,17 @@ export default function MyDocument() {
   );
 }
 
-// MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-//   const { css } = render((await ctx.renderPage()).html, { StyleSheet });
-//   const initialProps = await Document.getInitialProps(ctx);
+MyDocument.getInitialProps = async (ctx: DocumentContext) => {
+  const { css } = render((await ctx.renderPage()).html, { StyleSheet });
+  const initialProps = await Document.getInitialProps(ctx);
 
-//   return {
-//     ...initialProps,
-//     styles: (
-//       <>
-//         <style id="master-css">{css}</style>
-//         {initialProps.styles}
-//       </>
-//     ),
-//   };
-// };
+  return {
+    ...initialProps,
+    styles: (
+      <>
+        <style id="master-css">{css}</style>
+        {initialProps.styles}
+      </>
+    ),
+  };
+};

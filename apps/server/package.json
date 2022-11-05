@@ -3,6 +3,7 @@
   "license": "MIT",
   "types": "dist/src/app.exports.d.ts",
   "scripts": {
+    "clean": "rimraf dist",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "dev": "nest start --watch",
@@ -32,7 +33,6 @@
     "p-queue": "6.6.2",
     "pino": "8.7.0",
     "reflect-metadata": "0.1.13",
-    "rimraf": "3.0.2",
     "rxjs": "7.5.6",
     "uuid": "9.0.0",
     "zod": "3.19.1"

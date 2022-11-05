@@ -23,7 +23,9 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
     <>
       <Header />
       <LayoutBackground />
-      <Container className="min-h:700">{children}</Container>
+      <Container className="min-h:700">
+        {children}
+      </Container>
       <Footer />
     </>
   );
