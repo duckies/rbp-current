@@ -1,4 +1,6 @@
 export * from './auth/interfaces';
+export * from './form-field/dto';
+export * from './form-field/interfaces';
 
 /**
  * Entities

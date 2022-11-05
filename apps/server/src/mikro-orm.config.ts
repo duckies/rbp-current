@@ -1,6 +1,6 @@
 import { defineConfig } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
-import { Logger } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 
 const logger = new Logger('MikrORM');
 
@@ -20,6 +20,9 @@ export default defineConfig({
   schemaGenerator: {
     disableForeignKeys: false,
     createForeignKeyConstraints: false,
+  },
+  findOneOrFailHandler: (entityName) => {
+    return new NotFoundException(`${entityName} not found`);
   },
   debug: true,
   logger: logger.log.bind(logger),

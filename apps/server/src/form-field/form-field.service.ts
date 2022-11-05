@@ -14,9 +14,11 @@ export class FormFieldService {
   }
 
   public async create(formId: number, createFormFieldDTO: CreateFormFieldDTO) {
+    const form = await this.em.findOneOrFail(Form, formId);
+
     const field = this.repository.create({
       ...createFormFieldDTO,
-      form: this.em.getReference(Form, formId),
+      form,
     });
 
     await this.repository.persist(field).flush();

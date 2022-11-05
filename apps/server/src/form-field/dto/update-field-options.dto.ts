@@ -4,17 +4,9 @@ import {
   IsBoolean,
   IsNumber,
   IsOptional,
-  IsString,
   ValidateNested,
 } from 'class-validator';
-
-export class ItemsDTO {
-  @IsString()
-  label!: string;
-
-  @IsString()
-  value!: string;
-}
+import { ItemsDTO } from './create-field-options.dto';
 
 export class BaseUpdateOptionsDTO {
   @IsOptional()
