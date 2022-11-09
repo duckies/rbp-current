@@ -3,6 +3,8 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Container from 'components/Container';
 import background from 'public/images/noise-bg.png';
+import type { GetServerSideProps } from 'next';
+import { getMe } from 'lib/auth';
 
 export interface DefaultLayoutProps {
   children: React.ReactNode
@@ -30,3 +32,21 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const token = ctx.req.cookies.token;
+
+  if (token) {
+    return {
+      props: {
+        user: await getMe(token),
+      },
+    };
+  }
+
+  return {
+    props: {
+
+    },
+  };
+};

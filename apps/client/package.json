@@ -30,6 +30,7 @@
     "react-stately": "3.18.0"
   },
   "devDependencies": {
+    "@rbp/battle.net": "workspace:*",
     "@rbp/server": "workspace:*",
     "@rbp/shared": "workspace:*",
     "@react-types/shared": "3.15.0",

@@ -1,19 +1,21 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
-import { Injectable, Logger } from '@nestjs/common';
-import { ProfileEndpoint, WoWClient } from '@rbp/battle.net';
+import { Injectable } from '@nestjs/common';
+import { ProfileEndpoint, ProfileEndpointResponseMap, ProfileOptions } from '@rbp/battle.net';
 import { capitalize } from '@rbp/shared';
+import { CancelableRequest, Response } from 'got-cjs';
 import { Character } from './character.entity';
-import { FindCharacterDTO } from './dto/character.dto';
-import { CharacterIdMismatchError } from './errors/character-id-mismatch.error';
+import { CharacterOrchestrator } from './character.orchestrator';
+import { FindCharacterDTO } from './dto/find-character.dto';
+
+export type EndpointHandler<E extends ProfileEndpoint> = (options: ProfileOptions) => CancelableRequest<Response<ProfileEndpointResponseMap[E]>>;
 
 @Injectable()
 export class CharacterService {
-  private readonly logger = new Logger(CharacterService.name);
   public readonly repository;
 
   constructor(
     public readonly em: SqlEntityManager,
-    private readonly client: WoWClient,
+    private readonly orchestrator: CharacterOrchestrator,
   ) {
     this.repository = em.getRepository(Character);
   }
@@ -30,6 +32,24 @@ export class CharacterService {
   }
 
   /**
+   * Populates a character but does not save it to the database.
+   */
+  public async lookup(findCharacterDTO: FindCharacterDTO) {
+    const character = this.em.create(Character, {
+      name: capitalize(findCharacterDTO.name),
+      realm: findCharacterDTO.realm,
+      region: findCharacterDTO.region,
+    });
+
+    await this.orchestrator.getEndpoints([
+      'character-profile-summary',
+      'character-media-summary',
+    ], character);
+
+    return character;
+  }
+
+  /**
    * Updates a character with the latest data from the Battle.net API
    * for the given character and endpoints.
    */
@@ -40,64 +60,11 @@ export class CharacterService {
       region: findCharacterDTO.region,
     });
 
-    const promises = endpoints.map((endpoint) => {
-      switch (endpoint) {
-        case ProfileEndpoint.CharacterProfileSummary:
-          return this.getCharacterProfileSummary(character);
-        default:
-          return Promise.resolve();
-      }
-    });
+    await this.orchestrator.getEndpoints(endpoints, character);
 
-    return Promise.all(promises);
-  }
+    await this.em.flush();
 
-  public async getCharacterProfileSummary(character: Character) {
-    // TODO: ifModifiedSince: character.summary?.updated_at
-    const response = await this.client.profile.getCharacterProfileSummary(
-      { ...character },
-    );
-
-    // Note: Newly added characters may not have a `status.id` yet.
-    if (character.status && character.status.id !== response.body.id) {
-      throw new CharacterIdMismatchError();
-    }
-
-    // const data = {
-    //   achievement_points: response.body.achievement_points,
-    //   gender: response.body.gender.name,
-    //   faction: response.body.faction.name,
-    //   average_ilvl: response.body.average_item_level,
-    //   equipped_ilvl: response.body.equipped_item_level,
-    //   level: response.body.level,
-    //   logout_at: new Date(response.body.last_login_timestamp),
-    //   raceId: response.body.race.id,
-    //   raceName: response.body.race.name,
-    //   specId: response.body.active_spec?.id,
-    //   specName: response.body.active_spec?.name,
-    //   updated_at: new Date(),
-    //   title: response.body.active_title?.name,
-    // };
-
-    // return this.prisma.character.update({
-    //   where: {
-    //     name_realm_region: {
-    //       name: capitalize(character.name),
-    //       realm: character.realm,
-    //       region: character.region,
-    //     },
-    //   },
-    //   data: {
-    //     status_id: (character.status_id === null ? response.body.id : undefined),
-    //     summary: {
-    //       upsert: {
-    //         create: { ...data },
-    //         update: data,
-    //       },
-    //     },
-    //   },
-    //   include: { summary: true },
-    // });
+    return character;
   }
 
   public async delete(findCharacterDTO: FindCharacterDTO) {

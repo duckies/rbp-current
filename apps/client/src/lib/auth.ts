@@ -1,7 +1,6 @@
-import type { UserDTO } from '@rbp/server';
-import type { GetServerSidePropsContext } from 'next';
+import type { User } from '@rbp/server';
 import { $get } from './utils/fetch';
 
-export function getMe(context?: GetServerSidePropsContext) {
-  return $get<UserDTO>('/user/me', { context, authenticate: true });
+export function getMe(token: string) {
+  return $get<User>('/user/me', { headers: { Authorization: `Bearer ${token}` } });
 }

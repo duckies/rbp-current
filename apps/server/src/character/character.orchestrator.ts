@@ -1,49 +1,62 @@
 import { Injectable } from '@nestjs/common';
 import { ProfileEndpoint, WoWClient } from '@rbp/battle.net';
 import { Character } from './character.entity';
-import { CharacterService } from './character.service';
+import { EndpointHandler } from './character.service';
+import { CharacterStatus } from './embeddables/character-status.embeddable';
+import { CharacterIdMismatchError } from './errors/character-id-mismatch.error';
 
 export type ForEndpoints = Array<ProfileEndpoint | { endpoint: ProfileEndpoint; options?: any }>;
 
 @Injectable()
 export class CharacterOrchestrator {
-  constructor(private readonly characterService: CharacterService,
-    private readonly client: WoWClient) { }
+  constructor(private readonly client: WoWClient) { }
 
-  /**
-   * Character Updating Procedure
-   *
-   * 1. Fetch the character by { name, realm, region } or throw.
-   * 2. For a given arroy of endpoints
-   */
-
-  public getEndpointHandler(endpoint: ProfileEndpoint) {
+  public getEndpointHandler<E extends ProfileEndpoint>(endpoint: E): EndpointHandler<E> {
     switch (endpoint) {
-      case ProfileEndpoint.CharacterProfileSummary:
-        return this.client.profile.getCharacterProfileSummary;
-      case ProfileEndpoint.CharacterMediaSummary:
-        return this.client.profile.getCharacterMediaSummary;
-      case ProfileEndpoint.CharacterMythicKeystoneProfile:
-        return this.client.profile.getCharacterMythicKeystoneProfile;
-      case ProfileEndpoint.CharacterMythicKeystoneSeason:
-        return this.client.profile.getCharacterMythicKeystoneSeason;
+      case 'character-profile-status':
+        return this.client.profile.getCharacterProfileStatus.bind(this.client.profile);
+      case 'character-profile-summary':
+        return this.client.profile.getCharacterProfileSummary.bind(this);
+      case 'character-media-summary':
+        return this.client.profile.getCharacterMediaSummary.bind(this.client.profile);
+      default:
+        throw new Error(`Endpoint ${endpoint} is not yet implemented.`);
     }
   }
 
-  public async getCharacterProfileSummary(character: Character) {
-    const response = await this.client.profile.getCharacterProfileSummary({
+  public async getEndpoint(endpoint: ProfileEndpoint, character: Character) {
+    const lastUpdatedAt = character.getStorage(endpoint)?.updatedAt;
+    const handler = this.getEndpointHandler(endpoint);
+
+    const response = await handler({
       name: character.name,
       realm: character.realm,
       region: character.region,
+      ifModifiedSince: lastUpdatedAt,
     });
 
-    // The endpoint data is unchanged.
-    if (response.statusCode === 304) {
-      // The only way we get a 304 is if we used ifModifiedSince,
-      // so the summary should be defined.
-      character.summary!.updatedAt = new Date();
+    const statusId = endpoint === 'character-profile-status' || endpoint === 'character-profile-summary'
+      ? response.body.id
+      : response.body.character.id;
 
-      await this.characterService.repository.flush();
+    if (!character.status) {
+      character.status = new CharacterStatus();
+      character.status.id = statusId;
     }
+    else if (character.status.id !== statusId) {
+      character.deleteStorage(endpoint);
+      throw new CharacterIdMismatchError();
+    }
+
+    character.status.updatedAt = new Date();
+    const storage = character.getStorage(endpoint, true);
+    storage.set(response.body);
+    storage.updatedAt = new Date();
+
+    return character;
+  }
+
+  getEndpoints(endpoints: ProfileEndpoint[], character: Character) {
+    return Promise.all(endpoints.map(endpoint => this.getEndpoint(endpoint, character)));
   }
 }

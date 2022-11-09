@@ -1,6 +1,9 @@
-export enum ProfileEndpoint {
-  CharacterProfileSummary = 'character-profile-summary',
-  CharacterMediaSummary = 'character-media-summary',
-  CharacterMythicKeystoneProfile = 'character-mythic-keystone-profile',
-  CharacterMythicKeystoneSeason = 'character-mythic-keystone-season',
-}
+export const ProfileEndpoints = [
+  'character-profile-status',
+  'character-profile-summary',
+  'character-media-summary',
+  'character-mythic-keystone-profile',
+  'character-mythic-keystone-season',
+] as const;
+
+export type ProfileEndpoint = typeof ProfileEndpoints[number];

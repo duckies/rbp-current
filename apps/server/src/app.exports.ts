@@ -26,3 +26,4 @@ export type { EntityDTO };
 export * from './auth/interfaces';
 export * from './form-field/dto';
 export * from './form-field/interfaces';
+export * from './character/dto';

@@ -1,28 +1,28 @@
 import React, { useEffect } from 'react';
-import type { CharacterDTO, RealmSlug, RegionSlug } from '@rbp/server';
 import Select from 'components/forms/Select';
 import Textfield from 'components/forms/Textfield';
 import { shadow } from 'styles/theme';
 import Button from 'components/Button';
+import type { CharacterProfileSummary, RealmSlug, Region } from '@rbp/battle.net';
+import type { FindCharacterDTO } from '@rbp/server';
 import { getCharacter } from 'lib/blizzard';
+import { Avatar } from 'components/Avatar';
+import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
 
 export interface CharacterSelectorProps {
   id: string | number
-  initialValues?: CharacterDTO
+  initialValues?: FindCharacterDTO[]
 }
 
 export default function CharacterSelector({
   initialValues,
   ...props
 }: CharacterSelectorProps) {
-  const [name, setName] = React.useState<string>(initialValues?.name ?? '');
-  const [realm, setRealm] = React.useState<RealmSlug | null>(
-    initialValues?.realm ?? null,
-  );
-  const [region, setRegion] = React.useState<RegionSlug | null>(
-    initialValues?.region ?? null,
-  );
-  const [characters, setCharacters] = React.useState<CharacterDTO[]>([]);
+  const [name, setName] = React.useState<string>('');
+  const [region, setRegion] = React.useState<Region | null>('us');
+  const [realm, setRealm] = React.useState<RealmSlug | null>(null);
+  const [characters, setCharacters] = React.useState<FindCharacterDTO[]>(initialValues ?? []);
 
   useEffect(() => {}, [characters]);
 
@@ -54,7 +54,7 @@ export default function CharacterSelector({
             { id: 'tw', name: 'TW' },
           ]}
           selectedKey={region}
-          onSelectionChange={key => setRegion(key as RegionSlug)}
+          onSelectionChange={key => setRegion(key as Region)}
           className=""
         >
           {item => <Select.Item>{item.name}</Select.Item>}
@@ -96,23 +96,46 @@ export default function CharacterSelector({
 }
 
 export interface CharacterPreviewProps {
-  character: CharacterDTO
+  character: FindCharacterDTO
 }
 
 export function CharacterPreview({ character }: CharacterPreviewProps) {
-  const [data, setData] = React.useState<any>(null);
+  const { isLoading, error, data } = useQuery(['character', character], () => getCharacter(character));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getCharacter(character);
-      setData(data);
-    };
+  if (isLoading) {
+    return (
+      <div className="flex flex:wrap jc:space-between gap:20 p:20 bg:gray-20 r:10 my:15">
+        <div>
+          <div className="flex js:center r:100% bg:gray-30 h:80 w:80" />
+        </div>
 
-    fetchData();
-  }, [character]);
+        <div className="flex flex:wrap flex:row gap:10 ji:space-between ">
+          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
+        </div>
+
+        <div className="flex flex:wrap flex:row gap:10 ji:space-between ">
+          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
+        </div>
+
+        <div className="flex flex:wrap flex:row gap:10 ji:space-between ">
+          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
+          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p:10 flex ai:center ji:center">
+      <Image src={data} />
       {JSON.stringify(data, null, 2)}
     </div>
   );

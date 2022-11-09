@@ -3,7 +3,7 @@ import Queue from 'p-queue';
 import { WoWClient } from '@rbp/battle.net';
 import { BlizzardConfig } from '../app.config';
 import { HttpService } from '../common/http/http.service';
-import { FindCharacterDTO } from '../character/dto/character.dto';
+import { FindCharacterDTO } from '../character/dto/find-character.dto';
 
 @Injectable()
 export class BlizzardService {
@@ -16,6 +16,7 @@ export class BlizzardService {
     private readonly http: HttpService,
     private readonly queue: Queue,
   ) {
+    console.log(config);
     this.client = new WoWClient({
       clientId: config.ID,
       clientSecret: config.SECRET,

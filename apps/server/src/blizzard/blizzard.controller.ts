@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { FindCharacterDTO } from '../character/dto/character.dto';
+import { FindCharacterDTO } from '../character/dto/find-character.dto';
 import { BlizzardService } from './blizzard.service';
 
 @Controller('/blizzard/')

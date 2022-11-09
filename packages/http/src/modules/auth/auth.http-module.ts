@@ -22,7 +22,6 @@ export class AuthHttpModule extends HttpModule {
   }
 
   private async authenticate() {
-    console.log('Authenticating');
     try {
       // Using the default got instance can lead to a scenario
       // where the authorization request gets 429'd. A naive solution
@@ -38,6 +37,8 @@ export class AuthHttpModule extends HttpModule {
     }
     catch (error) {
       this.token = null;
+
+      console.error(error);
 
       throw error;
     }

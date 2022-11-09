@@ -1,5 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import { WoWClient } from '@rbp/battle.net';
+import { BlizzardConfig } from '../app.config';
 import { HttpModule } from '../common/http/http.module';
 import { RateLimiterModule } from '../common/rate-limiter/rate-limiter.module';
 import { BlizzardController } from './blizzard.controller';
@@ -7,14 +8,17 @@ import { BlizzardService } from './blizzard.service';
 
 const clientProvider: Provider = {
   provide: WoWClient,
-  useValue: new WoWClient({
-    clientId: process.env.BLIZZARD__ID!,
-    clientSecret: process.env.BLIZZARD__SECRET!,
-    defaults: {
-      region: 'us',
-      locale: 'en_US',
-    },
-  }),
+  useFactory: (config: BlizzardConfig) => {
+    return new WoWClient({
+      clientId: config.ID,
+      clientSecret: config.SECRET,
+      defaults: {
+        region: 'us',
+        locale: 'en_US',
+      },
+    });
+  },
+  inject: [BlizzardConfig],
 };
 
 @Module({

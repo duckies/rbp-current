@@ -1,17 +1,26 @@
-import type { CancelableRequest, Response } from '@rbp/http';
 import type { WoWClient } from '../client';
 import type { ProfileOptions } from '../interfaces/profile-options.interface';
 import type {
   CharacterMediaSummary,
+  CharacterProfileStatus,
   CharacterProfileSummary,
-  ProfileEndpointOptions,
-  ProfileEndpointResponses,
 } from './interfaces';
 import type { CharacterMythicKeystoneProfile } from './interfaces/character-mythic-keystone-profile-index.interface';
-import { ProfileEndpoint } from './profile-api.constants';
 
 export class ProfileAPIClient {
   constructor(private readonly client: WoWClient) { }
+
+  /**
+   * Character Profile API — Character Profile Status
+   */
+  getCharacterProfileStatus(options: ProfileOptions) {
+    return this.client.get<CharacterProfileStatus>({
+      path: `profile/wow/character/${options.realm
+        }/${options.name.toLowerCase()}/status`,
+      namespace: 'profile',
+      ...options,
+    });
+  }
 
   /**
    * Character Profile API — Character Profile Summary
