@@ -4,6 +4,7 @@ export const ProfileEndpoints = [
   'character-media-summary',
   'character-mythic-keystone-profile',
   'character-mythic-keystone-season',
+  'character-raids',
 ] as const;
 
 export type ProfileEndpoint = typeof ProfileEndpoints[number];

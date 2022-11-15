@@ -10,12 +10,16 @@
     "test:ui": "vitest --ui"
   },
   "devDependencies": {
-    "@duckies/eslint-config": "0.2.7",
+    "@duckies/eslint-config": "0.2.8",
     "@swc/core": "1.3.11",
+    "@types/prettier": "2.7.1",
     "@types/supertest": "2.0.12",
     "@vitest/ui": "0.24.3",
     "dotenv-cli": "6.0.0",
     "eslint": "8.26.0",
+    "eslint-config-prettier": "8.5.0",
+    "prettier": "2.7.1",
+    "prettier-plugin-organize-imports": "3.2.0",
     "rimraf": "3.0.2",
     "supertest": "6.3.1",
     "typescript": "4.8.4",
@@ -35,7 +39,7 @@
   },
   "prettier": {
     "singleQuote": true,
-    "semi": true,
+    "semi": false,
     "trailingComma": "all"
   }
 }

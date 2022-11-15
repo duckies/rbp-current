@@ -1,68 +1,69 @@
-import Ripple from 'material-ripple-effects';
-import React from 'react';
-import type { VariantProps } from 'cva';
-import { cva } from 'cva';
-import type { AriaButtonProps } from 'react-aria';
-import { useButton } from 'react-aria';
-import { useObjectRef } from '@react-aria/utils';
+import Ripple from 'material-ripple-effects'
+import React from 'react'
+import type { VariantProps } from 'cva'
+import { cva } from 'cva'
+import type { AriaButtonProps } from 'react-aria'
+import { useButton } from 'react-aria'
+import { useObjectRef } from '@react-aria/utils'
 
 export type ButtonProps = AriaButtonProps &
-React.ComponentPropsWithRef<'button'> &
-VariantProps<typeof button>;
+  React.ComponentPropsWithRef<'button'> &
+  VariantProps<typeof button>
 
 const button = cva(
   [
-    'btn',
     'inline-flex',
-    'jc:center',
-    'ai:center',
-    'r:6',
-    'f:medium',
-    '~color|250ms',
+    'content-center',
+    'items-center',
+    'rounded-md',
+    'text-md',
+    'transition-colors',
+    'duration-250',
   ],
   {
     variants: {
       variant: {
         plain: [],
-        base: ['px:16', 'py:4', 'bg:gray-90', 'font:black'],
-        icon: ['w:40', 'h:40', 'round', 'overflow:hidden'],
+        base: ['px-3', 'py-1', 'bg-yellow-400', 'text-black'],
+        icon: ['w-10', 'h-10', 'rounded-full', 'overflow-hidden'],
         outline: [
-          'px:16',
-          'py:6',
-          'b:2|solid|white',
-          'bg:white/95',
-          '~background-color|250ms,color|250ms',
-          'bg:transparent:hover',
-          'font:black',
-          'font:white:hover',
+          'px-4',
+          'py-1.5',
+          'border-2 border-solid',
+          'bg-white/95',
+          'transition-colors',
+          'duration-250',
+          'hover:bg-transparent',
+          'text-black',
+          'hover:text-white',
         ],
       },
       state: {
-        disabled: ['cursor:not-allowed', 'opacity:50'],
+        disabled: ['cursor-not-allowed', 'opacity-50'],
       },
       size: {
-        small: ['w:5', 'h:5'],
+        small: ['w-[5px]', 'h-[5px]'],
       },
     },
     defaultVariants: {
       variant: 'base',
     },
   },
-);
+)
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, size, className, children, ...props }, forwardedRef) => {
-    const ref = useObjectRef(forwardedRef);
-    const { buttonProps } = useButton(props, ref);
+    const ref = useObjectRef(forwardedRef)
+    const { buttonProps } = useButton(props, ref)
 
-    const ripple = new Ripple();
+    const ripple = new Ripple()
 
     const onMouseDown = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
-      ripple.create(e, 'dark');
-      buttonProps.onMouseDown?.(e);
-    };
+      ripple.create(e, 'dark')
+      buttonProps.onMouseDown?.(e)
+    }
 
     return (
       <button
@@ -78,10 +79,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {children}
       </button>
-    );
+    )
   },
-);
+)
 
-Button.displayName = 'Button';
+Button.displayName = 'Button'
 
-export default Button;
+export default Button

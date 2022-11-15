@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next';
-import { DefaultLayout } from 'layouts/Default';
+import { DefaultLayout } from 'components/layouts/Default';
 import type { MarkdownMetadata } from 'lib/mdx';
 import { getMarkdownMetadataByType } from 'lib/mdx';
 import Hero from 'components/Hero';
@@ -15,11 +15,11 @@ export default function BlogIndexPage({ posts }: BlogIndexPageProps) {
   return (
     <DefaultLayout>
       <Hero>
-        <Hero.Title>Recent<span className="inline-block @jump|1s|infinite font-color:crimson-60">*</span> Blog Posts</Hero.Title>
+        <Hero.Title>Recent<span className="inline-block @jump|1s|infinite text-red">*</span> Blog Posts</Hero.Title>
         <Hero.Caption>*Relative to the insufferable vastness of time, anyway.</Hero.Caption>
       </Hero>
 
-      <main className="grid grid-cols:3 gap:30">
+      <main className="grid grid-cols-3 gap-7">
         {posts.map(post => (
           <Link key={post.slug} to={`/blog/${post.slug}`} className="font-color:purple-74!:hover_.title">
             <Card className="group">

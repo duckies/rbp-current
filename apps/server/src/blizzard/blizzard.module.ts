@@ -3,10 +3,8 @@ import { WoWClient } from '@rbp/battle.net';
 import { BlizzardConfig } from '../app.config';
 import { HttpModule } from '../common/http/http.module';
 import { RateLimiterModule } from '../common/rate-limiter/rate-limiter.module';
-import { BlizzardController } from './blizzard.controller';
-import { BlizzardService } from './blizzard.service';
 
-const clientProvider: Provider = {
+const WoWClientProvider: Provider = {
   provide: WoWClient,
   useFactory: (config: BlizzardConfig) => {
     return new WoWClient({
@@ -31,8 +29,7 @@ const clientProvider: Provider = {
       timeout: 5000,
     }),
   ],
-  controllers: [BlizzardController],
-  providers: [BlizzardService, clientProvider],
-  exports: [BlizzardService, clientProvider],
+  providers: [WoWClientProvider],
+  exports: [WoWClientProvider],
 })
 export class BlizzardModule { }

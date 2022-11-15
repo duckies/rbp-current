@@ -37,11 +37,6 @@ export abstract class BattleNetClient {
           clientSecret: options.clientSecret,
           authorizationUrl: `https://${this.defaults.region}.battle.net/oauth/token`,
         },
-        logs: {
-          transport: {
-            target: 'pino-pretty',
-          },
-        },
       },
     });
   }

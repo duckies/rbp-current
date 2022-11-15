@@ -1,13 +1,13 @@
 import { SqlEntityManager } from '@mikro-orm/knex';
 import { Injectable } from '@nestjs/common';
-import { ProfileEndpoint, ProfileEndpointResponseMap, ProfileOptions } from '@rbp/battle.net';
+import { ProfileEndpoint, ProfileEndpointResponseMap } from '@rbp/battle.net';
 import { capitalize } from '@rbp/shared';
 import { CancelableRequest, Response } from 'got-cjs';
 import { Character } from './character.entity';
 import { CharacterOrchestrator } from './character.orchestrator';
 import { FindCharacterDTO } from './dto/find-character.dto';
 
-export type EndpointHandler<E extends ProfileEndpoint> = (options: ProfileOptions) => CancelableRequest<Response<ProfileEndpointResponseMap[E]>>;
+export type EndpointHandler<E extends ProfileEndpoint> = (options: any) => CancelableRequest<Response<ProfileEndpointResponseMap[E]>>;
 
 @Injectable()
 export class CharacterService {
@@ -44,6 +44,8 @@ export class CharacterService {
     await this.orchestrator.getEndpoints([
       'character-profile-summary',
       'character-media-summary',
+      'character-mythic-keystone-profile',
+      'character-raids',
     ], character);
 
     return character;

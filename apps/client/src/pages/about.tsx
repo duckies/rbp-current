@@ -1,7 +1,7 @@
 import type { GetStaticProps } from 'next';
 import { getMarkdownContent } from 'lib/mdx';
 import Hero from 'components/Hero';
-import { DefaultLayout } from 'layouts/Default';
+import { DefaultLayout } from 'components/layouts/Default';
 
 export default function AboutPage() {
   return (

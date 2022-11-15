@@ -1,13 +1,10 @@
+import type { VariantProps } from 'cva';
 import { cva } from 'cva';
 
-export interface InputWrapperProps extends React.ComponentPropsWithoutRef<'div'> { }
+export interface InputWrapperProps extends React.ComponentPropsWithoutRef<'div'>, VariantProps<typeof styles> { }
 
 const styles = cva([
-  'rel',
-  'mt:4',
-  'r:6',
-  'b:2px|solid|gray-30',
-  'f:white',
+  'mt-1',
 ]);
 
 export default function InputWrapper({ className, children }: InputWrapperProps) {

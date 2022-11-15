@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { getMDXComponent } from 'mdx-bundler/client';
 import React from 'react';
-import { DefaultLayout } from 'layouts/Default';
+import { DefaultLayout } from 'components/layouts/Default';
 import type { MarkdownMetadata } from 'lib/mdx';
 import { getMarkdownContent, getMarkdownFilesByType } from 'lib/mdx';
 import { Paper } from 'components/common/Paper';
@@ -19,7 +19,7 @@ export default function BlogPostPage({ code, meta }: BlogPostPageProps) {
       <div className="prose">
         <Hero>
           <Hero.Title>{meta.title || 'Blog Post'}</Hero.Title>
-          <Hero.Caption>{meta.description || 'Blog Description' }</Hero.Caption>
+          <Hero.Caption>{meta.description || 'Blog Description'}</Hero.Caption>
         </Hero>
 
         <Paper className="p-6 bg-zinc-900">

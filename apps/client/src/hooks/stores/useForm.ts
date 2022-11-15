@@ -1,8 +1,8 @@
 import type { FieldDiscriminator, Form } from '@rbp/server';
 import { useQuery } from '@tanstack/react-query';
-import CharacterSelector from 'components/forms/Character';
-import Textarea from 'components/forms/Textarea';
-import Textfield from 'components/forms/Textfield';
+import CharacterSelector from 'components/forms/fields/Character';
+import Textarea from 'components/forms/fields/Textarea';
+import Textfield from 'components/forms/fields/Textfield';
 import { $get } from 'lib/utils/fetch';
 
 export function getForm(id: number) {

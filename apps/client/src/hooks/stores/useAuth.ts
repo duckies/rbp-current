@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMe } from 'lib/auth';
 import type { GetServerSidePropsContext, PreviewData } from 'next';
 import nookies from 'nookies';
-import { createContext, createElement, useContext, useMemo } from 'react';
+import { createContext, createElement, useContext, useMemo, useState } from 'react';
 import { logout } from '../auth';
 
 export interface AuthContextValue {
@@ -33,28 +33,38 @@ export function useAuth() {
 }
 
 export interface AuthProviderProps {
-  initialState?: { user?: User }
+  initialState?: { user?: User; token?: string }
   children: React.ReactNode
 }
 
 export function AuthProvider({
-  initialState = {},
+  initialState,
   children,
 }: AuthProviderProps) {
+  const [token, _setToken] = useState<string | null>(initialState?.token || null);
   const queryClient = useQueryClient();
 
-  const { data, error, status, refetch } = useQuery(['user'], () => getMe(), {
-    initialData: initialState.user,
+  const { data, error, status, refetch } = useQuery(['user'], () => getMe(token!), {
+    initialData: initialState?.user,
     retry: 0,
     staleTime: 1000 * 60 * 60 * 8, // Refetch after 8 hours
-    enabled: !!(nookies.get(null).token),
+    enabled: !!token,
   });
+
+  function setToken(token: string | null) {
+    _setToken(token);
+
+    if (!token) {
+      nookies.destroy(null, 'token');
+    }
+  }
 
   const logoutMutation = useMutation(
     async (ctx?: GetServerSidePropsContext) => logout(ctx),
     {
       onSuccess: () => {
         queryClient.setQueryData(['user'], null);
+        setToken(null);
       },
     },
   );

@@ -1,12 +1,19 @@
-import { cva } from 'cva';
-import React, { type ElementType } from 'react';
+import { cva } from 'cva'
+import React, { type ElementType } from 'react'
 
 export type ContainerProps<T extends ElementType = 'div'> = {
   as?: T
-} & React.ComponentPropsWithoutRef<T>;
+} & React.ComponentPropsWithoutRef<T>
 
-const classes = cva(['w:full', 'w:xs:@xs', 'w:sm:@sm', 'w:md@md', 'w:lg@lg', 'w:xl@xl', 'w:2xl@2xl', 'mx:auto', 'px:32']);
+const container = cva(['max-w-[64rem]', 'mx-auto', 'px-8'])
 
-export default function Container<T extends ElementType = 'div'>({ as, className, children }: ContainerProps<T>) {
-  return React.createElement(as || 'div', { className: classes({ class: className }) }, children);
+export function Container<T extends ElementType = 'div'>(
+  props: ContainerProps<T>,
+) {
+  const { as = 'div', className, children } = props
+  return React.createElement(
+    as,
+    { className: container({ class: className }) },
+    children,
+  )
 }

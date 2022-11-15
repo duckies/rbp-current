@@ -2,7 +2,6 @@
   pointer-events: none;
 }
 
-
 #nprogress .bar {
   background: linear-gradient(45deg, #f900ff, #c0c1ff);
   position: fixed;

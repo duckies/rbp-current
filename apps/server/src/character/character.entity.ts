@@ -1,14 +1,20 @@
-import { Embedded, Entity, Enum, Property } from '@mikro-orm/core';
+import { Embedded, Entity, Enum, OptionalProps, PrimaryKeyType, Property } from '@mikro-orm/core';
 import { ProfileEndpoint, RealmSlug, RealmSlugs, Region, Regions } from '@rbp/battle.net';
+import { CharacterRaids } from './embeddables/characeter-raids.embeddable';
 import { CharacterMedia } from './embeddables/character-media.embeddable';
+import { CharacterKeystoneProfile } from './embeddables/character-mythic-keystone.embeddable';
 import { CharacterStatus } from './embeddables/character-status.embeddable';
 import { CharacterSummary } from './embeddables/character-summary.embeddable';
 import { EndpointStorage } from './interfaces/endpoint-storage.interface';
 
+export const HordeRaces = [2, 5, 6, 8, 9, 10, 26, 27, 28, 31, 35, 36, 70];
+
 @Entity()
 export class Character {
+  [PrimaryKeyType]?: [string, RealmSlug, Region];
+  [OptionalProps]?: 'avatar';
+
   @Property({ primary: true })
-  // @Index({ name: 'character_name_lower', expression: 'alter table `character` add index `lower`(`name`)' })
   name!: string;
 
   @Enum({ items: () => RealmSlugs, primary: true })
@@ -26,6 +32,24 @@ export class Character {
   @Embedded(() => CharacterMedia, { nullable: true })
   media?: CharacterMedia;
 
+  @Embedded(() => CharacterKeystoneProfile, { nullable: true })
+  keystones?: CharacterKeystoneProfile;
+
+  @Embedded(() => CharacterRaids, { nullable: true })
+  progression?: CharacterRaids;
+
+  // https://develop.battle.net/documentation/world-of-warcraft/guides/character-renders
+  @Property({ persist: false })
+  get avatar() {
+    if (this.media?.avatar) {
+      return this.media.avatar;
+    }
+    const race = this.summary?.race.id || HordeRaces[Math.floor(Math.random() * HordeRaces.length)];
+    const gender = this.summary ? this.summary.gender === 'Male' ? 0 : 1 : Math.round(Math.random());
+
+    return `https://render.worldofwarcraft.com/shadow/avatar/${race}/${gender}.jpg`;
+  }
+
   getStorage(endpoint: ProfileEndpoint): EndpointStorage | undefined;
   getStorage<C extends boolean | undefined>(endpoint: ProfileEndpoint, create: C): C extends true
     ? EndpointStorage
@@ -42,6 +66,11 @@ export class Character {
         return this.summary ?? (create ? (this.summary = new CharacterSummary()) : undefined);
       case 'character-media-summary':
         return this.media ?? (create ? (this.media = new CharacterMedia()) : undefined);
+      case 'character-mythic-keystone-profile':
+      case 'character-mythic-keystone-season':
+        return this.keystones ?? (create ? (this.keystones = new CharacterKeystoneProfile()) : undefined);
+      case 'character-raids':
+        return this.progression ?? (create ? (this.progression = new CharacterRaids()) : undefined);
       default:
         throw new Error(`Endpoint ${endpoint} is not yet implemented.`);
     }
@@ -57,6 +86,12 @@ export class Character {
         break;
       case 'character-media-summary':
         this.media = undefined;
+        break;
+      case 'character-mythic-keystone-profile':
+        this.keystones = undefined;
+        break;
+      case 'character-raids':
+        this.progression = undefined;
         break;
       default:
         throw new Error(`Endpoint ${endpoint} is not yet implemented.`);

@@ -2,8 +2,10 @@ import type { WoWClient } from '../client';
 import type { ProfileOptions } from '../interfaces/profile-options.interface';
 import type {
   CharacterMediaSummary,
+  CharacterMythicKeystoneSeason,
   CharacterProfileStatus,
   CharacterProfileSummary,
+  CharacterRaids,
 } from './interfaces';
 import type { CharacterMythicKeystoneProfile } from './interfaces/character-mythic-keystone-profile-index.interface';
 
@@ -64,10 +66,18 @@ export class ProfileAPIClient {
   getCharacterMythicKeystoneSeason(
     options: ProfileOptions & { season: number },
   ) {
-    return this.client.get<any>({
+    return this.client.get<CharacterMythicKeystoneSeason>({
       path: `profile/wow/character/${options.realm
         }/${options.name.toLowerCase()}/mythic-keystone-profile/season/${options.season
         }`,
+      namespace: 'profile',
+      ...options,
+    });
+  }
+
+  getCharacterRaids(options: ProfileOptions) {
+    return this.client.get<CharacterRaids>({
+      path: `profile/wow/character/${options.realm}/${options.name.toLowerCase()}/encounters/raids`,
       namespace: 'profile',
       ...options,
     });

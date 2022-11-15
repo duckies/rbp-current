@@ -27,6 +27,9 @@ export class CharacterSummary implements EndpointStorage {
   @Embedded(() => NamedResource)
   race!: NamedResource;
 
+  @Embedded(() => NamedResource)
+  class!: NamedResource;
+
   @Embedded(() => NamedResource, { nullable: true })
   spec?: NamedResource;
 
@@ -55,6 +58,7 @@ export class CharacterSummary implements EndpointStorage {
     this.gender = data.gender.name;
     this.faction = data.faction.name;
     this.race = new NamedResource(data.race.id, data.race.name);
+    this.class = new NamedResource(data.character_class.id, data.character_class.name);
     this.spec = data.active_spec ? new NamedResource(data.active_spec.id, data.active_spec.name) : undefined;
     this.level = data.level;
     this.equipped_item_level = data.equipped_item_level;

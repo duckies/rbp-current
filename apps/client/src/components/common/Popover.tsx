@@ -1,30 +1,33 @@
+import type { AriaPopoverProps } from 'react-aria';
+import { DismissButton, Overlay, usePopover } from 'react-aria';
 import React from 'react';
-import { DismissButton, FocusScope, useOverlay } from 'react-aria';
+import type { OverlayTriggerState } from 'react-stately';
 
-interface PopoverProps {
-  popoverRef?: React.RefObject<HTMLDivElement>
+type PopoverProps = Omit<AriaPopoverProps, 'popoverRef'> & {
   children: React.ReactNode
-  isOpen?: boolean
-  onClose: () => void
-}
+  state: OverlayTriggerState
+  className?: string
+  popoverRef?: React.RefObject<HTMLDivElement>
+};
 
-export default function Popover(props: PopoverProps) {
+export function Popover(props: PopoverProps) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const { popoverRef = ref, isOpen, onClose, children } = props;
+  const { popoverRef = ref, state, children, isNonModal } = props;
 
-  const { overlayProps } = useOverlay({
-    isOpen,
-    onClose,
-    shouldCloseOnBlur: true,
-    isDismissable: false,
-  }, popoverRef);
+  const { popoverProps, underlayProps } = usePopover({ ...props, popoverRef }, state);
 
   return (
-    <FocusScope restoreFocus>
-      <div {...overlayProps} ref={popoverRef} className="abs z:10 top:full w:full b:gray-90 bg:gray-60 mt:8 r:10">
+    <Overlay>
+      {!isNonModal && <div {...underlayProps} className="fixed inset-0" />}
+      <div
+        {...popoverProps}
+        ref={popoverRef}
+        className="z-10 shadow-lg mt-2 rounded-md bg-gray-800"
+      >
+        {!isNonModal && <DismissButton onDismiss={state.close} />}
         {children}
-        <DismissButton onDismiss={onClose} />
+        <DismissButton onDismiss={state.close} />
       </div>
-    </FocusScope>
+    </Overlay>
   );
 }

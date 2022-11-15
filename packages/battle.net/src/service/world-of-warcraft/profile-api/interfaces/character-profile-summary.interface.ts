@@ -6,6 +6,7 @@ export interface CharacterProfileSummary extends LinkedResource {
   gender: Enum<'Male' | 'Female'>
   faction: Enum<'Alliance' | 'Horde'>
   race: NameId
+  character_class: NameId
   active_spec?: NameId
   guild?: unknown
   level: number

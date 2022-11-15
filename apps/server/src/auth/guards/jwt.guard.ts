@@ -22,6 +22,7 @@ export class JWTGuard implements CanActivate {
     const request = ctx.switchToHttp().getRequest<RequestWithAuth>();
     const token = this.getBearerTokenFromHeader(request.headers);
 
+    console.log(request.headers, token);
     if (typeof token === 'string') {
       const { id }: { id: number } = this.authService.verifyJWT(token);
 

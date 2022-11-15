@@ -17,8 +17,8 @@ export interface LinkedResource {
   _links: Link
 }
 
-export interface Enum<T extends string> {
-  type: Uppercase<T>
+export interface Enum<T = string> {
+  type: string
   name: T
 }
 
@@ -30,6 +30,10 @@ export interface KeyId {
 export interface NameId {
   name: string
   id: number
+}
+
+export interface KeyNameId extends NameId {
+  key: Href
 }
 
 export interface DisplayKeyNameId extends NameId {

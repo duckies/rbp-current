@@ -1,4 +1,4 @@
-import Container from './Container';
+import { Container } from 'components/Container'
 
 export default function Footer() {
   return (
@@ -10,5 +10,5 @@ export default function Footer() {
       <div>Third</div>
       <div>Credits or whatever</div>
     </Container>
-  );
+  )
 }

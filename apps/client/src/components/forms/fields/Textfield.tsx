@@ -1,24 +1,16 @@
 import React from 'react';
-import { cva } from 'cva';
 import InputWrapper from 'components/forms/shared/InputWrapper';
 import Label from 'components/forms/shared/Label';
+import { FormFieldStyles } from 'styles/components/forms';
 
 export interface TextfieldProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id'> {
   id: string | number
   label: string
   className?: string
+  error?: string
 }
 
-const classes = cva([
-  'block',
-  'w:full',
-  'px:10',
-  'py:8',
-  'focus-ring',
-  'r:6',
-]);
-
-export default function Textfield({ id, className, ...props }: TextfieldProps) {
+export default function Textfield({ id, className, error, ...props }: TextfieldProps) {
   const forId = `textfield-${id}`;
 
   return (
@@ -26,12 +18,13 @@ export default function Textfield({ id, className, ...props }: TextfieldProps) {
       <Label htmlFor={forId}>{props.label}</Label>
       <InputWrapper>
         <input
-          className={classes({ class: className })}
+          className={FormFieldStyles({ class: className })}
           type="text"
           id={forId}
           {...props}
         />
       </InputWrapper>
+      {error && (<span className="text-red-400">{error}</span>)}
     </div >
   );
 }

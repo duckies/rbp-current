@@ -1,18 +1,20 @@
-import type { UserDTO } from '@rbp/server';
+import type { User } from '@rbp/server';
 import type { ImageProps } from 'next/image';
 import Image from 'next/image';
 
 export interface AvatarProps extends Omit<ImageProps, 'src' | 'alt'> {
-  user: UserDTO
+  user: User
   size?: number
 }
 
-export function getAvatar(user: UserDTO) {
-  if (user.discord.avatar) {
-    return `https://cdn.discordapp.com/avatars/${user.discord.id}/${user.discord.avatar}.png`;
+export function getAvatar(user: User) {
+  const discord = user.identities.find(i => i.provider === 'discord')!;
+
+  if (discord.avatar) {
+    return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
   }
 
-  const discriminator = +user.discord.identifier.split('#')[1];
+  const discriminator = +discord.identifier.split('#')[1];
   return `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
 }
 
@@ -22,7 +24,7 @@ export function Avatar({ user, size = 40, ...props }: AvatarProps) {
   return (
     <Image
       src={avatar}
-      className="object:cover"
+      className="object-cover"
       alt="Discord Avatar"
       height={size}
       width={size}
