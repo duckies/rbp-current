@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @import "reset.css"; */
-/* @import "fonts.css"; */
-/* @import "colors.css"; */
 @import "keyframes.css";
 
 @layer components {
