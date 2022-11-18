@@ -1,16 +1,16 @@
-import type { GetStaticPaths, GetStaticProps } from 'next';
-import { getMDXComponent } from 'mdx-bundler/client';
-import React from 'react';
-import { DefaultLayout } from 'components/layouts/Default';
-import type { MarkdownMetadata } from 'lib/mdx';
-import { getMarkdownContent, getMarkdownFilesByType } from 'lib/mdx';
-import { Paper } from 'components/common/Paper';
-import Hero from 'components/Hero';
+import Hero from "components/Hero";
+import { DefaultLayout } from "components/layouts/Default";
+import { Paper } from "components/Paper";
+import type { MarkdownMetadata } from "lib/mdx";
+import { getMarkdownContent, getMarkdownFilesByType } from "lib/mdx";
+import { getMDXComponent } from "mdx-bundler/client";
+import type { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
 
-export interface BlogPostPageProps {
-  code: string
-  meta: MarkdownMetadata
-}
+type BlogPostPageProps = {
+  code: string;
+  meta: MarkdownMetadata;
+};
 
 export default function BlogPostPage({ code, meta }: BlogPostPageProps) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
@@ -18,11 +18,11 @@ export default function BlogPostPage({ code, meta }: BlogPostPageProps) {
     <DefaultLayout>
       <div className="prose">
         <Hero>
-          <Hero.Title>{meta.title || 'Blog Post'}</Hero.Title>
-          <Hero.Caption>{meta.description || 'Blog Description'}</Hero.Caption>
+          <Hero.Title>{meta.title || "Blog Post"}</Hero.Title>
+          <Hero.Caption>{meta.description || "Blog Description"}</Hero.Caption>
         </Hero>
 
-        <Paper className="p-6 bg-zinc-900">
+        <Paper className="bg-zinc-900 p-6">
           <Component />
         </Paper>
       </div>
@@ -32,7 +32,7 @@ export default function BlogPostPage({ code, meta }: BlogPostPageProps) {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params!.slug as string;
-  const { code, meta } = await getMarkdownContent('posts', slug);
+  const { code, meta } = await getMarkdownContent("posts", slug);
 
   return {
     props: {
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const folder = getMarkdownFilesByType('posts');
+  const folder = getMarkdownFilesByType("posts");
 
   return {
     paths: folder.map(({ slug }) => ({ params: { slug } })),

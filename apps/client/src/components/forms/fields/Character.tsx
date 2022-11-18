@@ -1,79 +1,86 @@
-import type { RealmSlug, Region } from "@rbp/battle.net";
+import type { RealmSlug, Region } from "@rbp/battle.net/dist/constants";
+import { RealmMap, Regions } from "@rbp/battle.net/dist/constants";
 import type { FindCharacterDTO } from "@rbp/server";
 import { useQuery } from "@tanstack/react-query";
 import Button from "components/Button";
 import { ComboBox } from "components/forms/fields/Combobox";
-import Select from "components/forms/fields/Select";
+import { Select } from "components/forms/fields/Select";
 import Textfield from "components/forms/fields/Textfield";
 import { ArrowUpRight } from "components/icons/ArrowUpRight";
 import { getCharacter } from "lib/blizzard";
 import Image from "next/image";
-import React from "react";
+import { useState } from "react";
 import { Item } from "react-stately";
 
-export interface CharacterSelectorProps {
+type CharacterSelectorProps = {
   id: string | number;
   initialValues?: FindCharacterDTO[];
-}
+};
 
 export interface CharacterLocationPickerProps {
   id: string | number;
 }
 
+export const RegionItems = Regions.map((r) => ({ text: r.toUpperCase(), value: r }));
+
+export const Realms = Object.entries(RealmMap)
+  .sort((a, b) => a[0].localeCompare(b[0]))
+  .map(([text, value]) => ({
+    text,
+    value,
+  }));
+
 export default function CharacterSelector(props: CharacterSelectorProps) {
-  const { initialValues, ...otherProps } = props;
+  const { initialValues } = props;
 
-  const [name, setName] = React.useState<string>("");
-  const [region, setRegion] = React.useState<Region | null>("us");
-  const [realm, setRealm] = React.useState<RealmSlug | null>(null);
-  const [characters, setCharacters] = React.useState<FindCharacterDTO[]>(initialValues ?? []);
+  const [name, setName] = useState<string>("");
+  const [region, setRegion] = useState<Region | null>("us");
+  const [realm, setRealm] = useState<RealmSlug | null>(null);
+  const [characters, setCharacters] = useState<FindCharacterDTO[]>(initialValues ?? []);
 
-  const isFilledOut = Boolean(name?.length && realm && region);
+  const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="mb-5 overflow-hidden rounded-xl bg-surface-500 shadow-md">
+    <div className="mb-5 rounded-xl bg-surface-500 shadow-md">
       <div className="p-7">
         <h2 className="mb-2.5 text-2xl font-medium text-yellow">Character Selection</h2>
         <p className="my-2.5 text-gray-200">
           Link the main character you intend to raid with, and optionally any alts with noteworthy progression or logs.
         </p>
 
-        <div className="flex justify-evenly gap-8">
+        <div className="flex justify-evenly gap-4 md:gap-8">
           <div className="w-full">
-            <Select
-              label="Region"
-              items={[
-                { id: "us", name: "US" },
-                { id: "eu", name: "EU" },
-                { id: "kr", name: "KR" },
-                { id: "tw", name: "TW" },
-              ]}
-              selectedKey={region}
-              onSelectionChange={(key) => setRegion(key as Region)}
-            >
-              {(item) => <Select.Item>{item.name}</Select.Item>}
+            <Select label="Region">
+              {RegionItems.map((r) => (
+                <Item key={r.value}>{r.text}</Item>
+              ))}
             </Select>
           </div>
 
           <div className="w-full">
-            <ComboBox label="Realm">
-              <Item key="area-52">Area 52</Item>
+            <ComboBox label="Realm" menuTrigger="focus">
+              {Realms.map(({ text, value }) => (
+                <Item key={value}>{text}</Item>
+              ))}
             </ComboBox>
           </div>
 
           <div className="w-full">
-            <Textfield
-              id={`character-${props.id}`}
-              label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Textfield label="Name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
         </div>
       </div>
 
       <div className="flex justify-end bg-surface-600 px-7 py-5">
-        <Button disabled={!isFilledOut} onPress={() => console.log("Pressy")}>
+        <Button
+          onPress={() => {
+            if (error) {
+              setError(null);
+            } else {
+              setError("Realm is invalid");
+            }
+          }}
+        >
           Add character
         </Button>
       </div>
@@ -98,7 +105,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
 
   if (isLoading || !data) {
     return (
-      <div className="flex:wrap jc:space-between gap:20 p:20 bg:gray-20 r:10 my:15 flex">
+      <div className="flex:wrap jc:space-between gap:10 p:20 bg:gray-20 r:10 my:15 flex md:gap-20">
         <div>
           <div className="js:center r:100% bg:gray-30 h:80 w:80 flex" />
         </div>

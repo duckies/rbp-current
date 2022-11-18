@@ -1,30 +1,24 @@
-import React from 'react';
-import InputWrapper from 'components/forms/shared/InputWrapper';
-import Label from 'components/forms/shared/Label';
-import { FormFieldStyles } from 'styles/components/forms';
+import InputWrapper from "components/forms/shared/InputWrapper";
+import Label from "components/forms/shared/Label";
+import { FormFieldStyles } from "styles/components/forms";
+import type { DOMProps } from "types/shared";
 
-export interface TextfieldProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id'> {
-  id: string | number
-  label: string
-  className?: string
-  error?: string
-}
+type TextfieldProps = DOMProps<"input"> & {
+  label: string;
+  className?: string;
+  error?: string;
+};
 
-export default function Textfield({ id, className, error, ...props }: TextfieldProps) {
-  const forId = `textfield-${id}`;
+export default function Textfield(props: TextfieldProps) {
+  const { id, label, error, className, ...inputProps } = props;
 
   return (
     <div className={className}>
-      <Label htmlFor={forId}>{props.label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <InputWrapper>
-        <input
-          className={FormFieldStyles({ class: className })}
-          type="text"
-          id={forId}
-          {...props}
-        />
+        <input type="text" id={id} className={FormFieldStyles()} {...inputProps} />
       </InputWrapper>
-      {error && (<span className="text-red-400">{error}</span>)}
-    </div >
+      {error && <span className="text-red-400">{error}</span>}
+    </div>
   );
 }

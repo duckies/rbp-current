@@ -1,8 +1,8 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import Button from "components/Button";
-import Paper from "components/common/Paper";
 import Hero from "components/Hero";
 import { DefaultLayout } from "components/layouts/Default";
+import Paper from "components/Paper";
 import { Stepper } from "components/Stepper";
 import { getFieldComponent as getFormFieldComponent, getForm, useForm } from "hooks/stores/useForm";
 import { useStepper } from "hooks/useStepper";

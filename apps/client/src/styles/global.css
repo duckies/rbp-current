@@ -10,8 +10,13 @@
     background-blend-mode: overlay;
     mix-blend-mode: normal;
   }
-
 }
+
+::selection {
+  background: theme(colors.yellow.200);
+  color: theme(colors.gray.700);
+}
+
 :root {
   --text-light: theme(colors.gray.50);
   --text-dark: theme(colors.gray.900);

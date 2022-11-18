@@ -1,9 +1,10 @@
-import type { LabelProps } from '@radix-ui/react-label'
-import { Label as BaseLabel } from '@radix-ui/react-label'
-import { cva } from 'cva'
+import { cva } from "cva";
+import type { DOMRefProps } from "types/shared";
 
-const label = cva(['block', 'font-medium', 'mb-2'])
+const label = cva(["block", "font-medium", "mb-2"]);
+
+type LabelProps = DOMRefProps<"label">;
 
 export default function Label({ className, ...props }: LabelProps) {
-  return <BaseLabel className={label({ class: className })} {...props} />
+  return <label className={label({ class: className })} {...props} />;
 }
