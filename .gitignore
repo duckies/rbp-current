@@ -18,6 +18,7 @@ node_modules
 # Generated Outputs
 dist
 .next
+.turbo
 
 # Secrets Sssshhh
 .env
