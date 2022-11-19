@@ -14,7 +14,6 @@
     "@types/prettier": "2.7.1",
     "@types/supertest": "2.0.12",
     "@vitest/ui": "0.24.3",
-    "dotenv-cli": "6.0.0",
     "eslint": "8.26.0",
     "eslint-config-prettier": "8.5.0",
     "prettier": "2.7.1",

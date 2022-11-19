@@ -20,6 +20,5 @@ dist
 .next
 .turbo
 
-# Secrets Sssshhh
-.env
-.env.*
+# Spooky Secrets
+.env*
