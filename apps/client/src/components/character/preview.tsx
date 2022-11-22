@@ -1,3 +1,4 @@
+import { RealmMap } from "@rbp/battle.net/dist/constants";
 import type { FindCharacterDTO } from "@rbp/server";
 import { ArrowUpRight } from "components/icons/ArrowUpRight";
 import { useCharacterLookup } from "features/Characters/queries";
@@ -5,6 +6,8 @@ import Image from "next/image";
 
 export type CharacterPreviewProps = {
   character: FindCharacterDTO;
+  removable?: boolean;
+  onRemove?: (character: FindCharacterDTO) => void;
 };
 
 export function CharacterPreview({ character }: CharacterPreviewProps) {
@@ -50,13 +53,16 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
   }
 
   const CharacterBasics = data.summary ? (
-    <div>
-      <h3 className={`bg:$(class-color-${data.summary.class.id})`}>{data.name}</h3>
-      <p>{data.realm}</p>
+    <div className="flex flex-col justify-center">
+      <h3 className={`text-lg font-semibold`}>{data.name}</h3>
+      <p>{Object.entries(RealmMap).find(([r, v]) => v === data.realm)?.[0]}</p>
       <p>
         {data.summary.spec ? `${data.summary.spec.name} ` : ""}
         {data.summary.class.name}
       </p>
+      <div>
+        <div></div>
+      </div>
     </div>
   ) : (
     <div>
@@ -68,13 +74,11 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
 
   const CharacterProgression = data.progression?.summary ? (
     <div>
-      <h3>
-        Progression <ArrowUpRight className="h:100% w:auto inline-flex" />
+      <h3 className="text-lg font-semibold">
+        Progression <ArrowUpRight className="inline-flex h-full w-auto" />
       </h3>
       {Object.entries(data.progression.summary).map(([raid, difficulties]) => (
-        <div key={raid}>
-          {raid} {difficulties.toString()}
-        </div>
+        <div key={raid}>{raid}</div>
       ))}
       {/* <p>{data.progression.summary.map(raid => raid.name).join(', ')}</p> */}
     </div>
@@ -86,13 +90,23 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
 
   return (
     <>
-      <div className="p:20 gap:20 ji:center r:10 bg:gray-20 flex">
-        <Image className="r:100% as:center flex" src={data.avatar} width="84" height="84" alt="Character Avatar" />
+      <div
+        className={`my-5 flex justify-center gap-5 rounded-md p-5 ${
+          data.summary ? `bg-class-${data.summary.class.id}/30` : `bg-surface-300`
+        }`}
+      >
+        <Image
+          className="flex self-center rounded-full"
+          src={data.avatar}
+          width="84"
+          height="84"
+          alt="Character Avatar"
+        />
         {CharacterBasics}
         {CharacterProgression}
       </div>
-
-      <pre className="p:10 mt:20 r:10 bg:gray-30">{JSON.stringify(data, null, 2)}</pre>
     </>
   );
 }
+
+export function RemoveButton() {}

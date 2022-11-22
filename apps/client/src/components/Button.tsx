@@ -6,12 +6,20 @@ import { DOMProps } from "types/shared";
 export type ButtonProps = DOMProps<"button"> & VariantProps<typeof button>;
 
 const button = cva(
-  ["inline-flex", "content-center", "items-center", "rounded-md", "text-md", "transition-colors", "duration-250"],
+  [
+    "inline-flex",
+    "content-center",
+    "items-center",
+    "rounded-md",
+    "text-md",
+    "transition-colors",
+    "duration-250",
+  ],
   {
     variants: {
       variant: {
         unstyled: "",
-        base: ["px-3", "py-1", "bg-yellow-400", "text-black"],
+        base: ["px-3", "py-1", "bg-yellow-400", "hover:bg-yellow-200", "text-black"],
         icon: ["w-10", "h-10", "rounded-full", "overflow-hidden"],
         outline: [
           "px-4",

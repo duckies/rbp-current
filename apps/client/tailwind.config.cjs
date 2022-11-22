@@ -27,6 +27,7 @@ module.exports = {
           4: "#fff468", // Rogue
           7: "#8788ee", // Shaman
           9: "#c69b6d", // Warlock
+          1: "#C69B6D", // Warrior
         },
         surface: {
           50: "#E8E5EB",
@@ -69,5 +70,10 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /(text-color|bg)-class-(\d)/,
+    },
+  ],
   plugins: [TailwindForms()],
 };

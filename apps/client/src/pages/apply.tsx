@@ -23,6 +23,9 @@ export default function ApplyPage() {
         <Hero.Caption>We&apos;re always recruiting the best of the worst.</Hero.Caption>
       </Hero>
 
+      {/* REMOVE */}
+      {/* <DevTool control={form.control} /> */}
+
       <Paper className="flex flex-col gap-y-7">
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

@@ -5,5 +5,5 @@ import { $get } from "lib/utils/fetch";
 export const lookupCharacter = (ctx: CharacterQueryContext["lookup"]) => {
   const { region, realm, name } = ctx.queryKey[0].character;
 
-  return $get<Character>(`/lookup/${region}/${realm}/${name}`);
+  return $get<Character>(`/character/lookup/${region}/${realm}/${name}`);
 };
