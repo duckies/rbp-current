@@ -1,42 +1,60 @@
-import type { AriaSelectProps } from "@react-types/select";
-import Button from "components/Button";
-import { ChevronDownIcon } from "components/icons/ChevronDown";
-import { ListBox } from "components/ListBox";
-import { Popover } from "components/overlays/Popover";
-import { useRef } from "react";
-import { HiddenSelect, useSelect } from "react-aria";
-import { useSelectState } from "react-stately";
+import { Listbox } from "@headlessui/react";
+import { FieldError } from "components/forms/shared/FieldError";
+import { label as labelCSS } from "components/forms/shared/Label";
+import { FieldValues, useController } from "react-hook-form";
 import { FormFieldStyles } from "styles/components/forms";
-import type { CollectionItem } from "types/state";
-export { Item } from "react-stately";
+import { listbox, option } from "styles/components/listbox";
+import { FieldProps } from "types/forms";
+import { DOMProps } from "types/shared";
 
-type SelectProps = AriaSelectProps<CollectionItem>;
+type Item = {
+  text: string;
+  value: any;
+};
 
-export function Select(props: SelectProps) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const state = useSelectState(props);
-  const { labelProps, triggerProps, valueProps, menuProps } = useSelect(props, state, ref);
+type SelectProps<T extends FieldValues> = Omit<DOMProps<"select">, "name" | "form"> &
+  FieldProps<T> & {
+    label?: string;
+    items: Item[];
+  };
+
+export function Select<T extends FieldValues>({ label, items, name, form }: SelectProps<T>) {
+  const { field, fieldState } = useController({ name, control: form.control });
+
+  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null;
 
   return (
-    <div className="relative inline-flex w-full flex-col">
-      <div {...labelProps}>{props.label}</div>
+    <Listbox
+      as="div"
+      className="relative inline-flex w-full flex-col"
+      value={selectedItem}
+      onChange={field.onChange}
+    >
+      <Listbox.Label className={labelCSS()}>{label}</Listbox.Label>
 
-      <HiddenSelect state={state} triggerRef={ref} label={props.label} name={props.name} />
+      <div className="relative">
+        <Listbox.Button
+          className={FormFieldStyles({ class: "form-select text-left" })}
+          ref={field.ref}
+        >
+          {({ value }) => <span className="inline-block h-[1rem]">{value?.text}</span>}
+        </Listbox.Button>
 
-      <Button variant="unstyled" ref={ref} className={FormFieldStyles({ class: "relative" })} {...triggerProps}>
-        <span {...valueProps} className={`text-md ${state.selectedItem ? "text-gray-800" : "text-gray-500"}`}>
-          {state.selectedItem ? state.selectedItem.rendered : "Select an option"}
-        </span>
-
-        <div className="absolute inset-y-0 right-0 flex items-center p-2">
-          <ChevronDownIcon className="h-5 w-5" />
-        </div>
-      </Button>
-      {state.isOpen && (
-        <Popover state={state} triggerRef={ref} placement="bottom start" className="w-52" isNonModal>
-          <ListBox {...menuProps} state={state} />
-        </Popover>
-      )}
-    </div>
+        <Listbox.Options className={listbox()}>
+          {items.map((item) => (
+            <Listbox.Option
+              key={item.value}
+              value={item.value}
+              className={({ active, selected }) =>
+                option({ status: active ? "active" : selected ? "selected" : null })
+              }
+            >
+              {item.text}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </div>
+      {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
+    </Listbox>
   );
 }

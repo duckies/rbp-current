@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import * as React from "react";
 import type { AriaListBoxOptions } from "@react-aria/listbox";
-import type { Node } from "@react-types/shared";
-import CheckIcon from "components/icons/CheckIcon";
-import { useRef } from "react";
-import { useListBox, useListBoxSection, useOption } from "react-aria";
 import type { ListState } from "react-stately";
+import type { Node } from "@react-types/shared";
+import { useListBox, useListBoxSection, useOption } from "react-aria";
 
 interface ListBoxProps extends AriaListBoxOptions<unknown> {
   listBoxRef?: React.RefObject<HTMLUListElement>;
@@ -21,12 +21,16 @@ interface OptionProps {
 }
 
 export function ListBox(props: ListBoxProps) {
-  const ref = useRef<HTMLUListElement>(null);
-  const { listBoxRef = ref, state } = props;
-  const { listBoxProps } = useListBox(props, state, listBoxRef);
+  let ref = React.useRef<HTMLUListElement>(null);
+  let { listBoxRef = ref, state } = props;
+  let { listBoxProps } = useListBox(props, state, listBoxRef);
 
   return (
-    <ul {...listBoxProps} ref={listBoxRef} className="max-h-72 w-full overflow-auto outline-none">
+    <ul
+      {...listBoxProps}
+      ref={listBoxRef}
+      className="w-full max-h-72 overflow-auto outline-none"
+    >
       {[...state.collection].map((item) =>
         item.type === "section" ? (
           <ListBoxSection key={item.key} section={item} state={state} />
@@ -39,16 +43,19 @@ export function ListBox(props: ListBoxProps) {
 }
 
 function ListBoxSection({ section, state }: SectionProps) {
-  const { itemProps, headingProps, groupProps } = useListBoxSection({
+  let { itemProps, headingProps, groupProps } = useListBoxSection({
     heading: section.rendered,
-    "aria-label": section["aria-label"],
+    "aria-label": section["aria-label"]
   });
 
   return (
     <>
       <li {...itemProps} className="pt-2">
         {section.rendered && (
-          <span {...headingProps} className="mx-3 text-xs font-bold uppercase text-gray-500">
+          <span
+            {...headingProps}
+            className="text-xs font-bold uppercase text-gray-500 mx-3"
+          >
             {section.rendered}
           </span>
         )}
@@ -63,10 +70,10 @@ function ListBoxSection({ section, state }: SectionProps) {
 }
 
 function Option({ item, state }: OptionProps) {
-  const ref = useRef<HTMLLIElement>(null);
-  const { optionProps, isDisabled, isSelected, isFocused } = useOption(
+  let ref = React.useRef<HTMLLIElement>(null);
+  let { optionProps, isDisabled, isSelected, isFocused } = useOption(
     {
-      key: item.key,
+      key: item.key
     },
     state,
     ref
@@ -83,12 +90,14 @@ function Option({ item, state }: OptionProps) {
     <li
       {...optionProps}
       ref={ref}
-      className={`m-1 flex cursor-default items-center justify-between rounded-md py-2 px-2 text-sm outline-none ${text} ${
+      className={`m-1 rounded-md py-2 px-2 text-sm outline-none cursor-default flex items-center justify-between ${text} ${
         isFocused ? "bg-pink-100" : ""
       } ${isSelected ? "font-bold" : ""}`}
     >
       {item.rendered}
-      {isSelected && <CheckIcon aria-hidden="true" className="h-5 w-5 text-pink-600" />}
+      {/* {isSelected && (
+        <CheckIcon aria-hidden="true" className="w-5 h-5 text-pink-600" />
+      )} */}
     </li>
   );
 }

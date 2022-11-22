@@ -1,12 +1,9 @@
-import { mergeProps, useObjectRef } from "@react-aria/utils";
-import clsx from "clsx";
 import type { VariantProps } from "cva";
 import { cva } from "cva";
 import React from "react";
-import type { AriaButtonProps } from "react-aria";
-import { useButton, useFocusRing } from "react-aria";
+import { DOMProps } from "types/shared";
 
-export type ButtonProps = AriaButtonProps & React.ComponentPropsWithRef<"button"> & VariantProps<typeof button>;
+export type ButtonProps = DOMProps<"button"> & VariantProps<typeof button>;
 
 const button = cva(
   ["inline-flex", "content-center", "items-center", "rounded-md", "text-md", "transition-colors", "duration-250"],
@@ -43,20 +40,15 @@ const button = cva(
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, size, className, children, ...props }, forwardedRef) => {
-    const ref = useObjectRef(forwardedRef);
-    const { buttonProps } = useButton(props, ref);
-    const { focusProps, isFocusVisible } = useFocusRing();
-
     return (
       <button
-        ref={ref}
+        ref={forwardedRef}
         className={button({
           variant,
           size,
-          state: buttonProps.disabled ? "disabled" : null,
-          class: clsx(className, isFocusVisible ? "border-yellow text-black" : "border-transparent"),
+          state: props.disabled ? "disabled" : null,
         })}
-        {...mergeProps(buttonProps, focusProps)}
+        {...props}
       >
         {children}
       </button>

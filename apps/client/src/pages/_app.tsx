@@ -1,14 +1,12 @@
 import localFont from "@next/font/local";
 import type { User } from "@rbp/server";
-import type { DehydratedState } from "@tanstack/react-query";
-import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DehydratedState, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "components/common/LoadingBar/loading-bar.css";
 import { AuthProvider } from "hooks/stores/useAuth";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useState } from "react";
-import { SSRProvider } from "react-aria";
 import "styles/global.css";
 
 const wotfard = localFont({
@@ -30,37 +28,24 @@ const LoadingBar = dynamic(() => import("components/common/LoadingBar"), {
 });
 
 export default function MyApp({ Component, pageProps }: MyAppProps) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            refetchOnWindowFocus: false,
-          },
-        },
-      })
-  );
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <SSRProvider>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <AuthProvider initialState={{ user: pageProps.user }}>
-            <Head>
-              <title>Really Bad Players</title>
-            </Head>
-            <style jsx global>
-              {`
-                :root {
-                  --font-wotfard: ${wotfard.style.fontFamily};
-                }
-              `}
-            </style>
-            <Component {...pageProps} />
-          </AuthProvider>
-        </Hydrate>
-      </QueryClientProvider>
-      <LoadingBar />
-    </SSRProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider initialState={{ user: pageProps.user }}>
+        <Head>
+          <title>Really Bad Players</title>
+        </Head>
+        <style jsx global>
+          {`
+            :root {
+              --font-wotfard: ${wotfard.style.fontFamily};
+            }
+          `}
+        </style>
+        <LoadingBar />
+        <Component {...pageProps} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

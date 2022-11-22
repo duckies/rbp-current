@@ -1,23 +1,10 @@
-import type { ParsedUrlQuery } from 'querystring';
 import type { User } from '@rbp/server';
-import type { UseMutateFunction } from '@tanstack/react-query';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getMe } from 'lib/auth';
-import type { GetServerSidePropsContext, PreviewData } from 'next';
 import nookies from 'nookies';
 import { createContext, createElement, useContext, useMemo, useState } from 'react';
-import { logout } from '../auth';
 
 export interface AuthContextValue {
   user?: User
-  error: unknown
-  status: 'error' | 'success'
-  refetch: any
-  logout: UseMutateFunction<
-    void,
-    unknown,
-    GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | undefined
-  >
+  logout: () => void
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -41,15 +28,8 @@ export function AuthProvider({
   initialState,
   children,
 }: AuthProviderProps) {
+  const [user, setUser] = useState<User | null>(null);
   const [token, _setToken] = useState<string | null>(initialState?.token || null);
-  const queryClient = useQueryClient();
-
-  const { data, error, status, refetch } = useQuery(['user'], () => getMe(token!), {
-    initialData: initialState?.user,
-    retry: 0,
-    staleTime: 1000 * 60 * 60 * 8, // Refetch after 8 hours
-    enabled: !!token,
-  });
 
   function setToken(token: string | null) {
     _setToken(token);
@@ -59,25 +39,17 @@ export function AuthProvider({
     }
   }
 
-  const logoutMutation = useMutation(
-    async (ctx?: GetServerSidePropsContext) => logout(ctx),
-    {
-      onSuccess: () => {
-        queryClient.setQueryData(['user'], null);
-        setToken(null);
-      },
-    },
-  );
+  function logout() {
+    setToken(null);
+  }
 
   const value = useMemo(
     () => ({
-      user: data,
-      error,
-      status,
-      refetch,
-      logout: logoutMutation.mutate,
+      user,
+      token,
+      logout,
     }),
-    [data, error, status, refetch, logoutMutation.mutate],
+    [user, token, logout],
   );
 
   return createElement(AuthContext.Provider, { value }, children);

@@ -1,7 +1,7 @@
 import { cva } from "cva";
 import type { DOMRefProps } from "types/shared";
 
-const label = cva(["block", "font-medium", "mb-2"]);
+export const label = cva(["block", "font-medium", "mb-2"]);
 
 type LabelProps = DOMRefProps<"label">;
 

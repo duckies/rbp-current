@@ -1,54 +1,62 @@
-import type { AriaComboBoxProps } from "@react-types/combobox";
-import Button from "components/Button";
-import Label from "components/forms/shared/Label";
+import { Combobox as HeadlessCombobox } from "@headlessui/react";
+import { FieldError } from "components/forms/shared/FieldError";
+import { label as labelCSS } from "components/forms/shared/Label";
 import { ChevronDownIcon } from "components/icons/ChevronDown";
-import { ListBox } from "components/ListBox";
-import { Popover } from "components/overlays/Popover";
-import { useRef } from "react";
-import { useComboBox, useFilter } from "react-aria";
-import { useComboBoxState } from "react-stately";
+import { useState } from "react";
+import { FieldValues, useController } from "react-hook-form";
 import { FormFieldStyles } from "styles/components/forms";
-import type { DOMProps } from "types/shared";
-import type { CollectionItem } from "types/state";
+import { listbox, option } from "styles/components/listbox";
+import type { FieldProps, Item } from "types/forms";
 
-type ComboBoxProps = AriaComboBoxProps<CollectionItem> & DOMProps<"input">;
+type ComboboxProps<T extends FieldValues> = FieldProps<T> & {
+  items: Item[];
+  label?: string;
+  initialValue?: Item;
+};
 
-export function ComboBox(props: ComboBoxProps) {
-  const { contains } = useFilter({ sensitivity: "base" });
-  const state = useComboBoxState({ ...props, defaultFilter: contains });
+export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
+  const { label, items, initialValue, name, form, ...inputProps } = props;
+  const { field, fieldState } = useController({ name, control: form.control });
 
-  const buttonRef = useRef(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const listBoxRef = useRef(null);
-  const popoverRef = useRef(null);
-
-  const { labelProps, buttonProps, inputProps, listBoxProps } = useComboBox(
-    {
-      ...props,
-      inputRef,
-      buttonRef,
-      listBoxRef,
-      popoverRef,
-    },
-    state
-  );
+  const [query, setQuery] = useState("");
+  const filteredItems =
+    query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()));
+  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null;
 
   return (
-    <div className="relative inline-flex w-full flex-col">
-      <Label {...labelProps}>{props.label}</Label>
+    <HeadlessCombobox as="div" value={selectedItem} onChange={field.onChange}>
+      <HeadlessCombobox.Label className={labelCSS()}>{label}</HeadlessCombobox.Label>
 
-      <div className="relative inline-block">
-        <input {...inputProps} ref={inputRef} className={FormFieldStyles({ class: props.className })} />
-        <Button variant="unstyled" {...buttonProps} ref={buttonRef} className="absolute inset-y-0 right-0 ml-0 p-3">
+      <div className="relative mt-1">
+        <HeadlessCombobox.Input
+          {...inputProps}
+          className={FormFieldStyles()}
+          onChange={(e) => setQuery(e.target.value)}
+          displayValue={(item: Item) => item?.text}
+        />
+
+        <HeadlessCombobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronDownIcon className="h-5 w-5" aria-hidden />
-        </Button>
+        </HeadlessCombobox.Button>
+
+        {filteredItems.length > 0 && (
+          <HeadlessCombobox.Options className={listbox()}>
+            {filteredItems.map((item) => (
+              <HeadlessCombobox.Option
+                key={item.value}
+                value={item.value}
+                className={({ active, selected }) =>
+                  option({ status: active ? "active" : selected ? "selected" : null })
+                }
+              >
+                {({ active, selected }) => <span>{item.text}</span>}
+              </HeadlessCombobox.Option>
+            ))}
+          </HeadlessCombobox.Options>
+        )}
       </div>
 
-      {state.isOpen && (
-        <Popover popoverRef={popoverRef} triggerRef={inputRef} state={state} isNonModal placement="bottom start">
-          <ListBox {...listBoxProps} listBoxRef={listBoxRef} state={state} />
-        </Popover>
-      )}
-    </div>
+      {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
+    </HeadlessCombobox>
   );
 }

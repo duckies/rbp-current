@@ -1,12 +1,11 @@
-import type { VariantProps } from 'cva';
-import { cva } from 'cva';
+import type { VariantProps } from "cva";
+import { cva } from "cva";
+import { DOMProps } from "types/shared";
 
-export interface InputWrapperProps extends React.ComponentPropsWithoutRef<'div'>, VariantProps<typeof styles> { }
+type FieldWrapperProps = DOMProps<'div'> & VariantProps<typeof styles>;
 
-const styles = cva([
-  'mt-1',
-]);
+const styles = cva(["mt-1"]);
 
-export default function InputWrapper({ className, children }: InputWrapperProps) {
-  return <div className={styles({ class: className })}>{children}</div>;
+export default function FieldWrapper({ className, children, ...props }: FieldWrapperProps) {
+  return <div className={styles({ className })} {...props}>{children}</div>;
 }
