@@ -1,3 +1,5 @@
+import { withContentlayer } from "next-contentlayer"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Conflicts with React-Aria for now.
@@ -17,6 +19,9 @@ const nextConfig = {
   experimental: {
     appDir: false,
   },
-};
+  sassOptions: {
+    prependData: `@import "src/styles/global.scss";`,
+  },
+}
 
-export default nextConfig;
+export default withContentlayer(nextConfig)

@@ -1,64 +1,20 @@
-import path from 'path';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { bundleMDX } from 'mdx-bundler';
+import type { Expansion } from "@rbp/battle.net/constants"
+import { Expansions, Instances } from "@rbp/battle.net/constants"
+import slug from "slug"
 
-export interface MarkdownMetadata {
-  title: string
-  slug: string
-  description: string
-  date: Date
+export function getPathExpansion(path: string): Expansion | null {
+  const expansionSlug = path.split("/")[1]
+  return Expansions.find((e) => slug(e) === expansionSlug) || null
 }
 
-export interface MarkdownFile {
-  name: string
-  slug: string
-  path: string
-}
+export function getPathInstance(path: string): string | null {
+  const expansion = getPathExpansion(path)
 
-export type MarkdownType = 'posts' | 'pages';
+  if (!expansion) {
+    return null
+  }
 
-/**
- * Collects all markdown file names in the directory
- * associated with its type, e.g. posts or pages.
- */
-export function getMarkdownFilesByType(type: MarkdownType): MarkdownFile[] {
-  const folder = path.join(process.cwd(), `./src/content/${type}`);
-
-  return fs.readdirSync(folder)
-    .filter(fileName => /\.mdx?$/.test(fileName))
-    .map(fileName => ({
-      name: fileName,
-      slug: fileName.replace(/\.mdx?$/, ''),
-      path: path.join(process.cwd(), `./src/content/${type}/${fileName}`),
-    }));
-}
-
-/**
- * Collects the frontmatter of a type of markdown file.
- */
-export function getMarkdownMetadataByType(type: MarkdownType) {
-  const files = getMarkdownFilesByType(type);
-
-  return files.map((file) => {
-    const source = fs.readFileSync(file.path, 'utf8');
-    const { data } = matter(source);
-
-    // TODO: Should validate and discard malformed mdx files.
-    return { slug: file.slug, ...data } as MarkdownMetadata;
-  });
-}
-
-export async function getMarkdownContent(type: MarkdownType, slug: string) {
-  const filePath = path.join(process.cwd(), './src/content', type, `${slug}.mdx`);
-
-  const { code, frontmatter } = await bundleMDX({
-    file: filePath,
-    cwd: path.join(process.cwd(), `./src/content/${type}`),
-  });
-
-  return {
-    meta: frontmatter,
-    code,
-  };
+  const instances = Instances[expansion]
+  const instanceSlug = path.split("/")[2]
+  return instances?.find((i) => slug(i) === instanceSlug) || null
 }

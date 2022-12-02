@@ -1,7 +1,20 @@
 {
   "name": "@rbp/battle.net",
+  "exports": {
+    ".": "./dist/index.js",
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "require": "./dist/constants.js",
+      "import": "./dist/constants.js"
+    }
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "constants": ["./dist/constants.d.ts"]
+    }
+  },
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",

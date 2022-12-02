@@ -1,0 +1,20 @@
+{
+  "title": "Heroic Eranog",
+  "date": "2022-12-02T05:00:00.000Z",
+  "body": {
+    "raw": "\nUllamco et nostrud magna commodo nostrud occaecat quis pariatur id ipsum. Ipsum\nconsequat enim id excepteur consequat nostrud esse esse fugiat dolore.\nReprehenderit occaecat exercitation non cupidatat in eiusmod laborum ex eu\nfugiat aute culpa pariatur. Irure elit proident consequat veniam minim ipsum ex\npariatur.\n\nMollit nisi cillum exercitation minim officia velit laborum non Lorem\nadipisicing dolore. Labore commodo consectetur commodo velit adipisicing irure\ndolore dolor reprehenderit aliquip. Reprehenderit cillum mollit eiusmod\nexcepteur elit ipsum aute pariatur in. Cupidatat ex culpa velit culpa ad non\nlabore exercitation irure laborum.\n",
+    "code": "var Component=(()=>{var l=Object.create;var r=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var x=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var f=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports),b=(e,t)=>{for(var n in t)r(e,n,{get:t[n],enumerable:!0})},u=(e,t,n,a)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let o of p(t))!g.call(e,o)&&o!==n&&r(e,o,{get:()=>t[o],enumerable:!(a=d(t,o))||a.enumerable});return e};var h=(e,t,n)=>(n=e!=null?l(x(e)):{},u(t||!e||!e.__esModule?r(n,\"default\",{value:e,enumerable:!0}):n,e)),j=e=>u(r({},\"__esModule\",{value:!0}),e);var s=f((L,c)=>{c.exports=_jsx_runtime});var M={};b(M,{default:()=>v,frontmatter:()=>_});var i=h(s()),_={title:\"Heroic Eranog\",date:\"2022-12-2\"};function m(e){let t=Object.assign({p:\"p\"},e.components);return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsx)(t.p,{children:`Ullamco et nostrud magna commodo nostrud occaecat quis pariatur id ipsum. Ipsum\nconsequat enim id excepteur consequat nostrud esse esse fugiat dolore.\nReprehenderit occaecat exercitation non cupidatat in eiusmod laborum ex eu\nfugiat aute culpa pariatur. Irure elit proident consequat veniam minim ipsum ex\npariatur.`}),`\n`,(0,i.jsx)(t.p,{children:`Mollit nisi cillum exercitation minim officia velit laborum non Lorem\nadipisicing dolore. Labore commodo consectetur commodo velit adipisicing irure\ndolore dolor reprehenderit aliquip. Reprehenderit cillum mollit eiusmod\nexcepteur elit ipsum aute pariatur in. Cupidatat ex culpa velit culpa ad non\nlabore exercitation irure laborum.`})]})}function q(e={}){let{wrapper:t}=e.components||{};return t?(0,i.jsx)(t,Object.assign({},e,{children:(0,i.jsx)(m,e)})):m(e)}var v=q;return j(M);})();\n;return Component;"
+  },
+  "_id": "strategies/dragonflight/vault-of-the-incarnates/eranog.mdx",
+  "_raw": {
+    "sourceFilePath": "strategies/dragonflight/vault-of-the-incarnates/eranog.mdx",
+    "sourceFileName": "eranog.mdx",
+    "sourceFileDir": "strategies/dragonflight/vault-of-the-incarnates",
+    "contentType": "mdx",
+    "flattenedPath": "strategies/dragonflight/vault-of-the-incarnates/eranog"
+  },
+  "type": "Strategy",
+  "url": "/strategies/strategies/dragonflight/vault-of-the-incarnates/eranog",
+  "expansion": "Dragonflight",
+  "instance": "Vault of the Incarnates"
+}

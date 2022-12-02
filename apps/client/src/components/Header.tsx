@@ -1,47 +1,87 @@
-import { login } from 'hooks/auth'
-import DiscordLogo from 'components/icons/Discord'
-import Logo from 'components/icons/Logo'
-import Link from 'components/Link'
-import NavLink from 'components/NavLink'
-import { Container } from 'components/Container'
-import { useAuth } from '../hooks/stores/useAuth'
-import { Button } from './Button'
+import { Container } from "components/Container"
+import DiscordLogo from "components/icons/Discord"
+import Logo from "components/icons/Logo"
+import { Link } from "components/Link"
+import { ContentList, ContentListItem } from "components/navigation/content"
+import { NavigationMenu } from "components/navigation/menu"
+import { login } from "hooks/auth"
+import { useAuth } from "../hooks/stores/useAuth"
+import { Avatar } from "./Avatar"
+import { Button } from "./Button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './Dropdown'
-import { Avatar } from './Avatar'
+} from "./Dropdown"
 
 export default function Header() {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
   const isAuthenticated = !!user
 
   return (
-    <header className="sticky top-0 w-full py-2 bg-surface-800/90 backdrop-filter backdrop-blur-[10px] z-50">
+    <header className="sticky top-0 z-50 w-full bg-surface-800/90 py-2 backdrop-blur-[10px] backdrop-filter">
       <Container className="relative flex">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Link className="flex h-10 w-10" to="/">
             <Logo />
           </Link>
         </div>
 
-        <nav className="flex justify-center w-full">
-          <ul className="flex list-none gap-2 py-2">
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/blog">Blog</NavLink>
-            </li>
-            <li>
-              <NavLink to="/apply">Apply</NavLink>
-            </li>
-            <li>
-              <NavLink to="/about">About</NavLink>
-            </li>
-          </ul>
+        <nav className="flex w-full justify-center">
+          <NavigationMenu>
+            <NavigationMenu.List>
+              <NavigationMenu.Item>
+                <NavigationMenu.Link to="/">Home</NavigationMenu.Link>
+              </NavigationMenu.Item>
+
+              <NavigationMenu.Item>
+                <NavigationMenu.Trigger>Posts</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                  <ContentList style="featured">
+                    <ContentListItem
+                      style="featured"
+                      to="/posts/vault-of-the-incarnates"
+                      title="Vault of the Incarnates"
+                      img={{
+                        src: "/images/vault.jpg",
+                        alt: "Vault of the Incarnates Raid Entrance",
+                        width: "437",
+                        height: "664",
+                      }}
+                    >
+                      Strategy guides and resources for the first Dragonflight raid.
+                    </ContentListItem>
+
+                    <ContentListItem to="/posts" title="Posts">
+                      All recent posts
+                    </ContentListItem>
+
+                    <ContentListItem to="/posts" title="Announcements">
+                      Guild announcements
+                    </ContentListItem>
+                  </ContentList>
+                </NavigationMenu.Content>
+              </NavigationMenu.Item>
+
+              <NavigationMenu.Item>
+                <NavigationMenu.Trigger>Apply</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                  <ContentList style="grid">
+                    <ContentListItem to="/apply" title="Application">
+                      Fill out an application to join the guild.
+                    </ContentListItem>
+
+                    <ContentListItem to="/applications" title="View Submissions">
+                      View the list of submitted applications.
+                    </ContentListItem>
+                  </ContentList>
+                </NavigationMenu.Content>
+              </NavigationMenu.Item>
+
+              <NavigationMenu.Indicator />
+            </NavigationMenu.List>
+          </NavigationMenu>
         </nav>
 
         <div className="flex items-center gap-1.5">
