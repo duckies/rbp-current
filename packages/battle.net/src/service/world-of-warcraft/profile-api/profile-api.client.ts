@@ -1,27 +1,42 @@
-import type { WoWClient } from '../client';
-import type { ProfileOptions } from '../interfaces/profile-options.interface';
+import type { WoWClient } from '../client'
+import type { ProfileOptions } from '../interfaces/profile-options.interface'
 import type {
+  CharacterAchievementsSummary,
   CharacterMediaSummary,
   CharacterMythicKeystoneSeason,
   CharacterProfileStatus,
   CharacterProfileSummary,
   CharacterRaids,
-} from './interfaces';
-import type { CharacterMythicKeystoneProfile } from './interfaces/character-mythic-keystone-profile-index.interface';
+} from './interfaces'
+import type { CharacterMythicKeystoneProfile } from './interfaces/character-mythic-keystone-profile-index.interface'
 
 export class ProfileAPIClient {
-  constructor(private readonly client: WoWClient) { }
+  constructor(private readonly client: WoWClient) {}
+
+  /**
+   * Character Profile API — Character Achievement Summary
+   */
+  getCharacterAchievementSummary(options: ProfileOptions) {
+    return this.client.get<CharacterAchievementsSummary>({
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/achievements`,
+      namespace: 'profile',
+      ...options,
+    })
+  }
 
   /**
    * Character Profile API — Character Profile Status
    */
   getCharacterProfileStatus(options: ProfileOptions) {
     return this.client.get<CharacterProfileStatus>({
-      path: `profile/wow/character/${options.realm
-        }/${options.name.toLowerCase()}/status`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/status`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 
   /**
@@ -29,11 +44,12 @@ export class ProfileAPIClient {
    */
   getCharacterProfileSummary(options: ProfileOptions) {
     return this.client.get<CharacterProfileSummary>({
-      path: `profile/wow/character/${options.realm
-        }/${options.name.toLowerCase()}`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 
   /**
@@ -41,11 +57,12 @@ export class ProfileAPIClient {
    */
   getCharacterMediaSummary(options: ProfileOptions) {
     return this.client.get<CharacterMediaSummary>({
-      path: `profile/wow/character/${options.realm
-        }/${options.name.toLowerCase()}/character-media`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/character-media`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 
   /**
@@ -53,11 +70,12 @@ export class ProfileAPIClient {
    */
   getCharacterMythicKeystoneProfile(options: ProfileOptions) {
     return this.client.get<CharacterMythicKeystoneProfile>({
-      path: `profile/wow/character/${options.realm
-        }/${options.name.toLowerCase()}/mythic-keystone-profile`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/mythic-keystone-profile`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 
   /**
@@ -67,19 +85,23 @@ export class ProfileAPIClient {
     options: ProfileOptions & { season: number },
   ) {
     return this.client.get<CharacterMythicKeystoneSeason>({
-      path: `profile/wow/character/${options.realm
-        }/${options.name.toLowerCase()}/mythic-keystone-profile/season/${options.season
-        }`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/mythic-keystone-profile/season/${
+        options.season
+      }`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 
   getCharacterRaids(options: ProfileOptions) {
     return this.client.get<CharacterRaids>({
-      path: `profile/wow/character/${options.realm}/${options.name.toLowerCase()}/encounters/raids`,
+      path: `profile/wow/character/${
+        options.realm
+      }/${options.name.toLowerCase()}/encounters/raids`,
       namespace: 'profile',
       ...options,
-    });
+    })
   }
 }

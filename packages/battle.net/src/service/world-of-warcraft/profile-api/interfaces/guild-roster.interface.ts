@@ -1,5 +1,5 @@
-import type { Enum, LinkedResource, Realm, Resource } from '../../interfaces';
-import type { Character } from './character.interface';
+import type { Enum, LinkedResource, Realm, Resource } from '../../interfaces'
+import type { Character } from './character.interface'
 
 export interface Guild {
   name: string

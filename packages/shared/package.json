@@ -9,7 +9,8 @@
     "start": "node ./dist/index"
   },
   "dependencies": {
-    "deepmerge-ts": "4.2.2"
+    "deepmerge-ts": "4.2.2",
+    "type-fest": "3.2.0"
   },
   "devDependencies": {
     "typescript": "4.7.4"

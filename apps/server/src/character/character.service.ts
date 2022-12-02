@@ -1,23 +1,25 @@
-import { SqlEntityManager } from '@mikro-orm/knex';
-import { Injectable } from '@nestjs/common';
-import { ProfileEndpoint, ProfileEndpointResponseMap } from '@rbp/battle.net';
-import { capitalize } from '@rbp/shared';
-import { CancelableRequest, Response } from 'got-cjs';
-import { Character } from './character.entity';
-import { CharacterOrchestrator } from './character.orchestrator';
-import { FindCharacterDTO } from './dto/find-character.dto';
+import { SqlEntityManager } from '@mikro-orm/knex'
+import { Injectable } from '@nestjs/common'
+import { ProfileEndpoint, ProfileEndpointResponseMap } from '@rbp/battle.net'
+import { capitalize } from '@rbp/shared'
+import { CancelableRequest, Response } from 'got-cjs'
+import { Character } from './character.entity'
+import { CharacterOrchestrator } from './character.orchestrator'
+import { FindCharacterDTO } from './dto/find-character.dto'
 
-export type EndpointHandler<E extends ProfileEndpoint> = (options: any) => CancelableRequest<Response<ProfileEndpointResponseMap[E]>>;
+export type EndpointHandler<E extends ProfileEndpoint> = (
+  options: any
+) => CancelableRequest<Response<ProfileEndpointResponseMap[E]>>
 
 @Injectable()
 export class CharacterService {
-  public readonly repository;
+  public readonly repository
 
   constructor(
     public readonly em: SqlEntityManager,
-    private readonly orchestrator: CharacterOrchestrator,
+    private readonly orchestrator: CharacterOrchestrator
   ) {
-    this.repository = em.getRepository(Character);
+    this.repository = em.getRepository(Character)
   }
 
   /**
@@ -28,7 +30,7 @@ export class CharacterService {
       name: capitalize(findCharacterDTO.name),
       realm: findCharacterDTO.realm,
       region: findCharacterDTO.region,
-    });
+    })
   }
 
   /**
@@ -39,16 +41,20 @@ export class CharacterService {
       name: capitalize(findCharacterDTO.name),
       realm: findCharacterDTO.realm,
       region: findCharacterDTO.region,
-    });
+    })
 
-    await this.orchestrator.getEndpoints([
-      'character-profile-summary',
-      'character-media-summary',
-      'character-mythic-keystone-profile',
-      'character-raids',
-    ], character);
+    await this.orchestrator.getEndpoints(
+      [
+        'character-profile-summary',
+        'character-achievements-summary',
+        'character-media-summary',
+        'character-mythic-keystone-profile',
+        'character-raids',
+      ],
+      character
+    )
 
-    return character;
+    return character
   }
 
   /**
@@ -60,17 +66,17 @@ export class CharacterService {
       name: capitalize(findCharacterDTO.name),
       realm: findCharacterDTO.realm,
       region: findCharacterDTO.region,
-    });
+    })
 
-    await this.orchestrator.getEndpoints(endpoints, character);
+    await this.orchestrator.getEndpoints(endpoints, character)
 
-    await this.em.flush();
+    await this.em.flush()
 
-    return character;
+    return character
   }
 
   public async delete(findCharacterDTO: FindCharacterDTO) {
-    const character = await this.repository.findOneOrFail(findCharacterDTO);
-    return this.repository.remove(character).flush();
+    const character = await this.repository.findOneOrFail(findCharacterDTO)
+    return this.repository.remove(character).flush()
   }
 }
