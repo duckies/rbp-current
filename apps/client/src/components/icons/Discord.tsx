@@ -1,4 +1,8 @@
-export default function DiscordLogo() {
+import type { DOMProps } from "types/shared"
+
+type DiscordLogoProps = DOMProps<"svg">
+
+export default function DiscordLogo(props: DiscordLogoProps) {
   return (
     <svg
       width="1.5rem"
@@ -6,6 +10,7 @@ export default function DiscordLogo() {
       viewBox="0 0 71 55"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0)">
         <path
@@ -19,5 +24,5 @@ export default function DiscordLogo() {
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

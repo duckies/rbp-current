@@ -41,7 +41,7 @@ export default function Header() {
                   <ContentList style="featured">
                     <ContentListItem
                       style="featured"
-                      to="/posts/vault-of-the-incarnates"
+                      to="/strategies/vault"
                       title="Vault of the Incarnates"
                       img={{
                         src: "/images/vault.jpg",
@@ -53,12 +53,8 @@ export default function Header() {
                       Strategy guides and resources for the first Dragonflight raid.
                     </ContentListItem>
 
-                    <ContentListItem to="/posts" title="Posts">
-                      All recent posts
-                    </ContentListItem>
-
-                    <ContentListItem to="/posts" title="Announcements">
-                      Guild announcements
+                    <ContentListItem to="/strategies" title="Strategies">
+                      Collection of all strategy guides.
                     </ContentListItem>
                   </ContentList>
                 </NavigationMenu.Content>

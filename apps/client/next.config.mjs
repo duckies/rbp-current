@@ -1,9 +1,27 @@
-import { withContentlayer } from "next-contentlayer"
+import frontmatter from "remark-frontmatter"
+import remarkTOC from "remark-toc"
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Conflicts with React-Aria for now.
-  reactStrictMode: false,
+export default {
+  pageExtensions: ["tsx", "mdx"],
+  reactStrictMode: true,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.mdx?$/,
+      use: [
+        {
+          loader: "@mdx-js/loader",
+          /** @type {import('@mdx-js/loader').Options} */
+          options: {
+            remarkPlugins: [frontmatter, remarkTOC],
+            providerImportSource: "@mdx-js/react",
+          },
+        },
+      ],
+    })
+
+    return config
+  },
   images: {
     remotePatterns: [
       {
@@ -14,6 +32,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "render.worldofwarcraft.com",
       },
+      {
+        protocol: "https",
+        hostname: "render-us.worldofwarcraft.com",
+      },
     ],
   },
   experimental: {
@@ -23,5 +45,3 @@ const nextConfig = {
     prependData: `@import "src/styles/global.scss";`,
   },
 }
-
-export default withContentlayer(nextConfig)

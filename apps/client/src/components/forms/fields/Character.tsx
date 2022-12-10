@@ -1,32 +1,35 @@
-import { RealmMap, RealmSlug, Region, Regions } from "@rbp/battle.net/dist/constants";
-import { FindCharacterDTO } from "@rbp/server";
-import Button from "components/Button";
-import { CharacterPreview } from "components/character/preview";
-import { Combobox } from "components/forms/fields/Combobox";
-import { Select } from "components/forms/fields/Select";
-import { Textfield } from "components/forms/fields/Textfield";
-import { characterResolver } from "features/Application/validators";
-import { FieldValues, useFieldArray, useForm } from "react-hook-form";
-import { ArrayFieldProps } from "types/forms";
+import type { RealmSlug, Region } from "@rbp/battle.net/constants"
+import { RealmMap, Regions } from "@rbp/battle.net/constants"
+import type { FindCharacterDTO } from "@rbp/server"
+import Button from "components/Button"
+import { CharacterPreview } from "components/character/preview"
+import { Combobox } from "components/forms/fields/Combobox"
+import { Select } from "components/forms/fields/Select"
+import { Textfield } from "components/forms/fields/Textfield"
+import { characterResolver } from "features/Application/validators"
+import type { FieldValues } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
+import type { ArrayFieldProps } from "types/forms"
 
-export const RegionItems = Regions.map((r) => ({ text: r.toUpperCase(), value: r }));
+export const RegionItems = Regions.map((r) => ({ text: r.toUpperCase(), value: r }))
 
 export const Realms = Object.entries(RealmMap)
   .sort((a, b) => a[0].localeCompare(b[0]))
   .map(([text, value]) => ({
     text,
     value,
-  }));
+  }))
 
 export type CharacterPickerProps<T extends FieldValues> = ArrayFieldProps<T> & {
-  id: string | number;
-};
+  id: string | number
+  disabled?: boolean
+}
 
 export type CharacterSelectorSchema = {
-  region: Region;
-  realm: RealmSlug;
-  name: string;
-};
+  region: Region
+  realm: RealmSlug
+  name: string
+}
 
 export default function CharacterSelector({
   id,
@@ -40,13 +43,13 @@ export default function CharacterSelector({
       realm: null as never,
       name: "",
     },
-  });
+  })
 
-  const { fields, append, remove } = useFieldArray({ name, control: form.control });
+  const { fields, append, remove } = useFieldArray({ name, control: form.control })
 
   const onSubmit = () => {
-    append({ ...(subForm.getValues() as any) });
-  };
+    append({ ...(subForm.getValues() as any) })
+  }
 
   return (
     <>
@@ -75,7 +78,7 @@ export default function CharacterSelector({
       <div>
         {fields.map((field, index) => {
           // The types of this field prop are wildly confusing.
-          const { id, ...character }: { id: string } & FindCharacterDTO = field as any;
+          const { id, ...character }: { id: string } & FindCharacterDTO = field as any
 
           return (
             <div key={field.id}>
@@ -85,9 +88,9 @@ export default function CharacterSelector({
               <input type="hidden" {...form.register(`${name}.${index}.name` as any)} />
               <CharacterPreview character={character} />
             </div>
-          );
+          )
         })}
       </div>
     </>
-  );
+  )
 }

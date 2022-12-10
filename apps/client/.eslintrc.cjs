@@ -4,5 +4,6 @@ module.exports = {
     "import/order": "off",
     "sort-imports": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
+    "no-console": "off",
   },
-};
+}

@@ -1,24 +1,24 @@
-import { RealmMap } from "@rbp/battle.net/dist/constants";
-import type { FindCharacterDTO } from "@rbp/server";
-import { ArrowUpRight } from "components/icons/ArrowUpRight";
-import { useCharacterLookup } from "features/Characters/queries";
-import Image from "next/image";
+import { RealmMap } from "@rbp/battle.net/constants"
+import type { FindCharacterDTO } from "@rbp/server"
+import { ArrowUpRight } from "components/icons/ArrowUpRight"
+import { useCharacterLookup } from "features/Characters/queries"
+import Image from "next/image"
 
 export type CharacterPreviewProps = {
-  character: FindCharacterDTO;
-  removable?: boolean;
-  onRemove?: (character: FindCharacterDTO) => void;
-};
+  character: FindCharacterDTO
+  removable?: boolean
+  onRemove?: (character: FindCharacterDTO) => void
+}
 
 export function CharacterPreview({ character }: CharacterPreviewProps) {
-  const { data, status, error } = useCharacterLookup(character);
+  const { data, status, error } = useCharacterLookup(character)
 
   if (status === "error" && !data) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center">
         <h2>Oops lmfao</h2>
       </div>
-    );
+    )
   }
 
   if (status === "loading" && !data) {
@@ -49,7 +49,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
           <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
         </div>
       </div>
-    );
+    )
   }
 
   const CharacterBasics = data.summary ? (
@@ -70,7 +70,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
       <p>{data.realm}</p>
       <p>Unknown</p>
     </div>
-  );
+  )
 
   const CharacterProgression = data.progression?.summary ? (
     <div>
@@ -86,7 +86,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
     <div>
       <h3>No Progression Data</h3>
     </div>
-  );
+  )
 
   return (
     <>
@@ -106,7 +106,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
         {CharacterProgression}
       </div>
     </>
-  );
+  )
 }
 
 export function RemoveButton() {}

@@ -1,4 +1,5 @@
-const TailwindForms = require("@tailwindcss/forms");
+const TailwindForms = require("@tailwindcss/forms")
+const TailwindTypography = require("@tailwindcss/typography")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-wotfard)", "system-ui", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
         class: {
@@ -68,6 +69,13 @@ module.exports = {
           900: "#402f02",
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "#fff",
+          },
+        },
+      },
     },
   },
   safelist: [
@@ -75,5 +83,5 @@ module.exports = {
       pattern: /(text-color|bg)-class-(\d)/,
     },
   ],
-  plugins: [TailwindForms()],
-};
+  plugins: [TailwindForms(), TailwindTypography()],
+}

@@ -1,0 +1,15 @@
+.post {
+  border-radius: 12px;
+  background-color: color(surface);
+  padding: spacing(8);
+  
+}
+
+.title {
+  font-weight: 600;
+  @include text-size(xl);
+}
+
+.description {
+  margin-top: spacing(3);
+}

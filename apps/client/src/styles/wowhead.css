@@ -1,0 +1,49 @@
+a[data-wh-icon-added="true"] del {
+  display: none;
+}
+
+a[data-wh-icon-added="true"] ins {
+  top: 0;
+  left: 0;
+}
+
+a[data-wh-icon-added="true"] .iconsmall {
+  height: 18px;
+  width: 18px;
+  margin-right: 3px;
+  border-radius: 2px;
+  top: -2px;
+  overflow: hidden;
+}
+
+.wowhead-tooltip .whtt-tooltip-icon .iconmedium ins {
+  @apply rounded-none border border-solid border-black !important;
+}
+
+.wowhead-tooltip .whtt-tooltip-icon del {
+  display: none !important;
+}
+
+.wowhead-tooltip iconmedium ins {
+  @apply left-0 top-0;
+}
+
+.wowhead-tooltip b {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.wowhead-tooltip th,
+.wowhead-tooltip td {
+  @apply text-sm !important;
+  background-image: none !important;
+}
+
+.wowhead-tooltip > table {
+  background: rgb(23 20 26 / 0.8) !important;
+  backdrop-filter: blur(5px);
+}
+
+.wowhead-tooltip {
+  @apply border border-gray-900 shadow-xl;
+}

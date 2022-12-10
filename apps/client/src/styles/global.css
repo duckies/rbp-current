@@ -3,10 +3,19 @@
 @tailwind utilities;
 
 @import "keyframes.css";
+@import "wowhead.css";
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
 
 @layer components {
   .hero-gradient {
-    background: linear-gradient(107.67deg, #3220ff 0%, rgba(17,31,0,0.47) 99.5%);
+    background: linear-gradient(107.67deg, #3220ff 0%, rgba(17, 31, 0, 0.47) 99.5%);
     background-blend-mode: overlay;
     mix-blend-mode: normal;
   }
