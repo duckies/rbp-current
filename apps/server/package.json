@@ -7,7 +7,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "dev": "nest start --watch",
-    "start": "node dist/main",
+    "start": "node dist/src/main",
     "lint": "eslint ./src/**/*.ts --fix",
     "test:setup": "prisma:test migrate reset --force",
     "mikro-orm": "mikro-orm"
