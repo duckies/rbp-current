@@ -124,6 +124,14 @@ module.exports = {
           "100%": { transform: "scale(1)" },
         },
       },
+      animation: {
+        "fade-in": "fade-in 200ms ease",
+        "fade-out": "fade-out 200ms ease",
+        "enter-from-left": "enter-from-left 250ms ease",
+        "enter-from-right": "enter-from-right 250ms ease",
+        "exit-to-left": "exit-to-left 250ms ease",
+        "exit-to-right": "exit-to-right 250ms ease",
+      },
     },
   },
   safelist: [

@@ -1,0 +1,28 @@
+.viewport {
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  .viewport {
+    width: var(--radix-navigation-menu-viewport-width);
+  }
+
+  .content {
+    width: auto;
+  }
+
+  .featuredList {
+    width: 580px;
+    grid-template-columns: 0.75fr 1fr;
+  }
+
+  .gridList {
+    width: 400px;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -10,20 +10,23 @@ import Image from "next/image"
 import NextLink from "next/link"
 import { useRouter } from "next/router"
 import type { DOMProps } from "types/shared"
+import navigationMenuStyles from "./navigation-menu.module.css"
 
 type NavigationMenuRootProps = NavigationMenuProps & {
   children: React.ReactNode
 }
 
 const viewportCSS = cva([
-  "relative mt-[15px] w-full origin-top overflow-hidden rounded-md",
+  "relative mt-[15px] origin-top overflow-hidden rounded-md",
   "bg-surface-800/90 backdrop-blur-sm",
   "h-[var(--radix-navigation-menu-viewport-height)]",
   "shadow-[hsl(206_22%_7%/35%)_0_10px_38px_-10px,hsl(206_22%_7%/20%)_0_10px_20px_-15px]",
-  "transition-[width,height] duration-300 ease-[ease]",
+  "transition-[width,height] duration-300",
   "[&[data-state=open]]:animate-[scale-in_200ms_ease]",
   "[&[data-state=closed]]:animate-[scale-out_200ms_ease]",
-  "sm:w-[var(--radix-navigation-menu-viewport-width)]",
+  // The `w-full` overrides the breakpoint, look into.
+  // "w-full min-[600px]:w-[var(--radix-navigation-menu-viewport-width)]",
+  navigationMenuStyles.viewport,
 ])()
 
 /**
@@ -132,12 +135,12 @@ export type NavigationContentProps = {
 }
 
 const contentCSS = cva([
-  "absolute top-0 left-0 w-full [animation-duration:250ms]",
-  "[&[data-motion=from-start]]:[animation-name:enter-from-left]",
-  "[&[data-motion=from-end]]:[animation-name:enter-from-right]",
-  "[&[data-motion=to-start]]:[animation-name:exit-to-left]",
-  "[&[data-motion=to-end]]:[animation-name:exit-to-right]",
-  "sm:w-auto",
+  "absolute top-0 left-0 [animation-duration:250ms]",
+  "[&[data-motion=from-start]]:animate-enter-from-left",
+  "[&[data-motion=from-end]]:animate-enter-from-right",
+  "[&[data-motion=to-start]]:animate-exit-to-left",
+  "[&[data-motion=to-end]]:animate-exit-to-right",
+  navigationMenuStyles.content,
 ])
 
 function Content({ children }: NavigationContentProps) {
@@ -155,8 +158,8 @@ function Content({ children }: NavigationContentProps) {
 const indicatorCSS = cva([
   "flex items-end justify-center h-[15px] top-full overflow-hidden z-[1]",
   "[transition:width,transform_250ms_ease]",
-  "[&[data-state=visible]]:animate-[fade-in_200ms_ease]",
-  "[&[data-state=hidden]]:animate-[fade-out_200ms_ease]",
+  "[&[data-state=visible]]:animate-fade-in",
+  "[&[data-state=hidden]]:animate-fade-out",
 ])()
 
 type IndicatorProps = Radix.NavigationMenuIndicatorProps
@@ -174,8 +177,8 @@ export type ContentListProps = DOMProps<"ul"> & VariantProps<typeof listCSS>
 const listCSS = cva("grid p-5 m-0 gap-x-3 list-none", {
   variants: {
     style: {
-      featured: "w-[580px] grid grid-cols-[0.75fr_1fr] ",
-      grid: "w-[400px] grid-flow-row-dense grid-cols-[repeat(2,1fr)]",
+      featured: navigationMenuStyles.featuredList,
+      grid: navigationMenuStyles.gridList,
     },
   },
 })
@@ -197,7 +200,7 @@ const listItemCSS = cva(
   {
     variants: {
       style: {
-        featured: "p-0 first:row-span-3",
+        featured: "p-0 first:row-[span_3]",
       },
     },
   }
@@ -244,7 +247,7 @@ export function ContentListItem({
         )}
         <div className="z-10">
           <div className="mb-1 font-semibold text-yellow-200">{title}</div>
-          <p className="text-sm text-gray-50">{children}</p>
+          <p className="text-shadow-md text-sm text-gray-50">{children}</p>
         </div>
       </Link>
     </li>
