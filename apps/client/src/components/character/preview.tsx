@@ -11,6 +11,7 @@ export type CharacterPreviewProps = {
 }
 
 export function CharacterPreview({ character }: CharacterPreviewProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, status, error } = useCharacterLookup(character)
 
   if (status === "error" && !data) {
@@ -55,7 +56,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
   const CharacterBasics = data.summary ? (
     <div className="flex flex-col justify-center">
       <h3 className={`text-lg font-semibold`}>{data.name}</h3>
-      <p>{Object.entries(RealmMap).find(([r, v]) => v === data.realm)?.[0]}</p>
+      <p>{Object.entries(RealmMap).find(([, v]) => v === data.realm)?.[0]}</p>
       <p>
         {data.summary.spec ? `${data.summary.spec.name} ` : ""}
         {data.summary.class.name}
@@ -77,7 +78,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
       <h3 className="text-lg font-semibold">
         Progression <ArrowUpRight className="inline-flex h-full w-auto" />
       </h3>
-      {Object.entries(data.progression.summary).map(([raid, difficulties]) => (
+      {Object.entries(data.progression.summary).map(([raid]) => (
         <div key={raid}>{raid}</div>
       ))}
       {/* <p>{data.progression.summary.map(raid => raid.name).join(', ')}</p> */}

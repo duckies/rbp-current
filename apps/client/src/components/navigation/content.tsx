@@ -50,7 +50,7 @@ export function ContentListItem({
   return (
     <li className={listItemCSS({ style })} {...props}>
       <Link className={clsx(className, css.link)} to={to}>
-        {img && <Image className={css.image} {...img} />}
+        {img && <Image className={css.image} {...img} alt="" />}
         <div className={css.imageAfter}>
           <div className={css.heading}>{title}</div>
           <p className={css.text}>{children}</p>

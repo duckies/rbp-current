@@ -7,7 +7,7 @@
 
   @media only screen and (min-width: 600px) {
     &--featured {
-      width: 500px;
+      width: 550px;
       grid-template-columns: 0.75fr 1fr;
 
       & > :nth-child(1) {
@@ -100,5 +100,5 @@
 }
 
 .text {
-  @include text-size(xs);
+  @include text-size(base);
 }

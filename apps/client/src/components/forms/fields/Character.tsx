@@ -45,6 +45,8 @@ export default function CharacterSelector({
     },
   })
 
+  // Removing not yet implemented.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fields, append, remove } = useFieldArray({ name, control: form.control })
 
   const onSubmit = () => {
@@ -78,6 +80,8 @@ export default function CharacterSelector({
       <div>
         {fields.map((field, index) => {
           // The types of this field prop are wildly confusing.
+          // Do I need this id?
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { id, ...character }: { id: string } & FindCharacterDTO = field as any
 
           return (

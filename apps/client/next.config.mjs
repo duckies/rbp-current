@@ -1,5 +1,4 @@
 import frontmatter from "remark-frontmatter"
-import remarkTOC from "remark-toc"
 
 /** @type {import('next').NextConfig} */
 export default {
@@ -13,7 +12,7 @@ export default {
           loader: "@mdx-js/loader",
           /** @type {import('@mdx-js/loader').Options} */
           options: {
-            remarkPlugins: [frontmatter, remarkTOC],
+            remarkPlugins: [frontmatter],
             providerImportSource: "@mdx-js/react",
           },
         },

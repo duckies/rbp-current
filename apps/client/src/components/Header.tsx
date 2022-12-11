@@ -5,7 +5,7 @@ import { Link } from "components/Link"
 import { ContentList, ContentListItem } from "components/navigation/content"
 import { NavigationMenu } from "components/navigation/menu"
 import { login } from "hooks/auth"
-import { useAuth } from "../hooks/stores/useAuth"
+import { useAuth } from "hooks/stores/useAuth"
 import { Avatar } from "./Avatar"
 import { Button } from "./Button"
 import {
@@ -17,7 +17,6 @@ import {
 
 export default function Header() {
   const { user } = useAuth()
-  const isAuthenticated = !!user
 
   return (
     <header className="sticky top-0 z-50 w-full bg-surface-800/90 py-2 backdrop-blur-[10px] backdrop-filter">
@@ -41,7 +40,7 @@ export default function Header() {
                   <ContentList style="featured">
                     <ContentListItem
                       style="featured"
-                      to="/strategies/vault"
+                      to="/strategies"
                       title="Vault of the Incarnates"
                       img={{
                         src: "/images/vault.jpg",
@@ -50,11 +49,15 @@ export default function Header() {
                         height: "664",
                       }}
                     >
-                      Strategy guides and resources for the first Dragonflight raid.
+                      Strategy guides and resources for Vault of the Incarnates.
                     </ContentListItem>
 
-                    <ContentListItem to="/strategies" title="Strategies">
-                      Collection of all strategy guides.
+                    <ContentListItem to="#" title="Announcements">
+                      Announcements and news from the guild.
+                    </ContentListItem>
+
+                    <ContentListItem to="#" title="Resources">
+                      Blog-style posts with useful information for guildies.
                     </ContentListItem>
                   </ContentList>
                 </NavigationMenu.Content>
@@ -68,7 +71,7 @@ export default function Header() {
                       Fill out an application to join the guild.
                     </ContentListItem>
 
-                    <ContentListItem to="/applications" title="View Submissions">
+                    <ContentListItem to="#" title="View Submissions">
                       View the list of submitted applications.
                     </ContentListItem>
                   </ContentList>
@@ -81,7 +84,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          {isAuthenticated ? (
+          {user ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

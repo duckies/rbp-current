@@ -13,7 +13,7 @@ export const Link = ({ to, ...props }: NavigationLinkProps) => {
 
   return (
     <RadixNavLink asChild active={isActive}>
-      <NextLink href={to} className={css.link} {...props} />
+      <NextLink href={to!} className={css.link} {...props} />
     </RadixNavLink>
   )
 }

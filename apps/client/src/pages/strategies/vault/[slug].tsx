@@ -3,12 +3,30 @@ import { MarkdownLayout } from "components/layouts/Markdown"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
 import type { FC } from "react"
+import { useEffect, useRef } from "react"
 import { findMDXDocuments, getMDXDocument } from "utils/markdown"
 
 export const StrategyPage: FC<any> = ({ slug, frontmatter }) => {
   const Component = dynamic(() => import(`../../../../content/strategies/vault/${slug}.mdx`))
+  const interval = useRef<ReturnType<typeof setInterval> | undefined>()
 
-  console.log(Component)
+  // Forcibly refresh Wowhead links.
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      if (
+        document.querySelector('[href*="wowhead.com/spell="') &&
+        !document.querySelector("[data-wh-icon-added]")
+      ) {
+        window.$WowheadPower?.refreshLinks()
+      } else {
+        clearInterval(interval.current)
+      }
+    }, 250)
+
+    return () => {
+      clearInterval(interval.current)
+    }
+  })
 
   return (
     <div>
@@ -46,7 +64,6 @@ export const getStaticProps: GetStaticProps = (ctx) => {
 }
 
 export const getStaticPaths: GetStaticPaths = () => {
-  console.log(findMDXDocuments("strategies/vault").map((slug) => ({ params: { slug } })))
   return {
     paths: findMDXDocuments("strategies/vault").map((slug) => ({ params: { slug } })),
     fallback: false,

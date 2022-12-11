@@ -1,20 +1,18 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query"
-import Button from "components/Button"
 import Hero from "components/Hero"
 import Paper from "components/Paper"
-import { getFieldComponent as getFormFieldComponent, getForm, useForm } from "hooks/stores/useForm"
+import { getForm } from "hooks/stores/useForm"
 import { getMe } from "lib/auth"
 import type { GetServerSideProps } from "next"
 import Image from "next/image"
-import { FormProvider, useForm as useFormHook } from "react-hook-form"
 
 export default function ApplyPage() {
-  const { data } = useForm(1)
-  const form = useFormHook()
+  // const { data } = useForm(1)
+  // const form = useFormHook()
 
-  const onSubmit = (data: any) => {
-    console.log(data)
-  }
+  // const onSubmit = (data: any) => {
+  //   console.log(data)
+  // }
 
   return (
     <>
@@ -42,39 +40,39 @@ export default function ApplyPage() {
     </>
   )
 
-  return (
-    <>
-      <Hero>
-        <Hero.Title>Application</Hero.Title>
-        <Hero.Caption>We&apos;re always recruiting the best of the worst.</Hero.Caption>
-      </Hero>
+  // return (
+  //   <>
+  //     <Hero>
+  //       <Hero.Title>Application</Hero.Title>
+  //       <Hero.Caption>We&apos;re always recruiting the best of the worst.</Hero.Caption>
+  //     </Hero>
 
-      <Paper className="flex flex-col gap-y-7">
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            {data?.fields.map((field) => {
-              const Component = getFormFieldComponent(field as any)
-              return (
-                <div key={field.id} className="mb-5">
-                  <Component
-                    disabled
-                    id={field.id}
-                    name={field.id}
-                    label={field.label}
-                    form={form}
-                  />
-                </div>
-              )
-            })}
+  //     <Paper className="flex flex-col gap-y-7">
+  //       <FormProvider {...form}>
+  //         <form onSubmit={form.handleSubmit(onSubmit)}>
+  //           {data?.fields.map((field) => {
+  //             const Component = getFormFieldComponent(field as any)
+  //             return (
+  //               <div key={field.id} className="mb-5">
+  //                 <Component
+  //                   disabled
+  //                   id={field.id}
+  //                   name={field.id}
+  //                   label={field.label}
+  //                   form={form}
+  //                 />
+  //               </div>
+  //             )
+  //           })}
 
-            <div className="flex justify-end gap-3">
-              <Button type="submit">Submit</Button>
-            </div>
-          </form>
-        </FormProvider>
-      </Paper>
-    </>
-  )
+  //           <div className="flex justify-end gap-3">
+  //             <Button type="submit">Submit</Button>
+  //           </div>
+  //         </form>
+  //       </FormProvider>
+  //     </Paper>
+  //   </>
+  // )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

@@ -1,27 +1,28 @@
-import { Combobox as HeadlessCombobox } from "@headlessui/react";
-import { FieldError } from "components/forms/shared/FieldError";
-import { label as labelCSS } from "components/forms/shared/Label";
-import { ChevronDownIcon } from "components/icons/ChevronDown";
-import { useState } from "react";
-import { FieldValues, useController } from "react-hook-form";
-import { FormFieldStyles } from "styles/components/forms";
-import { listbox, option } from "styles/components/listbox";
-import type { FieldProps, Item } from "types/forms";
+import { Combobox as HeadlessCombobox } from "@headlessui/react"
+import { FieldError } from "components/forms/shared/FieldError"
+import { label as labelCSS } from "components/forms/shared/Label"
+import { ChevronDownIcon } from "components/icons/ChevronDown"
+import { useState } from "react"
+import type { FieldValues } from "react-hook-form"
+import { useController } from "react-hook-form"
+import { FormFieldStyles } from "styles/components/forms"
+import { listbox, option } from "styles/components/listbox"
+import type { FieldProps, Item } from "types/forms"
 
 type ComboboxProps<T extends FieldValues> = FieldProps<T> & {
-  items: Item[];
-  label?: string;
-  initialValue?: Item;
-};
+  items: Item[]
+  label?: string
+  initialValue?: Item
+}
 
 export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
-  const { label, items, initialValue, name, form, ...inputProps } = props;
-  const { field, fieldState } = useController({ name, control: form.control });
+  const { label, items, name, form, ...inputProps } = props
+  const { field, fieldState } = useController({ name, control: form.control })
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("")
   const filteredItems =
-    query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()));
-  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null;
+    query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()))
+  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 
   return (
     <HeadlessCombobox as="div" value={selectedItem} onChange={field.onChange}>
@@ -49,7 +50,7 @@ export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
                   option({ status: active ? "active" : selected ? "selected" : null })
                 }
               >
-                {({ active, selected }) => <span>{item.text}</span>}
+                <span>{item.text}</span>
               </HeadlessCombobox.Option>
             ))}
           </HeadlessCombobox.Options>
@@ -58,5 +59,5 @@ export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
 
       {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
     </HeadlessCombobox>
-  );
+  )
 }

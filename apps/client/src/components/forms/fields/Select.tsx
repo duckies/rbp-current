@@ -1,27 +1,28 @@
-import { Listbox } from "@headlessui/react";
-import { FieldError } from "components/forms/shared/FieldError";
-import { label as labelCSS } from "components/forms/shared/Label";
-import { FieldValues, useController } from "react-hook-form";
-import { FormFieldStyles } from "styles/components/forms";
-import { listbox, option } from "styles/components/listbox";
-import { FieldProps } from "types/forms";
-import { DOMProps } from "types/shared";
+import { Listbox } from "@headlessui/react"
+import { FieldError } from "components/forms/shared/FieldError"
+import { label as labelCSS } from "components/forms/shared/Label"
+import type { FieldValues } from "react-hook-form"
+import { useController } from "react-hook-form"
+import { FormFieldStyles } from "styles/components/forms"
+import { listbox, option } from "styles/components/listbox"
+import type { FieldProps } from "types/forms"
+import type { DOMProps } from "types/shared"
 
 type Item = {
-  text: string;
-  value: any;
-};
+  text: string
+  value: any
+}
 
 type SelectProps<T extends FieldValues> = Omit<DOMProps<"select">, "name" | "form"> &
   FieldProps<T> & {
-    label?: string;
-    items: Item[];
-  };
+    label?: string
+    items: Item[]
+  }
 
 export function Select<T extends FieldValues>({ label, items, name, form }: SelectProps<T>) {
-  const { field, fieldState } = useController({ name, control: form.control });
+  const { field, fieldState } = useController({ name, control: form.control })
 
-  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null;
+  const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 
   return (
     <Listbox
@@ -56,5 +57,5 @@ export function Select<T extends FieldValues>({ label, items, name, form }: Sele
       </div>
       {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
     </Listbox>
-  );
+  )
 }

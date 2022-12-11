@@ -1,3 +1,4 @@
+import { dehydrate, QueryClient } from "@tanstack/react-query"
 import Hero from "components/Hero"
 import type { GetServerSideProps } from "next"
 import { getMe } from "../lib/auth"
@@ -27,20 +28,20 @@ export default function HomePage() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = ctx.req.cookies.token
-  // const posts = getBlogPosts();
 
   if (token) {
+    const queryClient = new QueryClient()
+
+    await queryClient.prefetchQuery(["self"], () => getMe(token))
+
     return {
       props: {
-        user: await getMe(token),
-        token,
+        dehydratedState: dehydrate(queryClient),
       },
     }
   }
 
   return {
-    props: {
-      // posts,
-    },
+    props: {},
   }
 }

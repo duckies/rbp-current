@@ -1,9 +1,9 @@
-import type { VariantProps } from "cva";
-import { cva } from "cva";
-import React from "react";
-import { DOMProps } from "types/shared";
+import type { VariantProps } from "cva"
+import { cva } from "cva"
+import React from "react"
+import type { DOMProps } from "types/shared"
 
-export type ButtonProps = DOMProps<"button"> & VariantProps<typeof button>;
+export type ButtonProps = DOMProps<"button"> & VariantProps<typeof button>
 
 const button = cva(
   [
@@ -44,7 +44,7 @@ const button = cva(
       variant: "base",
     },
   }
-);
+)
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, size, className, children, ...props }, forwardedRef) => {
@@ -55,15 +55,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           variant,
           size,
           state: props.disabled ? "disabled" : null,
+          className,
         })}
         {...props}
       >
         {children}
       </button>
-    );
+    )
   }
-);
+)
 
-Button.displayName = "Button";
+Button.displayName = "Button"
 
-export default Button;
+export default Button

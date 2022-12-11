@@ -39,7 +39,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider initialState={{ user: pageProps.user }}>
+      <AuthProvider>
         <Head>
           <title>Really Bad Players</title>
         </Head>

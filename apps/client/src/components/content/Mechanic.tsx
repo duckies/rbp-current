@@ -14,7 +14,7 @@ type MechanicProps = {
   children: ReactNode
 }
 
-export function Mechanic({ id, name, caption, link, children }: MechanicProps) {
+export function Mechanic({ id, name, caption, children }: MechanicProps) {
   const [open, setOpen] = useState(false)
   const wasOpened = useRef(false)
 
