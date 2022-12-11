@@ -67,7 +67,6 @@ importers:
       eslint-config-next: 13.0.3
       framer-motion: 7.6.7
       gray-matter: 4.0.3
-      material-ripple-effects: 2.0.1
       next: 13.0.4
       next-remote-watch: 2.0.0
       nookies: 2.5.2
@@ -126,7 +125,6 @@ importers:
       autoprefixer: 10.4.13_postcss@8.4.19
       eslint: 8.26.0
       eslint-config-next: 13.0.3_wyqvi574yv7oiwfeinomdzmc3m
-      material-ripple-effects: 2.0.1
       postcss: 8.4.19
       prettier: 2.7.1
       prettier-plugin-tailwindcss: 0.2.0-beta.1_prettier@2.7.1
@@ -5826,10 +5824,6 @@ packages:
     resolution: {integrity: sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==}
     engines: {node: '>=0.10.0'}
     dev: false
-
-  /material-ripple-effects/2.0.1:
-    resolution: {integrity: sha512-hHlUkZAuXbP94lu02VgrPidbZ3hBtgXBtjlwR8APNqOIgDZMV8MCIcsclL8FmGJQHvnORyvoQgC965vPsiyXLQ==}
-    dev: true
 
   /mdast-util-definitions/5.1.1:
     resolution: {integrity: sha512-rQ+Gv7mHttxHOBx2dkF4HWTg+EE+UR78ptQWDylzPKaQuVGdG4HIoY3SrS/pCp80nZ04greFvXbVFHT+uf0JVQ==}
