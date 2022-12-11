@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import "keyframes.css";
+@import "tailwind.css";
 @import "wowhead.css";
 
 html {
@@ -11,46 +7,6 @@ html {
 
 body {
   min-height: 100%;
-}
-
-@layer components {
-  .hero-gradient {
-    background: linear-gradient(107.67deg, #3220ff 0%, rgba(17, 31, 0, 0.47) 99.5%);
-    background-blend-mode: overlay;
-    mix-blend-mode: normal;
-  }
-
-  a.hide-wowhead {
-    background: inherit !important;
-    padding-left: inherit !important;
-    text-decoration: inherit !important;
-  }
-}
-
-@layer utilities {
-  .text-shadow {
-    text-shadow: 0 0 1px rgb(0 0 0 / 20%);
-  }
-
-  .text-shadow-sm {
-    text-shadow: 0 0 1px rgb(0 0 0 / 20%), 0px 0px 1px rgb(1 0 5 / 10%);
-  }
-
-  .text-shadow-md {
-    text-shadow: 0px 1px 2px rgb(30 29 39 / 19%), 1px 2px 4px rgb(54 64 147 / 18%);
-  }
-
-  .text-shadow-lg {
-    text-shadow: 3px 3px 6px rgb(0 0 0 / 26%), 0 0 5px rgb(15 3 86 / 22%);
-  }
-
-  .text-shadow-xl {
-    text-shadow: 1px 1px 3px rgb(0 0 0 / 29%), 2px 4px 7px rgb(73 64 125 / 35%);
-  }
-
-  .text-shadow-none {
-    text-shadow: none;
-  }
 }
 
 ::selection {
