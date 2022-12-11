@@ -1,7 +1,7 @@
 import { Head, Html, Main, NextScript } from "next/document"
 import Script from "next/script"
 
-const wowheadScript = `var wowhead_tooltips = {"colorlinks": false, "iconSize": false, "iconizelinks": true, "renamelinks": false};`
+const wowheadScript = `var wowhead_tooltips = {"colorlinks": false, "iconizelinks": true, "renamelinks": false};`
 
 export default function MyDocument() {
   return (

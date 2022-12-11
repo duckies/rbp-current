@@ -40,7 +40,4 @@ export default {
   experimental: {
     appDir: false,
   },
-  sassOptions: {
-    prependData: `@import "src/styles/global.scss";`,
-  },
 }

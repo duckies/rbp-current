@@ -11,8 +11,8 @@ declare interface AppConfig {
 }
 
 const config: AppConfig = {
-  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3030',
+  API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3030",
   DISCORD_CLIENT_ID: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!,
-};
+}
 
-export default config;
+export default config

@@ -1,5 +1,4 @@
 import clsx from "clsx"
-import { useWowhead } from "hooks/useWowhead"
 import type { FC, ReactNode } from "react"
 import { isValidElement, useState } from "react"
 import type { DOMProps } from "types/shared"
@@ -27,16 +26,14 @@ export const getParsedTabs = (children: ReactNode[]) => {
 export const Tabs: FC<TabsProps> & { Tab: typeof Tab } = ({ children }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const tabs = getParsedTabs(children)
-  const { reload } = useWowhead()
 
   const onSetTab = (index: number) => {
-    reload()
     setTabIndex(index)
   }
 
   return (
     <div className="my-4 rounded-lg bg-surface-600 p-4">
-      <nav className="not-prose bg-surface mb-3">
+      <nav className="not-prose mb-3 bg-surface">
         <ul className="flex gap-3">
           {tabs.map(({ label, index }) => {
             const isActive = index === tabIndex

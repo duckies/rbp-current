@@ -1,32 +1,16 @@
 import Hero from "components/Hero"
 import { MarkdownLayout } from "components/layouts/Markdown"
+import { useWowhead } from "hooks/useWowhead"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
 import type { FC } from "react"
-import { useEffect, useRef } from "react"
 import { findMDXDocuments, getMDXDocument } from "utils/markdown"
 
 export const StrategyPage: FC<any> = ({ slug, frontmatter }) => {
   const Component = dynamic(() => import(`../../../../content/strategies/vault/${slug}.mdx`))
-  const interval = useRef<ReturnType<typeof setInterval> | undefined>()
 
   // Forcibly refresh Wowhead links.
-  useEffect(() => {
-    interval.current = setInterval(() => {
-      if (
-        document.querySelector('[href*="wowhead.com/spell="') &&
-        !document.querySelector("[data-wh-icon-added]")
-      ) {
-        window.$WowheadPower?.refreshLinks()
-      } else {
-        clearInterval(interval.current)
-      }
-    }, 250)
-
-    return () => {
-      clearInterval(interval.current)
-    }
-  })
+  useWowhead()
 
   return (
     <div>

@@ -13,7 +13,7 @@ export interface DefaultLayoutProps {
 function LayoutBackground() {
   return (
     <div className="absolute inset-0 -z-10 h-[450px] overflow-hidden lg:h-[500px]">
-      <div className="hero-gradient absolute inset-[-50vw] animate-spin" />
+      <div className="hero-gradient absolute inset-[-50vw] animate-[3s_infinite_spin]" />
       <Image className="h-full w-full object-fill" src={background} alt="" priority />
       <div className="to-surface-800/35 absolute inset-0 bg-gradient-to-t from-surface-800" />
     </div>

@@ -1,10 +1,10 @@
-import type { GetServerSideProps } from 'next';
-import Image from 'next/image';
-import type { Provider } from '@rbp/server';
-import nookies from 'nookies';
-import Card from 'components/Card';
-import background from 'public/images/login-screen.webp';
-import { callback } from 'hooks/auth';
+import type { Provider } from "@rbp/server"
+import Card from "components/Card"
+import { callback } from "hooks/auth"
+import type { GetServerSideProps } from "next"
+import Image from "next/image"
+import nookies from "nookies"
+import background from "public/images/login-screen.webp"
 
 export default function CallbackPage() {
   return (
@@ -25,32 +25,41 @@ export default function CallbackPage() {
         <p>Logging you in...</p>
       </Card>
     </div>
-  );
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const provider = ctx.params?.provider;
-  const code = ctx.query?.code;
+  const provider = ctx.params?.provider
+  const code = ctx.query?.code
 
   // TODO: Validate provider & code.
+  try {
+    if (provider && code) {
+      const { token } = await callback(provider as Provider, code as string)
 
-  if (provider && code) {
-    const { token } = await callback(provider as Provider, code as string);
+      nookies.set(ctx, "token", token, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+      })
 
-    nookies.set(ctx, 'token', token, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-    });
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      }
+    }
+  } catch (error: any) {
+    if (error?.statusCode === 401 || error?.statusCode === 403) {
+      nookies.destroy(ctx, "token")
+    }
 
     return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
+      props: {},
+    }
   }
 
   return {
     props: {},
-  };
-};
+  }
+}

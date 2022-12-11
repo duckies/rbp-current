@@ -1,5 +1,4 @@
 import { Container } from "components/Container"
-import { LinkPreview } from "components/content/LinkPreview"
 import DiscordLogo from "components/icons/Discord"
 import { Link } from "components/Link"
 import type { FC, PropsWithChildren } from "react"
@@ -16,7 +15,7 @@ export default function Footer() {
           <FooterHeader>Really Bad Players</FooterHeader>
           <ul className="flex flex-col">
             <li>
-              <Link to="https://discord.gg/rbp">
+              <Link to="https://discord.gg/rbp" style="plain" externalIcon={false}>
                 <DiscordLogo className="inline-flex h-6 w-6" />
               </Link>
             </li>
@@ -27,19 +26,19 @@ export default function Footer() {
           <FooterHeader>Presence</FooterHeader>
           <ul className="space-y-2">
             <li>
-              <LinkPreview href="https://www.warcraftlogs.com/guild/us/area-52/really%20bad%20players">
+              <Link href="https://www.warcraftlogs.com/guild/us/area-52/really%20bad%20players">
                 WarcraftLogs
-              </LinkPreview>
+              </Link>
             </li>
             <li>
-              <LinkPreview href="https://raider.io/guilds/us/area-52/Really%20Bad%20Players">
+              <Link href="https://raider.io/guilds/us/area-52/Really%20Bad%20Players">
                 Raider.io
-              </LinkPreview>
+              </Link>
             </li>
             <li>
-              <LinkPreview href="https://worldofwarcraft.com/en-us/guild/us/area-52/really-bad-players">
+              <Link href="https://worldofwarcraft.com/en-us/guild/us/area-52/really-bad-players">
                 World of Warcraft
-              </LinkPreview>
+              </Link>
             </li>
           </ul>
         </div>
@@ -48,16 +47,16 @@ export default function Footer() {
           <FooterHeader>Resources</FooterHeader>
           <ul className="space-y-2">
             <li>
-              <LinkPreview href="https://raidplan.io">RaidPlan.io</LinkPreview>
+              <Link href="https://raidplan.io">RaidPlan.io</Link>
             </li>
             <li>
-              <LinkPreview href="https://mythictrap.com">MythicTrap</LinkPreview>
+              <Link href="https://mythictrap.com">MythicTrap</Link>
             </li>
             <li>
-              <LinkPreview href="https://raidbots.com">RaidBots</LinkPreview>
+              <Link href="https://raidbots.com">RaidBots</Link>
             </li>
             <li>
-              <LinkPreview href="https://www.wowhead.com">Wowhead</LinkPreview>
+              <Link href="https://www.wowhead.com">Wowhead</Link>
             </li>
           </ul>
         </div>

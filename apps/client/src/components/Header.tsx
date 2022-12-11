@@ -2,8 +2,7 @@ import { Container } from "components/Container"
 import DiscordLogo from "components/icons/Discord"
 import Logo from "components/icons/Logo"
 import { Link } from "components/Link"
-import { ContentList, ContentListItem } from "components/navigation/content"
-import { NavigationMenu } from "components/navigation/menu"
+import { NavigationMenu } from "components/navigation/NavigationMenu"
 import { login } from "hooks/auth"
 import { useAuth } from "hooks/stores/useAuth"
 import { Avatar } from "./Avatar"
@@ -16,13 +15,18 @@ import {
 } from "./Dropdown"
 
 export default function Header() {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+
+  const onLogout = () => {
+    console.log("Header Clicky")
+    logout()
+  }
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-surface-800/90 py-2 backdrop-blur-[10px] backdrop-filter">
+    <header className="sticky top-0 z-50 w-full py-2 before:absolute before:inset-0 before:bg-surface-800/90 before:backdrop-blur-md before:content-['']">
       <Container className="relative flex">
         <div className="flex items-center gap-2">
-          <Link className="flex h-10 w-10" to="/">
+          <Link className="flex h-10 w-10" to="/" style="plain">
             <Logo />
           </Link>
         </div>
@@ -37,8 +41,8 @@ export default function Header() {
               <NavigationMenu.Item>
                 <NavigationMenu.Trigger>Posts</NavigationMenu.Trigger>
                 <NavigationMenu.Content>
-                  <ContentList style="featured">
-                    <ContentListItem
+                  <NavigationMenu.ContentList style="featured">
+                    <NavigationMenu.ContentListItem
                       style="featured"
                       to="/strategies"
                       title="Vault of the Incarnates"
@@ -50,31 +54,31 @@ export default function Header() {
                       }}
                     >
                       Strategy guides and resources for Vault of the Incarnates.
-                    </ContentListItem>
+                    </NavigationMenu.ContentListItem>
 
-                    <ContentListItem to="#" title="Announcements">
+                    <NavigationMenu.ContentListItem to="#" title="Announcements">
                       Announcements and news from the guild.
-                    </ContentListItem>
+                    </NavigationMenu.ContentListItem>
 
-                    <ContentListItem to="#" title="Resources">
+                    <NavigationMenu.ContentListItem to="#" title="Resources">
                       Blog-style posts with useful information for guildies.
-                    </ContentListItem>
-                  </ContentList>
+                    </NavigationMenu.ContentListItem>
+                  </NavigationMenu.ContentList>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
               <NavigationMenu.Item>
                 <NavigationMenu.Trigger>Apply</NavigationMenu.Trigger>
                 <NavigationMenu.Content>
-                  <ContentList style="grid">
-                    <ContentListItem to="/apply" title="Application">
+                  <NavigationMenu.ContentList style="grid">
+                    <NavigationMenu.ContentListItem to="/apply" title="Application">
                       Fill out an application to join the guild.
-                    </ContentListItem>
+                    </NavigationMenu.ContentListItem>
 
-                    <ContentListItem to="#" title="View Submissions">
+                    <NavigationMenu.ContentListItem to="#" title="View Submissions">
                       View the list of submitted applications.
-                    </ContentListItem>
-                  </ContentList>
+                    </NavigationMenu.ContentListItem>
+                  </NavigationMenu.ContentList>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
 
@@ -94,7 +98,7 @@ export default function Header() {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent sideOffset={5} collisionPadding={5}>
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
                   <DropdownMenuItem>
                     Discord <DiscordLogo />
                   </DropdownMenuItem>

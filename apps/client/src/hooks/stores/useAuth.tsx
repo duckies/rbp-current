@@ -2,7 +2,7 @@ import type { User } from "@rbp/server"
 import type { UseMutateFunction } from "@tanstack/react-query"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getMe } from "lib/auth"
-import nookies from "nookies"
+import nookies, { destroyCookie } from "nookies"
 import { createContext, useContext, useMemo } from "react"
 
 type AuthContextValue = {
@@ -29,11 +29,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     initialData: null,
     retry: 0,
     queryFn: () => getMe(),
+    onError: (error: any) => {
+      console.log(error, nookies.get(null))
+      if (error?.statusCode === 401 || error?.statusCode === 403) {
+        // This is not working :)
+        destroyCookie(null, "token")
+      }
+    },
   })
 
   const logout = useMutation({
-    onSuccess: () => {
-      nookies.destroy(null, "token")
+    mutationFn: async () => {
+      console.log("Logout Mutation")
+      destroyCookie(null, "token")
       client.invalidateQueries({ queryKey: ["user", "self"] })
     },
   })
@@ -43,7 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       user,
       error,
       isLoading,
-      logout: logout.mutate,
+      logout: logout.mutateAsync,
     }),
     [user, error, isLoading, logout.mutate]
   )
