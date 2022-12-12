@@ -10,8 +10,8 @@ const FooterHeader: FC<PropsWithChildren> = ({ children }) => {
 export default function Footer() {
   return (
     <footer className="bg-surface-800">
-      <Container className="grid grid-cols-4 border-t border-gray-800/80 bg-[url('/images/footer.jpg')] py-7 pt-10">
-        <div>
+      <Container className="grid grid-cols-4 gap-y-4 border-t border-gray-800/80 bg-[url('/images/footer.jpg')] py-7 pt-10">
+        <div className="col-span-2 md:col-span-1">
           <FooterHeader>Really Bad Players</FooterHeader>
           <ul className="flex flex-col">
             <li>
@@ -22,7 +22,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <FooterHeader>Presence</FooterHeader>
           <ul className="space-y-2">
             <li>
@@ -43,7 +43,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <FooterHeader>Resources</FooterHeader>
           <ul className="space-y-2">
             <li>
@@ -61,7 +61,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <FooterHeader>About Us</FooterHeader>
           <ul className="space-y-2">
             <li>Privacy & Terms</li>

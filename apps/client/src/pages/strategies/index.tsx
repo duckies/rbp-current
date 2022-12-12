@@ -1,7 +1,12 @@
 import Card from "components/Card"
 import Hero from "components/Hero"
+import { getMarkdownLayout } from "components/layouts/Markdown"
 import { Link } from "components/Link"
 import Image from "next/image"
+import type { Page } from "pages/_app"
+
+import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
+import { BackgroundProvider } from "stores/background"
 
 const bosses = [
   { name: "Eranog", slug: "eranog" },
@@ -14,7 +19,7 @@ const bosses = [
   { name: "Raszageth the Storm-Eater", slug: "raszageth-the-storm-eater" },
 ]
 
-export default function Strategies() {
+export const StrategiesPage: Page = () => {
   return (
     <>
       <Hero>
@@ -52,3 +57,9 @@ export default function Strategies() {
     </>
   )
 }
+
+StrategiesPage.getLayout = (page) => (
+  <BackgroundProvider src={VaultBackground}>{getMarkdownLayout(page)}</BackgroundProvider>
+)
+
+export default StrategiesPage

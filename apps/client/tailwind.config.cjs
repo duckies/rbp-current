@@ -70,13 +70,30 @@ module.exports = {
           900: "#402f02",
         },
       },
-      typography: {
+      typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: "#fff",
+            "color": "#fff",
+            "--tw-prose-invert-counters": theme("colors.yellow[300]"),
+            "> ul li > *:first-child": {
+              marginTop: 0,
+            },
+            "> ol li > *:first-child": {
+              marginTop: 0,
+            },
           },
         },
-      },
+        lg: {
+          css: {
+            "> ul li > *:first-child": {
+              marginTop: 0,
+            },
+            "> ol li > *:first-child": {
+              marginTop: 0,
+            },
+          },
+        },
+      }),
       keyframes: {
         "enter-from-right": {
           "0%": { opacity: 0, transform: "translateX(200px)" },

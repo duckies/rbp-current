@@ -1,32 +1,27 @@
-import localFont from "@next/font/local"
-import type { User } from "@rbp/server"
-import type { DehydratedState } from "@tanstack/react-query"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "components/common/LoadingBar/loading-bar.css"
-import { DefaultLayout } from "components/layouts/Default"
+import { getDefaultLayout } from "components/layouts/Default"
 import { AuthProvider } from "hooks/stores/useAuth"
+import type { NextPage } from "next"
 import type { AppProps } from "next/app"
 import dynamic from "next/dynamic"
 import Head from "next/head"
+import type { ReactElement, ReactNode } from "react"
 import { useState } from "react"
+import { BackgroundProvider } from "stores/background"
 import "styles/global.css"
 
-const wotfard = localFont({
-  variable: "--font-wotfard",
-  src: [
-    { path: "../../public/fonts/wotfard/wotfard-regular-webfont.woff2", weight: "400" },
-    { path: "../../public/fonts/wotfard/wotfard-medium-webfont.woff2", weight: "500" },
-    { path: "../../public/fonts/wotfard/wotfard-semibold-webfont.woff2", weight: "600" },
-  ],
-})
+export type Page<T = any> = NextPage<T> & {
+  /**
+   * Chooses the layout for the page.
+   *
+   * If omitted, the `DefaultLayout` is used.
+   */
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
-type MyAppProps = AppProps<{
-  dehydratedState?: DehydratedState
-  user?: User
-}>
-
-type AppPropsWithLayout = Omit<MyAppProps, "Component"> & {
-  Component: AppProps["Component"] & { getLayout?: (page: React.ReactNode) => React.ReactNode }
+type AppPropsWithLayout = AppProps & {
+  Component: Page<any>
 }
 
 const LoadingBar = dynamic(() => import("components/common/LoadingBar"), {
@@ -35,23 +30,18 @@ const LoadingBar = dynamic(() => import("components/common/LoadingBar"), {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient())
-  const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
+  const getLayout = Component.getLayout || getDefaultLayout
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Head>
-          <title>Really Bad Players</title>
-        </Head>
-        <style jsx global>
-          {`
-            :root {
-              --font-wotfard: ${wotfard.style.fontFamily};
-            }
-          `}
-        </style>
-        <LoadingBar />
-        {getLayout(<Component {...pageProps} />)}
+        <BackgroundProvider>
+          <Head>
+            <title>Really Bad Players</title>
+          </Head>
+          <LoadingBar />
+          {getLayout(<Component {...pageProps} />)}
+        </BackgroundProvider>
       </AuthProvider>
     </QueryClientProvider>
   )

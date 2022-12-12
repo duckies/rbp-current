@@ -4,13 +4,11 @@ date: 2022-12-10
 description: Second boss in the Vault of the Incarnates raid
 ---
 
-## Summary
-
-He has no legs!
+Terros is a patchwerk boss (who notably lacks legs) which focuses on dropping pillars for tanks to break with a beam mechanic, a meteor soak mechanic, and few minor mechanics requiring us to slowly rotate around his platform.
 
 ## Mechanics
 
-Notably, Terros
+Refer to [Mythic Trap — Terros](https://www.mythictrap.com/en/vault/terros/heroic) for detailed visuals and animations of the mechanics. They have been listed here for reference.
 
 <Mechanic id={380487} name="Rock Blast" caption="Split-meteor mechanic">
 
@@ -25,7 +23,7 @@ split evenly among players within 12 yards and leaves an [Aftershock](https://ww
 </Mechanic>
 
 <Mechanic id={381486} name="Awakened Earth" caption="Pillars">
-  Several players are debuffed with [Awakened Earth](https://www.wowhead.com/spell=381486), marking them with a yellow arrow and surrounding them with a small circle. Upon expiration these spawn pillars of the same name that pulsate raid damage until destroyed. These should be placed in a line, or very close together but not stacked (splashing your debuff-mates), and *not in melee*.
+  Several players are debuffed with [Awakened Earth](https://www.wowhead.com/spell=381486), marking them with a yellow arrow and surrounding them with a small circle. Upon expiration these spawn pillars of the same name that pulsate raid damage until destroyed. These should be placed in line with the primary tank position, or very close together but not stacked (splashing your debuff-mates), and *not in melee*.
 
   <Alert type="warning">
   This goes out at the same time as [Rock Blast](https://www.wowhead.com/spell=380487). These players should focus on placing their pillar in the correct spot and not soaking.
@@ -38,11 +36,11 @@ split evenly among players within 12 yards and leaves an [Aftershock](https://ww
 </Mechanic>
 
 <Mechanic id={377166} name="Resonating Annihilation" caption="Pizza-slice Frontal">
-  When Terros reaches 100 energy he will pizza-slice frontal the platform. It deals lethal (478k
-  nature) damage to those caught in it, destroying [Awakened
-  Earth](https://www.wowhead.com/spell=381486) pillars in the process, and causes [Fractured
-  Rubble](https://www.wowhead.com/spell=378861) to fall from the ceiling which deals impact damage
-  and leaving behind miasma.
+  When Terros reaches 100 energy he will pizza-slice frontal the platform that permanently covers a
+  quarter of the platform in miasma. It deals lethal (478k nature) damage to those caught in it,
+  destroying [Awakened Earth](https://www.wowhead.com/spell=381486) pillars in the process, and
+  causes [Fractured Rubble](https://www.wowhead.com/spell=378861) to fall from the ceiling which
+  deals impact damage and leaving behind miasma.
 </Mechanic>
 
 <Mechanic id={383073} name="Shattering Impact" caption="Swirly on Largest Player Clump">
@@ -69,3 +67,30 @@ In the same spirit of Halondrus, the beam is used to break pillars.
   If no player is within the bosses range he will cast [Tectonic
   Barrage](https://www.wowhead.com/spell=388393) repeatedly.
 </Mechanic>
+
+## Strategy
+
+Positioning matters but isn't the key to this fight. The boss will periodically drop rocks that spawn miasma on the platform which would complicating rigid positions. Ensuring pillars are in a cohesive line for tanks to break is the only real requirement.
+
+<figure>
+  <ProseImage src="/images/strategies/vault/terros-rp-1.jpg" width="1394" height="500" alt="" />
+  <figcaption>The room is circular, but the RaidPlan is cropped for space.</figcaption>
+</figure>
+
+The fight is based around a triangular formation for the ranged players. Ranged players will stack at <Marker type="diamond" />. Melee and the off-tank should always be to the left of the current tank to avoid the [Concussive Slam](https://www.wowhead.com/spell=376279) beam.
+
+1. Players debuffed with [Rock Blast](https://www.wowhead.com/spell=380487) move to <Marker type="star" />. The ranged and melee groups will dip into the outer edge of the circle to help soak.
+2. Players debuffed with [Awakened Earth](https://www.wowhead.com/spell=381486) move to <Marker type="skull" /> and spread their circles in a line so the tank's beam mechanic can hit them all in one go.
+
+At 100 energy when the boss casts [Resonating Annihilation](https://www.wowhead.com/spell=377166) the group will gateway out of the pizza slice. The various abilities that cause [Fractured Rubble](https://www.wowhead.com/spell=378861) can also disrupt the group's positioning. Regardless, after movement the groups should best recreate the general positions they were in before, absent the markers. Think of the movement like Skolex, and the pillars and tank beam like Halondrus.
+
+## Video
+
+<figure>
+  <Video src="https://www.youtube.com/watch?v=3koEFj75lkQ" />
+  <figcaption>
+    The video does not show the players placing or breaking pillars in a consistent pattern. The
+    specifics of movement and positioning are not important, just get a feel for what the mechanics
+    look like.
+  </figcaption>
+</figure>

@@ -4,7 +4,8 @@
 
 @layer components {
   .hero-gradient {
-    background: linear-gradient(107.67deg, #3220ff 0%, rgba(17, 31, 0, 0.47) 99.5%);
+    //background: linear-gradient(107.67deg, #3220ff 0%, rgba(17, 31, 0, 0.47) 99.5%);
+    background: linear-gradient(90deg, rgba(130, 188, 255, 1) 0%, rgba(255, 32, 94, 1) 100%);
     background-blend-mode: overlay;
     mix-blend-mode: normal;
   }

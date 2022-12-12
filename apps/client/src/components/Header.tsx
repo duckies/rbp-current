@@ -18,7 +18,6 @@ export default function Header() {
   const { user, logout } = useAuth()
 
   const onLogout = () => {
-    console.log("Header Clicky")
     logout()
   }
 

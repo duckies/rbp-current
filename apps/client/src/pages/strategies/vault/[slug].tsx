@@ -1,12 +1,14 @@
 import Hero from "components/Hero"
-import { MarkdownLayout } from "components/layouts/Markdown"
+import { getMarkdownLayout, MarkdownLayout } from "components/layouts/Markdown"
 import { useWowhead } from "hooks/useWowhead"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
-import type { FC } from "react"
+import type { Page } from "pages/_app"
+import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
+import { BackgroundProvider } from "stores/background"
 import { findMDXDocuments, getMDXDocument } from "utils/markdown"
 
-export const StrategyPage: FC<any> = ({ slug, frontmatter }) => {
+export const StrategyPage: Page = ({ slug, frontmatter }) => {
   const Component = dynamic(() => import(`../../../../content/strategies/vault/${slug}.mdx`))
 
   // Forcibly refresh Wowhead links.
@@ -53,5 +55,13 @@ export const getStaticPaths: GetStaticPaths = () => {
     fallback: false,
   }
 }
+
+// StrategyPage.getLayout = ({ children }) => (
+//   <DefaultLayout background={Background}>{children}</DefaultLayout>
+// )
+
+StrategyPage.getLayout = (page) => (
+  <BackgroundProvider src={VaultBackground}>{getMarkdownLayout(page)}</BackgroundProvider>
+)
 
 export default StrategyPage

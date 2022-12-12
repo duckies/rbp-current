@@ -4,22 +4,23 @@ import Header from "components/Header"
 import { getMe } from "lib/auth"
 import type { GetServerSideProps } from "next"
 import Image from "next/image"
-import background from "public/images/noise-bg.png"
-
-export interface DefaultLayoutProps {
-  children: React.ReactNode
-}
+import { useBackground } from "stores/background"
 
 function LayoutBackground() {
+  const { background } = useBackground()
+
   return (
-    <div className="absolute inset-0 -z-10 h-[450px] overflow-hidden lg:h-[500px]">
-      <div className="hero-gradient absolute inset-[-50vw] animate-[3s_infinite_spin]" />
-      <Image className="h-full w-full object-fill" src={background} alt="" priority />
-      <div className="to-surface-800/35 absolute inset-0 bg-gradient-to-t from-surface-800" />
+    <div className="absolute inset-0 -z-10 h-[440px] overflow-hidden lg:h-[750px]">
+      <div className="hero-gradient absolute inset-[-50vw] z-[10] animate-[5s_infinite_spin] opacity-40" />
+      <Image className="h-full w-full object-cover" src={background} fill alt="" priority />
+      <div className="absolute inset-0 z-[20] bg-gradient-to-t from-surface-800 to-surface-800/[65%]" />
     </div>
   )
 }
 
+type DefaultLayoutProps = {
+  children: React.ReactNode
+}
 export function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
@@ -30,6 +31,8 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
     </>
   )
 }
+
+export const getDefaultLayout = (page: React.ReactNode) => <DefaultLayout>{page}</DefaultLayout>
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = ctx.req.cookies.token
