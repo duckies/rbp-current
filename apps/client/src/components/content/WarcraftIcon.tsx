@@ -18,6 +18,11 @@ export function WarcraftIcon({ id, size, ...props }: WarcraftIconProps) {
         width={size || 56}
         height={size || 56}
         alt={data.name}
+        style={{ boxShadow: "0 0 0 1px rgb(250 214 122)" }}
+        onLoad={(e) =>
+          // Rather annoying way to remove a hyper-specific border-radius from Wowhead.
+          (e.target as HTMLImageElement).style.setProperty("border-radius", "0px", "important")
+        }
         {...props}
       />
     )

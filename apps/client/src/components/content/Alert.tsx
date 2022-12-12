@@ -4,10 +4,10 @@ import type { FC, PropsWithChildren } from "react"
 
 type AlertProps = VariantProps<typeof classes>
 
-const classes = cva("not-prose mb-6 p-8 rounded-lg", {
+const classes = cva("not-prose mb-6 px-8 py-4 rounded-lg", {
   variants: {
     type: {
-      info: "bg-yellow-300 text-black",
+      info: "bg-yellow-300/30 border-2 border-yellow-300",
       warning: "bg-pink-700/30 border-2 border-pink-700",
     },
   },

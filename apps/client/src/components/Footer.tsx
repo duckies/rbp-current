@@ -4,7 +4,7 @@ import { Link } from "components/Link"
 import type { FC, PropsWithChildren } from "react"
 
 const FooterHeader: FC<PropsWithChildren> = ({ children }) => {
-  return <p className="mb-4 text-2xl">{children}</p>
+  return <p className="mb-4 text-lg font-medium">{children}</p>
 }
 
 export default function Footer() {
