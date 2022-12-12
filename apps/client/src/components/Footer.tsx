@@ -1,13 +1,17 @@
 import { Container } from "components/Container"
 import DiscordLogo from "components/icons/Discord"
 import { Link } from "components/Link"
-import type { FC, PropsWithChildren } from "react"
+import type { FC, ReactNode } from "react"
 
-const FooterHeader: FC<PropsWithChildren> = ({ children }) => {
+type FooterHeaderProps = {
+  children: ReactNode
+}
+
+const FooterHeader: FC<FooterHeaderProps> = ({ children }) => {
   return <p className="mb-4 text-lg font-medium">{children}</p>
 }
 
-export default function Footer() {
+export const Footer: FC = () => {
   return (
     <footer className="bg-surface-800">
       <Container className="grid grid-cols-4 gap-y-4 border-t border-gray-800/80 bg-[url('/images/footer.jpg')] py-7 pt-10">
@@ -66,7 +70,6 @@ export default function Footer() {
           <ul className="space-y-2">
             <li>Privacy & Terms</li>
             <li>Terms of Service</li>
-            <li></li>
           </ul>
         </div>
 

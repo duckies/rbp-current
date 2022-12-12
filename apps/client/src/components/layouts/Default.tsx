@@ -1,12 +1,13 @@
 import { Container } from "components/Container"
-import Footer from "components/Footer"
-import Header from "components/Header"
+import { Footer } from "components/Footer"
+import { Header } from "components/Header"
 import { getMe } from "lib/auth"
 import type { GetServerSideProps } from "next"
 import Image from "next/image"
+import type { FC, ReactNode } from "react"
 import { useBackground } from "stores/background"
 
-function LayoutBackground() {
+const LayoutBackground: FC = () => {
   const { background } = useBackground()
 
   return (
@@ -19,9 +20,10 @@ function LayoutBackground() {
 }
 
 type DefaultLayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
-export function DefaultLayout({ children }: DefaultLayoutProps) {
+
+export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />

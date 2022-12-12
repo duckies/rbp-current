@@ -2,23 +2,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "components/common/LoadingBar/loading-bar.css"
 import { getDefaultLayout } from "components/layouts/Default"
 import { AuthProvider } from "hooks/stores/useAuth"
-import type { NextPage } from "next"
 import type { AppProps } from "next/app"
 import dynamic from "next/dynamic"
 import Head from "next/head"
-import type { ReactElement, ReactNode } from "react"
 import { useState } from "react"
 import { BackgroundProvider } from "stores/background"
 import "styles/global.css"
-
-export type Page<T = any> = NextPage<T> & {
-  /**
-   * Chooses the layout for the page.
-   *
-   * If omitted, the `DefaultLayout` is used.
-   */
-  getLayout?: (page: ReactElement) => ReactNode
-}
+import type { Page } from "types"
 
 type AppPropsWithLayout = AppProps & {
   Component: Page<any>

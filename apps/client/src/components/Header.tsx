@@ -1,25 +1,25 @@
 import { Container } from "components/Container"
-import DiscordLogo from "components/icons/Discord"
 import Logo from "components/icons/Logo"
 import { Link } from "components/Link"
 import { NavigationMenu } from "components/navigation/NavigationMenu"
-import { login } from "hooks/auth"
-import { useAuth } from "hooks/stores/useAuth"
-import { Avatar } from "./Avatar"
-import { Button } from "./Button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./Dropdown"
+import type { FC } from "react"
+// import DiscordLogo from "components/icons/Discord"
+// import { login } from "hooks/auth"
+// import { Avatar } from "./Avatar"
+// import { Button } from "./Button"
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuTrigger,
+// } from "./Dropdown"
 
-export default function Header() {
-  const { user, logout } = useAuth()
+export const Header: FC = () => {
+  // const { user, logout } = useAuth()
 
-  const onLogout = () => {
-    logout()
-  }
+  // const onLogout = () => {
+  //   logout()
+  // }
 
   return (
     <header className="sticky top-0 z-50 w-full py-2 before:absolute before:inset-0 before:bg-surface-800/90 before:backdrop-blur-md before:content-['']">
@@ -86,7 +86,7 @@ export default function Header() {
           </NavigationMenu>
         </nav>
 
-        <div className="flex items-center gap-1.5">
+        {/* <div className="flex items-center gap-1.5">
           {user ? (
             <>
               <DropdownMenu>
@@ -109,7 +109,7 @@ export default function Header() {
               Login
             </Button>
           )}
-        </div>
+        </div> */}
       </Container>
     </header>
   )

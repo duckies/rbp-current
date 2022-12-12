@@ -28,10 +28,9 @@ export const Marker = ({ type }: MarkerProps) => {
   return (
     <span className="not-prose">
       <Image
-        className="inline-block transition-transform will-change-transform hover:scale-105 hover:animate-pulse"
+        className="inline-block h-7 w-auto transition-transform will-change-transform hover:scale-105 hover:animate-pulse"
         src={Markers[type]}
         alt={`${name} Raid Marker`}
-        width="22"
         height="22"
       />
     </span>

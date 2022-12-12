@@ -81,6 +81,12 @@ module.exports = {
             "> ol li > *:first-child": {
               marginTop: 0,
             },
+            "> ul li > *:last-child": {
+              marginBottom: 0,
+            },
+            "> ol li > *:last-child": {
+              marginBottom: 0,
+            },
           },
         },
         lg: {
@@ -90,6 +96,12 @@ module.exports = {
             },
             "> ol li > *:first-child": {
               marginTop: 0,
+            },
+            "> ul li > *:last-child": {
+              marginBottom: 0,
+            },
+            "> ol li > *:last-child": {
+              marginBottom: 0,
             },
           },
         },

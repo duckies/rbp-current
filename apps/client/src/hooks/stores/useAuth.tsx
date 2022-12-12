@@ -53,7 +53,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isLoading,
       logout: logout.mutateAsync,
     }),
-    [user, error, isLoading, logout.mutate]
+    [user, error, isLoading, logout.mutateAsync]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

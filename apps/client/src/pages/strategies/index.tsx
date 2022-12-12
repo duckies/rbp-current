@@ -1,4 +1,5 @@
 import Card from "components/Card"
+import { Breadcrumbs } from "components/content/Breadcrumbs"
 import Hero from "components/Hero"
 import { getMarkdownLayout } from "components/layouts/Markdown"
 import { Link } from "components/Link"
@@ -23,6 +24,7 @@ export const StrategiesPage: Page = () => {
   return (
     <>
       <Hero>
+        <Breadcrumbs inclusive />
         <Hero.Title>Really Bad Strategies</Hero.Title>
         <Hero.Caption>Fight guides and resources.</Hero.Caption>
       </Hero>

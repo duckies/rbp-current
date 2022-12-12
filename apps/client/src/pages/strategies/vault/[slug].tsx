@@ -1,11 +1,12 @@
+import { Breadcrumbs } from "components/content/Breadcrumbs"
 import Hero from "components/Hero"
 import { getMarkdownLayout, MarkdownLayout } from "components/layouts/Markdown"
 import { useWowhead } from "hooks/useWowhead"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
-import type { Page } from "pages/_app"
 import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
 import { BackgroundProvider } from "stores/background"
+import type { Page } from "types"
 import { findMDXDocuments, getMDXDocument } from "utils/markdown"
 
 export const StrategyPage: Page = ({ slug, frontmatter }) => {
@@ -18,6 +19,7 @@ export const StrategyPage: Page = ({ slug, frontmatter }) => {
     <div>
       <MarkdownLayout>
         <Hero>
+          <Breadcrumbs />
           <Hero.Title>
             {frontmatter.difficulty} {frontmatter.title}
           </Hero.Title>
