@@ -40,4 +40,8 @@
   .text-shadow-none {
     text-shadow: none;
   }
+
+  .with-wowhead-icon:not(:where([data-wh-icon-added~="true"])) {
+    @apply pl-[21px];
+  }
 }
