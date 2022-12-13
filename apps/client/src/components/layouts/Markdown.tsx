@@ -1,5 +1,6 @@
 import { MDXProvider } from "@mdx-js/react"
 import { Alert } from "components/content/Alert"
+import { Difficulty } from "components/content/Difficulty"
 import { Marker } from "components/content/Marker"
 import { Mechanic } from "components/content/Mechanic"
 import { ProseImage } from "components/content/prose/ProseImage"
@@ -19,6 +20,7 @@ const components = {
   Mechanic,
   Video,
   Marker,
+  Difficulty,
 }
 
 export const MarkdownLayout: FC<PropsWithChildren<{}>> = ({ children }) => {

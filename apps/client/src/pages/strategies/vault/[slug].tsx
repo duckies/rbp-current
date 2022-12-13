@@ -6,6 +6,7 @@ import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
 import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
 import { BackgroundProvider } from "stores/background"
+import { DifficultyProvider } from "stores/difficulty"
 import type { Page } from "types"
 import { findMDXDocuments, getMDXDocument } from "utils/markdown"
 
@@ -17,19 +18,20 @@ export const StrategyPage: Page = ({ slug, frontmatter }) => {
 
   return (
     <div>
-      <MarkdownLayout>
-        <Hero>
-          <Breadcrumbs />
-          <Hero.Title>
-            {frontmatter.difficulty} {frontmatter.title}
-          </Hero.Title>
-          <Hero.Caption>{frontmatter.description}</Hero.Caption>
-        </Hero>
-        <main className="prose prose-invert relative mx-auto max-w-none lg:prose-lg">
-          <Component />
-          {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
-        </main>
-      </MarkdownLayout>
+      <DifficultyProvider>
+        <MarkdownLayout>
+          <Hero>
+            <Breadcrumbs />
+            <Hero.Title>
+              {frontmatter.difficulty} {frontmatter.title}
+            </Hero.Title>
+            <Hero.Caption>{frontmatter.description}</Hero.Caption>
+          </Hero>
+          <main className="prose prose-invert relative mx-auto max-w-none lg:prose-lg">
+            <Component />
+          </main>
+        </MarkdownLayout>
+      </DifficultyProvider>
     </div>
   )
 }

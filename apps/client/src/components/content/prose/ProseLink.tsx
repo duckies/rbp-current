@@ -1,9 +1,25 @@
 import clsx from "clsx"
 import type { LinkProps } from "components/Link"
 import { Link } from "components/Link"
+import { useDifficulty } from "stores/difficulty"
 
-export function ProseLink(props: Omit<LinkProps, "style">) {
-  const isWowheadLink = props.href?.includes("wowhead.com/spell=")
+export function ProseLink({ href, ...props }: Omit<LinkProps, "style">) {
+  const isWowheadLink = href?.includes("wowhead.com/spell=")
+  const { level } = useDifficulty()
+
+  if (isWowheadLink) {
+    const url = new URL(href!)
+    const params = url.searchParams
+
+    if (level === "mythic") {
+      params.delete("dd")
+    } else {
+      params.set("dd", level === "heroic" ? "15" : "14")
+    }
+
+    href = url.toString()
+    console.info("Resolved URL:", level, href)
+  }
 
   return (
     <Link
@@ -13,6 +29,7 @@ export function ProseLink(props: Omit<LinkProps, "style">) {
       )}
       externalIcon={false}
       data-wh-icon-size="small"
+      href={href}
       {...props}
     />
   )

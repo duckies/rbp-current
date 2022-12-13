@@ -23,6 +23,7 @@ type UseBreadcrumbOptions = {
 export const useBreadcrumbs = ({ inclusive }: UseBreadcrumbOptions) => {
   const router = useRouter()
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null)
+  const includeLast = inclusive || false
 
   useEffect(() => {
     if (router) {
@@ -38,10 +39,10 @@ export const useBreadcrumbs = ({ inclusive }: UseBreadcrumbOptions) => {
 
       setBreadcrumbs([
         { breadcrumb: "Home", href: "/" },
-        ...(inclusive ? pathArray : pathArray.slice(0, -1)),
+        ...(includeLast ? pathArray : pathArray.slice(0, -1)),
       ])
     }
-  }, [router, !!inclusive])
+  }, [router, includeLast])
 
   return breadcrumbs
 }
