@@ -4,7 +4,7 @@ import Hero from "components/Hero"
 import { getMarkdownLayout } from "components/layouts/Markdown"
 import { Link } from "components/Link"
 import Image from "next/image"
-import type { Page } from "pages/_app"
+import type { Page } from "types"
 
 import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
 import { BackgroundProvider } from "stores/background"

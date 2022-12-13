@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image"
-import DefaultBackground from "public/images/noise-bg.png"
+import DefaultBackground from "public/images/noise-bg.jpg"
 import type { ReactNode } from "react"
 import { createContext, useContext, useMemo, useState } from "react"
 
