@@ -13,6 +13,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["DM Mono", "monospace"],
       },
       colors: {
         class: {
@@ -87,6 +88,8 @@ module.exports = {
             "> ol li > *:last-child": {
               marginBottom: 0,
             },
+            "code::before": null,
+            "code::after": null,
           },
         },
         lg: {
@@ -102,6 +105,16 @@ module.exports = {
             },
             "> ol li > *:last-child": {
               marginBottom: 0,
+            },
+            "code::before": null,
+            "code::after": null,
+            "code": {
+              color: "var(--tw-prose-code)",
+              backgroundColor: "rgb(250 214 122 / 25%)",
+              borderRadius: "0.375rem",
+              padding: "3px 6px",
+              fontSize: "0.875rem",
+              fontWeight: "inherit",
             },
           },
         },

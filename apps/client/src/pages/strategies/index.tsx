@@ -16,7 +16,7 @@ const bosses = [
   { name: "Terros", slug: "terros" },
   { name: "The Primal Council", slug: "the-primal-council" },
   { name: "Sennarth, the Cold Breath", slug: "sennarth-the-cold-breath" },
-  { name: "Dathea, Ascended", slug: "dathea-ascended", disabled: true },
+  { name: "Dathea, Ascended", slug: "dathea-ascended" },
   { name: "Kurog Grimtotem", slug: "kurog-grimtotem", disabled: true },
   { name: "Broodkeeper Diurna", slug: "broodkeeper-diurna", disabled: true },
   { name: "Raszageth the Storm-Eater", slug: "raszageth-the-storm-eater", disabled: true },

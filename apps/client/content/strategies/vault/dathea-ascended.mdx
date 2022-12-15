@@ -1,0 +1,133 @@
+---
+title: Dathea Ascended
+date: 2022-12-13
+description: Dorothy, we're not in Kansas no more, but there sure are a lot of tornadoes.
+---
+
+## Mechanics
+
+Refer to [MythicTrap — Dathea](https://www.method.gg/guides/vault-of-the-incarnates/dathea-ascended-heroic) for detailed visuals and animations of the mechanics. They have been listed here in brief for reference.
+
+<Mechanic id={375580} name="Zephyr Slam" caption="Tank Swap">
+  
+A tank swap mechanic which deals 240,325 physical damage and knocks the tank back. Subsequent applications apply a stacking 50% vulnerability to the damage and strength of the knockback.
+
+If Dathea's current target isn't within reach she will cast [Aerial Buffet](https://www.wowhead.com/spell=376851), dealing 96,130 nature damage to her current target. Tanks that can get back to her quickly, or prevent knockbacks, can prevent this damage.
+
+</Mechanic>
+
+<Mechanic id={388302} name="Raging Burst" caption="Swirls">
+  Dathea creates swirls on the ground that inflicts 48,089 damage upon impact. These swirls will
+  spawn a [Raging Tempest](https://www.wowhead.com/spell=375424) at their location.
+</Mechanic>
+
+<Mechanic id={375424} name="Raging Tempest" caption="Tornados">
+
+A tornado moves around the platform dealing 96,130 nature damage and throwing players into
+the air when hit. They have a couple of effects aside from causing contact dermatitis:
+
+1. They periodically pulse raid damage through [Raging Winds](https://www.wowhead.com/spell=384637).
+2. When Dathea casts [Crosswinds](https://www.wowhead.com/spell=388410) the tornadoes will show an arrow and a swirly indicating a direction and location where they intend to move. Shortly thereafter the tornado rapidly moves to this new location, dealing 72,097 nature damage to any players at the destination and throwing them up in the air.
+
+</Mechanic>
+
+<Mechanic id={391686} name="Conductive Mark" caption="Covid Debuff">
+
+Dathea targets a player and applies a DoT that deals 48,082 nature damage instantly and 7,210 nature damage every second for 15 seconds. The debuff also causes the player to take 10% increased nature damage. The debuff is refreshed and duplicated when it comes into contact with another player.
+
+This is Dathea's mechanic from _The Primal Council_, only without the pillar to clear it. Since this debuff overlaps with nearly every other mechanic it's incredibly dangerous to the player, and the rest of the raid if they spread it to others.
+
+</Mechanic>
+
+<Mechanic id={376943} name="Cyclone" caption="Sucky Vortex">
+
+Dathea creates a vortex that pulls players towards her dealing 28,839 nature damage every second for 10 seconds. Players who are pulled into the vortex practice the rapture. This is reasonably countered by raid-movement abilities like [Stampeding Roar](https://www.wowhead.com/spell=77764/stampeding-roar).
+
+</Mechanic>
+
+### Volatile Infuser
+
+<Mechanic id={385812} name="Aerial Slash" caption="Tanked Add Ability">
+
+Slashes their current target with 156,211 nature damage. The add needs to be tanked.
+
+</Mechanic>
+
+<Mechanic id={387627} name="Blowback" caption="Large Knockback on Death">
+
+When the Volatile Infuser dies it explodes dealing 60,090 nature damage to all players and doing a considerable knockback. This knockback is used to move across platforms.
+
+</Mechanic>
+
+<Mechanic id={387943} name="Diverted Essence" caption="Interruptable Cast">
+
+The Infuser gives love to mommy, increasing her damage by 20% for 20 seconds which stacks. The infuser on the main platform will be killed so that [Blowback](https://www.wowhead.com/spell=387627) can take players to the side platform to interrupt the other infuser.
+
+</Mechanic>
+
+<Mechanic id={388562} name="Unstable Gusts" caption="Swirls">
+
+The Infuser will periodically expel swirls which deal 96,130 nature damage to players caught in the impact.
+
+</Mechanic>
+
+### Thunder Caller
+
+<Mechanic id={384273} name="Storm Bolt" caption="Persistent Cast">
+
+Thunder Callers are born with an insatiable lust to cast [Storm Bolt](https://www.wowhead.com/spell=384273) which deals 19,226 nature damage. The spell is interruptable and most forms of CC work on the Thunder Callers. They'll be grouped up and killed regardless.
+
+</Mechanic>
+
+<Mechanic id={390449} name="Thunderbolt" caption="Platform Vulnerability">
+
+When Thunder Callers spawn they leave a thunderstorm on their respective side platform which makes players take 7,210 nature damage every 2 seconds for 1.5 minutes and increases the damage taken from this ability by 50% per tick.
+
+</Mechanic>
+
+## Strategy
+
+This is a single-phase fight where a portion of the raid needs to split off to deal with adds she spawns on a side platform when she reaches 100 energy. The two large adds cast a boss-empowering ability, whereas the shrimpy ones cast at random players from afar. However, when a player is on a platform they take pulsating damage that applies a `1.5-minute` vulnerability. To counter this the raid will be split into two groups that alternate dealing with the platforming mechanic.
+
+I'll discuss the mechanics players have to deal with on the main platform and then the platform mechanics as a detailed sequence of events.
+
+### Main Platform
+
+The raid will be decently spread.
+
+- Dodge [Raging Burst](https://www.wowhead.com/spell=388302) swirls and the [Raging Tempest](https://www.wowhead.com/spell=375424) tornadoes that spawn from them. When Dathea casts [Crosswinds](https://www.wowhead.com/spell=388410) look for nearby tornadoes as they may be aiming through your character even if their impact location is not near you. These tornadoes operate _exactly_ the same way as the King Mechagon fight orbs.
+- Use movement utility to avoid being dragged into [Cyclone](https://www.wowhead.com/spell=376943) and a defensive to dampen the pulsating raid damage it deals.
+- Treat [Conductive Mark](https://www.wowhead.com/spell=391686) as if the person has the plague and will kill your whole family if they touch you. The person with the debuff needs to be extremely careful in addition to everyone giving them a wide birth to avoid spreading it. A cascade failure of spreading this mechanic will wipe the raid.
+
+### Platform Sequence
+
+<figure>
+  <ProseImage src="/images/strategies/vault/dathea-rp-1.png" width="1394" height="784" />
+  <figcaption>
+    There are only two Volatile Infusers, one of which is on the main platform. The second Volatile
+    Infuser and the Thunder Callers are on the activated platform.
+  </figcaption>
+</figure>
+
+Dathea hits 100 energy and this sequence of events will occur:
+
+1. It's announced that `Group 1` should go clear the side platform.
+2. The `Group 1` tank grabs the Volatile Infuser and drags it to the edge of the main platform across from the side platform with the rest of the adds on it. Only one side platform is "active" and will have adds on it at a time.
+3. The rest of the players in `Group 1` run to stand between the Volatile Infuser and the edge of the platform, angling themselves so that they are in a direct line from the add to the side platform. Players not going to the side platform should move away to avoid getting knocked off.
+4. Everyone focuses down the Volatile Infuser and interrupts it as it casts. Once it dies it will cast [Blowback](https://www.wowhead.com/spell=387627) which will knock `Group 1` to the side platform.
+5. Focus Thunder Callers while keeping everything interrupted.
+6. `Group 1` repeats standing between the Volatile Infuser and the edge of the platform, killing it, then being knocked back to the main platform.
+
+The next time Dathea hits 100 energy the same sequence will happen for `Group 2`, then back to `Group 1`, etc.
+
+<Alert type="warning">
+
+The verbosity and hand-holding of this explanation is intentional. If you aren't in position _before_ killing an Infuser you will likely miss the short [Blowback](https://www.wowhead.com/spell=387627) cast and fail to reach the other platform.
+
+Killing the Thunder Callers must be a priority because if the Volatile Infuser on the side platform dies first everyone will be sent back to the main platform with no way to kill any remaining Thunder Callers.
+
+</Alert>
+
+## Video
+
+<Video src="https://www.youtube.com/watch?v=7UP6y-UaT6Q" />
