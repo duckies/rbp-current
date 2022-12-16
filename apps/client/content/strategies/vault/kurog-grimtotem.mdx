@@ -1,0 +1,247 @@
+---
+title: Kurog Grimtotem
+date: 2022-12-15
+description: Hahahaha
+---
+
+## Mechanics
+
+Refer to [MythicTrap — Kurog Grimtotem](https://www.mythictrap.com/en/vault/kurog) for detailed visuals and animations of the mechanics.
+
+<Mechanic id={374861} name="Primal Shift" caption="Altar Activation Damage">
+  Moving Kurog into a different quadrant of the room causes him to attune himself to the quadrant's
+  altar. Doing so inflicts `36,049` damage to the raid and applies [Primal
+  Break](https://www.wowhead.com/spell=374864) making the raid 300% more vulnerable to this damage,
+  stacking.
+</Mechanic>
+
+<Mechanic id={390548} name="Sundering Strike" caption="Tank Swap">
+  Kurog attacks his current target inflicting `324,438` damage to players in a frontal cone and
+  knocking them back. Players that are hit suffer `28,839` physical damage every second for 35
+  seconds.
+</Mechanic>
+
+<Mechanic id={371971} name="Elemental Surge" caption="Enrage">
+  If Kurog is in the middle of the room, aka not in one of the quadrants, he will deal `7,210`
+  elemental damage to the raid every 0.5 seconds, stacking. This should never be triggered.
+</Mechanic>
+
+<Mechanic id={374779} name="Primal Barrier" caption="Intermission Shield">
+  At 100 energy Kurog enters his no-touchy shell and makes us kill his children.
+</Mechanic>
+
+<Mechanic id={396243} name="Primal Attunement" caption="Soft Enrage">
+  The third time Kurog reaches 100 energy he gains all altar abilities simultaneously and deals
+  `7,210` elemental damage to the raid every 0.5 seconds, stacking. This is an enrage mechanic that
+  is hopefully not seen.
+</Mechanic>
+
+### Elemental Altars
+
+<Tabs header>
+  <Tabs.Tab label="Altar of Flame">
+    
+    ### Altar Mechanics
+
+    <Mechanic id={374881} name="Flame Dominance" caption="Altar Raid Damage">
+      Each altar has a "dominance" mechanic causing him to pulse `33,645` damage of the corresponding
+      element type to the raid every 4 seconds.
+
+      Triggering an altar, killing an intermission add associated with an altar, and Kurog casting his ultimate ability at 100 energy each add 10% increased damage to this mechanic.
+    </Mechanic>
+
+    <Mechanic id={382563} name="Magma Burst" caption="Debuff Circles">
+      Kurog hurls magma at several players, dealing `60,081` fire damage to them and causing a large fire circle to spawn under them that deals `108,146` fire damage every second to players within it.
+
+      Players should bait this mechanic away from the raid as the circle lasts a long time.
+    </Mechanic>
+
+    <Mechanic id={373329} name="Molten Rupture" caption="Fire Lines">
+
+      Kurog radiates fire lines dealing `180,243` fire damage to players hit by them.
+
+    </Mechanic>
+
+    <Mechanic id={374022} name="Searing Carnage" caption="Trailing Fire Bombs">
+
+      Several players are infused with fire, causing them to leave a fire swirly in their path every 1 second for 5 seconds. Each swirly explodes after 2 seconds dealing `447,962` fire damage to players hit.
+
+      This is a typical bombardment-style mechanic where the player should keep moving to avoid the swirly and also avoid placing it under other players.
+
+    </Mechanic>
+
+    ### Intermission — Blazing Fiend
+
+    <Mechanic id={375828} name="Blistering Presence" caption="Pulsating Damage">
+      The raid burns for `2,403` fire damage every second while the Blazing Fiend lives, stacking.
+    </Mechanic>
+
+    <Mechanic id={374485} name="Magma Flow" caption="Dodge">
+      Magma pools form at random locations that inflict `108,146` damage when stood in.
+    </Mechanic>
+
+    <Mechanic id={376063} name="Smoldering Hellion" caption="Interrupt & Kill">
+      Adds will spawn from the magma pools, targeting random players with an interruptable cast that deals `76,094` fire damage.
+    </Mechanic>
+
+  </Tabs.Tab>
+  
+  <Tabs.Tab label="Altar of Frost">
+
+    ### Altar Mechanics
+
+    <Mechanic id={374916} name="Frost Dominance" caption="Altar Raid Damage">
+      Each altar has a "dominance" mechanic causing him to pulse `33,645` damage of the corresponding
+      element type to the raid every 4 seconds.
+
+      Triggering an altar, killing an intermission add associated with an altar, and Kurog casting his ultimate ability at 100 energy each add 10% increased damage to this mechanic.
+    </Mechanic>
+
+    <Mechanic id={373678} name="Biting Chill" caption="Rot Damage">
+      Kurog debuffs all players with [Biting Chill](https://www.wowhead.com/spell=373678) causing them to take `12,016` frost damage every second for 10 seconds.
+    </Mechanic>
+
+    <Mechanic id={391019} name="Frigid Torrent" caption="Dodge Orbs">
+      Kurog knocks players in melee back and summons orbs every 2 seconds for 4 seconds that travel in lines away from him. Players hit take `180,243` frost damage and are stunned for 6 seconds, though dispellable.
+    </Mechanic>
+
+    <Mechanic id={372456} name="Absolute Zero" caption="Soaking Meteor">
+      A chunk of ice is hurled at two players, inflicting `740,974` frost damage split evenly among all players in the impact location.
+
+      Getting hit gives a player 1 stack of [Frost Bite](https://www.wowhead.com/spell=372514). Reaching 2 stacks causes the player to be [Frozen Solid](https://www.wowhead.com/spell=372517), stunning the player and receiving a large DoT for 10 seconds. The vulnerability implies two separate soaking groups.
+    </Mechanic>
+
+    ### Intermission — Frozen Destroyer
+
+    <Mechanic id={375825} name="Chilling Presence" caption="Pulsating Damage">
+      The raid shivers for `2,403` frost damage every second while the Frozen Destroyer lives, stacking.
+    </Mechanic>
+
+    <Mechanic id={374623} name="Frozen Binds" caption="Interrupt">
+      The Frozen Destroyer unleashes a frost nova that inflicts `72,097` frost damage to all players and an additional `16,823` frost damage every 2 seconds for 20 seconds and reducing movement speed by 10%, stacking.
+
+      This is interruptable.
+    </Mechanic>
+
+    <Mechanic id={374624} name="Freezing Tempest" caption="Stack in Melee">
+      Winds form around the Frozen Destroyer dealing `96,129` frost damage every second to players farther than 10 yards away. However, players within 10 yards take `24,279` frost damage every second.
+    </Mechanic>
+
+  </Tabs.Tab>
+  
+  <Tabs.Tab label="Altar of Stone">
+    
+    ### Altar Mechanics
+
+    <Mechanic id={374917} name="Earth Dominance" caption="Altar Raid Damage">
+      Each altar has a "dominance" mechanic causing him to pulse `33,645` damage of the corresponding
+      element type to the raid every 4 seconds.
+
+      Triggering an altar, killing an intermission add associated with an altar, and Kurog casting his ultimate ability at 100 energy each add 10% increased damage to this mechanic.
+    </Mechanic>
+
+    <Mechanic id={395894} name="Erupting Bedrock" caption="Dodge Rings">
+      A sequence of concentric earthen rings erupts from the ground, inflicting `288,390` nature damage to players struck. Originates from melee and travels outwards.
+    </Mechanic>
+
+    <Mechanic id={391055} name="Enveloping Earth" caption="Large Healing Absorb">
+      Several players are debuffed with a healing absorb for `379,713`.
+    </Mechanic>
+
+    <Mechanic id={374705} name="Seismic Rupture" caption="Adds">
+      Several `Earth Breaker` adds erupt from the ground, dealing `216,292` nature damage to players in the eruption. These adds must be tanked and should be stunned and focused down as they cause [Skeletal Fractures](https://www.wowhead.com/spell=377780), a stacking 6% physical vulnerability to the tank.
+    </Mechanic>
+
+    ### Intermission — Tectonic Crusher
+
+    <Mechanic id={375824} name="Shattering Presence" caption="Pulsating Damage">
+      The raid burns for `2,403` nature damage every second while the Tectonic Crusher lives, stacking.
+    </Mechanic>
+
+    <Mechanic id={374321} name="Breaking Gravel" caption="Tank Swap">
+      Melee attacks debuff the target with a stacking 3% physical damage vulnerability that is removed after attacking a new target.
+    </Mechanic>
+
+    <Mechanic id={374427} name="Ground Shatter" caption="Spread & Aftershock">
+      Several players are infused with volatile earth, erupting to deal `168,227` nature damage to nearby players after 5 seconds within 10 yards. This is a collective spread mechanic.
+
+      After the effect expires, [Violent Upheavel](https://www.wowhead.com/spell=374430) is triggered at the location dealing `216,292` nature damage within 10 yards and knocking players away.
+    </Mechanic>
+
+  </Tabs.Tab>
+
+  <Tabs.Tab label="Altar of Storms">
+
+    ### Altar Mechanics
+
+    <Mechanic id={374918} name="Storm Dominance" caption="Altar Raid Damage">
+      Each altar has a "dominance" mechanic causing him to pulse `33,645` damage of the corresponding
+      element type to the raid every 4 seconds.
+
+      Triggering an altar, killing an intermission add associated with an altar, and Kurog casting his ultimate ability at 100 energy each add 10% increased damage to this mechanic.
+    </Mechanic>
+
+    <Mechanic id={390920} name="Shocking Burst" caption="Spread">
+      Kurog charges several players with electricity for 5 seconds. Upon expiration, charged players inflict `168,227` nature damage to players within 12 yards. This is a large circle that players need to spread out for.
+    </Mechanic>
+
+    <Mechanic id={373487} name="Lightning Crash" caption="Jumping DoT">
+      Several players are affected with a debuff that, on expiration, increases nature damage taken by 30% and inflicts `12,016` nature damage every 1 second to the closest player for 8 seconds.
+
+      The goal is to avoid two players with [Lightning Crash](https://www.wowhead.com/spell=373487) spreading their debuff to each other as this will increase their stacks and likely kill them both. Find a friend without the debuff and shock them.
+    </Mechanic>
+
+    <Mechanic id={374217} name="Thunder Strike" caption="Soaking Circles">
+      Several swirlies spawn around the altar that inflicts `84,113` nature damage to players in their impact. If one of these fails to hit a player then the entire raid will take `218,461` nature damage.
+    </Mechanic>
+
+    ### Intermission — Thundering Ravager
+
+    <Mechanic id={375792} name="Thundering Presence" caption="Pulsating Damage">
+       The raid suffers `2,403` nature damage every second while the Thundering Ravager lives, stacking.
+    </Mechanic>
+
+    <Mechanic id={374621} name="Storm Break" caption="Nothing Personal Kid">
+      The Thundering Ravager vanishes and teleports behind a random player to unleash [Lethal Current](https://www.wowhead.com/spell=391696) `40,855` nature damage every second for 6 seconds around the player.
+    </Mechanic>
+
+  </Tabs.Tab>
+</Tabs>
+
+### Main Phase Overview
+
+Kurog channels the power of an elemental altar in the quadrant of the room he is in, dealing increasing rot damage to us the longer we're exposed to the altar's mechanics. If we drag Kurog into a different quadrant he will attune himself to the new altar causing [Primal Shift](https://www.wowhead.com/spell=374861) — a burst of raid damage and a 20 second vulnerability to this mechanic. Each Altar is fairly straightforward featuring mostly dodging or spreading mechanics.
+
+- The fire altar has [fire lines](https://www.wowhead.com/spell=373329) originating from Kurog, spawns magma under players, and features a [bombardment](https://www.wowhead.com/spell=374022) mechanic where debuffed players need to run away to avoid exploding fire swirlies that spawn under their feet.
+- The frost altar double dips on the rot damage by periodically [debuffing](https://www.wowhead.com/spell=373678) the raid, fires [frozen orbs](https://www.wowhead.com/spell=391019) from Kurog that deal large damage, and lobs a [meteor](https://www.wowhead.com/spell=372456) at two players that need to be soaked by melee and ranges separately.
+- The earth altar summons [concentric rings of earth](https://www.wowhead.com/spell=395894) players need to dodge, heal through a large [healing absorb](https://www.wowhead.com/spell=391055) on several players, and [spawns adds](https://www.wowhead.com/spell=374705) that deal large damage to those in the swirly where they spawn as well as needing to be tanked and focused down.
+- The storm altar forces players to spread to avoid hitting each other with a [large exploding debuff](https://www.wowhead.com/spell=390920), [soaking circles](https://www.wowhead.com/spell=374217), and avoiding doubling up a [jumping dot](https://www.wowhead.com/spell=373487).
+
+<Alert>
+
+Although there are a lot of mechanics, most are self-explanitory and will be understood by watching videos and practicing the fight.
+
+</Alert>
+
+### Intermission Overview
+
+At 100 energy Kurog travels into the middle of the room and becomes immune. He will summon two elementals corresponding to the last two active altars. These elementals deal increasing damage the longer they are alive. Killing them returns Kurog to the main phase whee Kurog retains increased damage we take from our time on the prior altars.
+
+- The fire elemental spawns [pools of fire](https://www.wowhead.com/spell=374485) randomly, with each [summoning smaller adds](https://www.wowhead.com/spell=376063) which need to be interrupted and cleaved down.
+- The frost elemental needs to be [interrupted](https://www.wowhead.com/spell=374623) and will force players to stack in melee during [Freezing Tempest](https://www.wowhead.com/spell=374624).
+- The earth elemental has a [tank swap](https://www.wowhead.com/spell=374321) and forces players to spread to with a [debuff](https://www.wowhead.com/spell=374427) that has an [aftershock](https://www.wowhead.com/spell=374430) component.
+- The storm elemental will randomly [teleport behind a player](https://www.wowhead.com/spell=374621) and everyone needs to stay away from them.
+
+## Strategy
+
+Kurog's altar and intermission mechanics are taken at face value, but we can choose the order of the altars and how long we remain on them. Since the altars deal increasing damage the longer you're on them the safest option is to be on each altar for an equal amount of time.
+
+1. Kurog gains energy linearly, reaching 100 energy and thus entering the intermission 2 minutes into the fight.
+2. We can stay in the intermission for as long as we can heal through the elementals. Kurog will remain at 0 energy while in the intermission.
+3. It's recommended to start at the fire altar and transitin at 50 energy while rotating clockwise throughout the fight. With 2 upstairs phases each lasting 2 minutes each altar is activated for a minute.
+
+[Here is a log of Liquid killing him with this strategy](https://www.warcraftlogs.com/reports/txhM1NdGPB2XzCbm#fight=28).
+
+## Video
+
+<Video src="https://www.youtube.com/watch?v=YuT4XNMnkMQ" />

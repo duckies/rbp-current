@@ -24,9 +24,9 @@ export function Mechanic({ id, name, caption, children }: MechanicProps) {
   }
 
   return (
-    <div className="prose relative my-4 max-w-none rounded-lg bg-surface-600 shadow-lg hover:bg-surface">
-      <div className="flex gap-4 rounded-md p-4 hover:cursor-pointer" onClick={toggle}>
-        <div className="not-prose flex items-center rounded-md">
+    <div className="relative my-4 max-w-none rounded-lg bg-surface-600 shadow-lg hover:bg-surface">
+      <div className="not-prose flex gap-4 rounded-md p-4 hover:cursor-pointer" onClick={toggle}>
+        <div className="flex items-center rounded-md">
           <Link
             to={`https://wowhead.com/spell=${id}`}
             className="hide-wowhead"

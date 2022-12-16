@@ -13,8 +13,8 @@ const FooterHeader: FC<FooterHeaderProps> = ({ children }) => {
 
 export const Footer: FC = () => {
   return (
-    <footer className="bg-surface-800">
-      <Container className="grid grid-cols-4 gap-y-4 border-t border-gray-800/80 bg-[url('/images/footer.jpg')] py-7 pt-10">
+    <footer className="bg-surface-900">
+      <Container className="grid grid-cols-4 gap-y-4 border-t border-gray-900/80 bg-[url('/images/footer.jpg')] py-7 pt-10">
         <div className="col-span-2 md:col-span-1">
           <FooterHeader>Really Bad Players</FooterHeader>
           <ul className="flex flex-col">

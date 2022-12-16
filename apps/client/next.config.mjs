@@ -35,6 +35,10 @@ export default {
         protocol: "https",
         hostname: "render-us.worldofwarcraft.com",
       },
+      {
+        protocol: "https",
+        hostname: "wow.zamimg.com",
+      },
     ],
   },
   experimental: {

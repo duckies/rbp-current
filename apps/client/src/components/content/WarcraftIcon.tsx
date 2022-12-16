@@ -14,7 +14,8 @@ export function WarcraftIcon({ id, size, ...props }: WarcraftIconProps) {
   if (data) {
     return (
       <Image
-        src={`https://render-us.worldofwarcraft.com/icons/56/${data.icon}.jpg`}
+        src={`https://wow.zamimg.com/images/wow/icons/large/${data.icon}.jpg`}
+        // src={`https://render-us.worldofwarcraft.com/icons/56/${data.icon}.jpg`}
         width={size || 56}
         height={size || 56}
         alt={data.name}
