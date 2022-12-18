@@ -59,6 +59,7 @@ importers:
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.9
       '@types/slug': 5.0.3
+      '@vercel/analytics': 0.1.6
       autoprefixer: 10.4.13
       clsx: 1.2.1
       cva: npm:class-variance-authority@0.4.0
@@ -96,6 +97,7 @@ importers:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
       '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
       '@tanstack/react-query': 4.19.1_biqbaboplfbrettd7655fr4n2y
+      '@vercel/analytics': 0.1.6_react@18.2.0
       clsx: 1.2.1
       cva: /class-variance-authority/0.4.0_typescript@4.8.4
       framer-motion: 7.7.2_biqbaboplfbrettd7655fr4n2y
@@ -2371,6 +2373,14 @@ packages:
       '@ucast/core': 1.10.1
       '@ucast/js': 3.0.2
       '@ucast/mongo': 2.4.2
+    dev: false
+
+  /@vercel/analytics/0.1.6_react@18.2.0:
+    resolution: {integrity: sha512-zNd5pj3iDvq8IMBQHa1YRcIteiw6ZiPB8AsONHd8ieFXlNpLqhXfIYnf4WvTfZ7S1NSJ++mIM14aJnNac/VMXQ==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@vitest/ui/0.24.3:

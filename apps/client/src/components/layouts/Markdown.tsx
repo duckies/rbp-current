@@ -1,23 +1,31 @@
 import { MDXProvider } from "@mdx-js/react"
-import { Alert } from "components/content/Alert"
 import { Difficulty } from "components/content/Difficulty"
 import { Marker } from "components/content/Marker"
-import { Mechanic } from "components/content/Mechanic"
 import { ProseImage } from "components/content/prose/ProseImage"
 import { ProseLink } from "components/content/prose/ProseLink"
-import { Tabs } from "components/content/Tabs"
 import { Video } from "components/content/Video"
 import { getDefaultLayout } from "components/layouts/Default"
+import dynamic from "next/dynamic"
 import Image from "next/image"
 import type { FC, PropsWithChildren, ReactElement } from "react"
+
+const DynamicMechanic = dynamic(() =>
+  import("../content/Mechanic").then((module) => module.Mechanic)
+)
+
+const DynamicTabs = dynamic(() => import("../content/Tabs").then((module) => module.Tabs))
+const DynamicTab = dynamic(() => import("../content/Tabs").then((module) => module.Tab))
+
+const DynamicAlert = dynamic(() => import("../content/Alert").then((module) => module.Alert))
 
 const components = {
   a: ProseLink,
   Image,
   ProseImage,
-  Tabs,
-  Alert,
-  Mechanic,
+  Tabs: DynamicTabs,
+  Tab: DynamicTab,
+  Alert: DynamicAlert,
+  Mechanic: DynamicMechanic,
   Video,
   Marker,
   Difficulty,

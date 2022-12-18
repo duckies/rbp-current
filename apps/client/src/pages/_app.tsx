@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { Analytics } from "@vercel/analytics/react"
 import "components/common/LoadingBar/loading-bar.css"
 import { getDefaultLayout } from "components/layouts/Default"
 import { AuthProvider } from "hooks/stores/useAuth"
@@ -31,6 +32,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           </Head>
           <LoadingBar />
           {getLayout(<Component {...pageProps} />)}
+          <Analytics />
         </BackgroundProvider>
       </AuthProvider>
     </QueryClientProvider>

@@ -18,7 +18,6 @@ export function ProseLink({ href, ...props }: Omit<LinkProps, "style">) {
     }
 
     href = url.toString()
-    console.info("Resolved URL:", level, href)
   }
 
   return (

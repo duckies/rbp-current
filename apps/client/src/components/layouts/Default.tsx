@@ -1,9 +1,12 @@
 import { Container } from "components/Container"
 import { Footer } from "components/Footer"
 import { Header } from "components/Header"
+import type { Transition, Variants } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { getMe } from "lib/auth"
 import type { GetServerSideProps } from "next"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import type { FC, ReactNode } from "react"
 import { useBackground } from "stores/background"
 
@@ -23,12 +26,40 @@ type DefaultLayoutProps = {
   children: ReactNode
 }
 
+const variants: Variants = {
+  in: {
+    opacity: 1,
+  },
+  out: {
+    opacity: 0,
+  },
+}
+
+const transition: Transition = {
+  duration: 0.25,
+}
+
 export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
+  const router = useRouter()
+
   return (
     <>
       <Header />
       <LayoutBackground />
-      <Container className="min-h-[700px] pb-[90px]">{children}</Container>
+      <Container className="min-h-[700px] pb-[90px]">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={router.asPath}
+            animate="in"
+            initial="out"
+            exit="out"
+            variants={variants}
+            transition={transition}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </Container>
       <Footer />
     </>
   )

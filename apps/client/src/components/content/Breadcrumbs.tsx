@@ -4,7 +4,7 @@ import { useBreadcrumbs } from "hooks/useBreadcrumbs"
 import Link from "next/link"
 import type { FC } from "react"
 
-const breadcrumbCSS = cva(["text-gray-300 flex hover:text-white transition-color"])()
+const breadcrumbCSS = cva(["text-gray-300 hover:text-white transition-color hidden lg:flex"])()
 const separatorCSS = cva(["mx-2 h-4 w-4 self-center"])()
 
 type BreadcrumbsProps = {

@@ -141,5 +141,3 @@ type TabProps = {
 }
 
 export const Tab: FC<TabProps> = ({ children }) => <>{children}</>
-
-Tabs.Tab = Tab
