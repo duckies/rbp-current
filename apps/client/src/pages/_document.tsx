@@ -20,7 +20,7 @@ export default function MyDocument() {
         <script id="wowhead" dangerouslySetInnerHTML={{ __html: wowheadScript }} />
         <Script strategy="lazyOnload" src="https://wow.zamimg.com/js/tooltips.js" />
       </Head>
-      <body className="bg-white text-black dark:bg-surface-900 dark:text-white">
+      <body className="bg-surface-900 text-white">
         <Main />
         <NextScript />
       </body>
