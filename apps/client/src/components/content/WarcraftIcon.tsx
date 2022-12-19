@@ -2,7 +2,6 @@ import clsx from "clsx"
 import { motion } from "framer-motion"
 import type { ImageProps } from "next/image"
 import Image from "next/image"
-import { useCallback, useState } from "react"
 import { useSpell } from "stores/wowhead"
 
 export type WarcraftIconProps = Omit<ImageProps, "id" | "width" | "height" | "alt" | "src"> & {
@@ -11,12 +10,12 @@ export type WarcraftIconProps = Omit<ImageProps, "id" | "width" | "height" | "al
 }
 
 export function WarcraftIcon({ id, size, ...props }: WarcraftIconProps) {
-  const { data, error, status } = useSpell(id)
-  const [failed, setFailed] = useState(false)
+  const { data, status } = useSpell(id)
+  // const [failed, setFailed] = useState(false)
 
-  const onError = useCallback(() => {
-    setFailed(true)
-  }, [])
+  // const onError = useCallback(() => {
+  //   setFailed(true)
+  // }, [])
 
   // const src = !!data ? `https://wow.zamimg.com/images/wow/icons/large/${data.icon}.jpg` :
 
@@ -51,7 +50,7 @@ export function WarcraftIcon({ id, size, ...props }: WarcraftIconProps) {
         width={size || 56}
         height={size || 56}
         alt={data?.name || ""}
-        onError={onError}
+        // onError={onError}
         style={{ boxShadow: "0 0 0 1px rgb(250 214 122)" }}
         onLoad={(e) =>
           // Rather annoying way to remove a hyper-specific border-radius from Wowhead.

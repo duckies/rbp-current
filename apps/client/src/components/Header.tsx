@@ -55,7 +55,7 @@ export const Header: FC = () => {
                       Strategy guides and resources for Vault of the Incarnates.
                     </NavigationMenu.ContentListItem>
 
-                    <NavigationMenu.ContentListItem to="#" title="Announcements">
+                    <NavigationMenu.ContentListItem to="/announcements" title="Announcements">
                       Announcements and news from the guild.
                     </NavigationMenu.ContentListItem>
 

@@ -31,7 +31,7 @@ export const getParsedTabs = (children: ReactNode[]) => {
 //   return Math.abs(offset) * velocity
 // }
 
-export const Tabs: FC<TabsProps> & { Tab: typeof Tab } = ({ header, children }) => {
+export const Tabs: FC<TabsProps> = ({ header, children }) => {
   const [[page, direction], setPage] = useState([0, 0])
   const tabs = getParsedTabs(children)
 
