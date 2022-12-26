@@ -32,7 +32,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           </Head>
           <LoadingBar />
           {getLayout(<Component {...pageProps} />)}
-          <Analytics />
+          <Analytics debug={false} />
         </BackgroundProvider>
       </AuthProvider>
     </QueryClientProvider>

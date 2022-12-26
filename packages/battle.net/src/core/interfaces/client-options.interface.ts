@@ -1,16 +1,20 @@
-import type { Locale, Region } from '../regions';
+import type {
+  HttpModuleOptions,
+  HttpOptions,
+} from '@rbp/http/dist/interfaces/http-options.interface'
+import type { Locale, Region } from '../regions'
 
 export interface ClientDefaults {
   /**
-     * Default region to use for requests.
-     */
+   * Default region to use for requests.
+   */
   region: Region
 
   /**
-      * Default locale to use for requests.
-      *
-      * If not provided, the API will return all locales for the region.
-      */
+   * Default locale to use for requests.
+   *
+   * If not provided, the API will return all locales for the region.
+   */
   locale?: Locale
 }
 
@@ -30,4 +34,9 @@ export interface ClientOptions {
    * Can be overriden on a per-request basis.
    */
   defaults: ClientDefaults
+
+  /**
+   * Options to pass to `got`.
+   */
+  clientOptions?: Omit<HttpOptions, 'modules'>
 }

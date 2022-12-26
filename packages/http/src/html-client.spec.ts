@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
-import { HTTPClient } from './html-client';
+import { describe, expect, it } from 'vitest'
+import { HTTPClient } from './html-client'
 
 describe('HTTPClient', () => {
   it('should load modules', () => {
     // @ts-expect-error - Peeking at the privates.
-    expect(Object.keys(new HTTPClient()._modules).length).toBe(0);
+    expect(Object.keys(new HTTPClient()._modules).length).toBe(0)
 
     const http = new HTTPClient({
       modules: {
@@ -20,9 +20,9 @@ describe('HTTPClient', () => {
           intervalCap: 5,
         },
       },
-    });
+    })
 
     // @ts-expect-error - Peeking at the privates.
-    expect(Object.keys(http._modules).length).toBe(2);
-  });
-});
+    expect(Object.keys(http._modules).length).toBe(2)
+  })
+})

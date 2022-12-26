@@ -1,11 +1,11 @@
 import { Listbox } from "@headlessui/react"
 import { FieldError } from "components/forms/shared/FieldError"
 import { label as labelCSS } from "components/forms/shared/Label"
-import type { FieldValues } from "react-hook-form"
+import type { FieldProps } from "features/application/useForm"
+import type { FC } from "react"
 import { useController } from "react-hook-form"
 import { FormFieldStyles } from "styles/components/forms"
 import { listbox, option } from "styles/components/listbox"
-import type { FieldProps } from "types/forms"
 import type { DOMProps } from "types/shared"
 
 type Item = {
@@ -13,15 +13,14 @@ type Item = {
   value: any
 }
 
-type SelectProps<T extends FieldValues> = Omit<DOMProps<"select">, "name" | "form"> &
-  FieldProps<T> & {
+type SelectProps = Omit<DOMProps<"select">, "name" | "form"> &
+  FieldProps & {
     label?: string
     items: Item[]
   }
 
-export function Select<T extends FieldValues>({ label, items, name, form }: SelectProps<T>) {
-  const { field, fieldState } = useController({ name, control: form.control })
-
+export const Select: FC<SelectProps> = ({ id, label, items, form }) => {
+  const { field, fieldState } = useController({ name: id, control: form.control })
   const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 
   return (
@@ -30,14 +29,12 @@ export function Select<T extends FieldValues>({ label, items, name, form }: Sele
       className="relative inline-flex w-full flex-col"
       value={selectedItem}
       onChange={field.onChange}
+      onBlur={field.onBlur}
     >
       <Listbox.Label className={labelCSS()}>{label}</Listbox.Label>
 
       <div className="relative">
-        <Listbox.Button
-          className={FormFieldStyles({ class: "form-select text-left" })}
-          ref={field.ref}
-        >
+        <Listbox.Button className={FormFieldStyles({ class: "form-select text-left" })}>
           {({ value }) => <span className="inline-block h-[1rem]">{value?.text}</span>}
         </Listbox.Button>
 

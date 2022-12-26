@@ -2,23 +2,22 @@ import { Combobox as HeadlessCombobox } from "@headlessui/react"
 import { FieldError } from "components/forms/shared/FieldError"
 import { label as labelCSS } from "components/forms/shared/Label"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
+import type { Item } from "features/application/types"
+import type { FieldProps } from "features/application/useForm"
+import type { FC } from "react"
 import { useState } from "react"
-import type { FieldValues } from "react-hook-form"
 import { useController } from "react-hook-form"
 import { FormFieldStyles } from "styles/components/forms"
 import { listbox, option } from "styles/components/listbox"
-import type { FieldProps, Item } from "types/forms"
 
-type ComboboxProps<T extends FieldValues> = FieldProps<T> & {
+type ComboboxProps = FieldProps & {
   items: Item[]
   label?: string
   initialValue?: Item
 }
 
-export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
-  const { label, items, name, form, ...inputProps } = props
-  const { field, fieldState } = useController({ name, control: form.control })
-
+export const Combobox: FC<ComboboxProps> = ({ id, label, items, form, ...inputProps }) => {
+  const { field, fieldState } = useController({ name: id, control: form.control })
   const [query, setQuery] = useState("")
   const filteredItems =
     query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()))

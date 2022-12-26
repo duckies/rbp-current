@@ -25,7 +25,7 @@ export class CharacterService {
   /**
    * Inserts the basic character identifiers into the database.
    */
-  public async create(findCharacterDTO: FindCharacterDTO) {
+  public create(findCharacterDTO: FindCharacterDTO) {
     return this.repository.create({
       name: capitalize(findCharacterDTO.name),
       realm: findCharacterDTO.realm,
@@ -34,25 +34,27 @@ export class CharacterService {
   }
 
   /**
-   * Populates a character but does not save it to the database.
+   * Locates or creates a character and populates it with basic data.
    */
-  public async lookup(findCharacterDTO: FindCharacterDTO) {
-    const character = this.em.create(Character, {
-      name: capitalize(findCharacterDTO.name),
-      realm: findCharacterDTO.realm,
-      region: findCharacterDTO.region,
-    })
+  public async upsert(findCharacterDTO: FindCharacterDTO) {
+    let character = await this.repository.findOne({ ...findCharacterDTO })
+
+    if (!character) {
+      character = this.create(findCharacterDTO)
+      this.em.persist(character)
+    }
 
     await this.orchestrator.getEndpoints(
       [
         'character-profile-summary',
-        'character-achievements-summary',
         'character-media-summary',
         'character-mythic-keystone-profile',
         'character-raids',
       ],
       character
     )
+
+    await this.em.flush()
 
     return character
   }
@@ -76,7 +78,7 @@ export class CharacterService {
   }
 
   public async delete(findCharacterDTO: FindCharacterDTO) {
-    const character = await this.repository.findOneOrFail(findCharacterDTO)
+    const character = await this.repository.findOneOrFail({ ...findCharacterDTO })
     return this.repository.remove(character).flush()
   }
 }

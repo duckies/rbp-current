@@ -1,17 +1,18 @@
 import { RealmMap } from "@rbp/battle.net/constants"
 import type { FindCharacterDTO } from "@rbp/server"
+import Button from "components/Button"
 import { ArrowUpRight } from "components/icons/ArrowUpRight"
-import { useCharacterLookup } from "features/Characters/queries"
+import { CloseIcon } from "components/icons/Close"
+import { useCharacterLookup } from "features/characters/queries"
 import Image from "next/image"
 
 export type CharacterPreviewProps = {
   character: FindCharacterDTO
   removable?: boolean
-  onRemove?: (character: FindCharacterDTO) => void
+  onRemove?: () => void
 }
 
-export function CharacterPreview({ character }: CharacterPreviewProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function CharacterPreview({ character, onRemove }: CharacterPreviewProps) {
   const { data, status, error } = useCharacterLookup(character)
 
   if (status === "error" && !data) {
@@ -24,30 +25,16 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
 
   if (status === "loading" && !data) {
     return (
-      <div className="flex:wrap jc:space-between gap:10 p:20 bg:gray-20 r:10 my:15 flex md:gap-20">
-        <div>
-          <div className="js:center r:100% bg:gray-30 h:80 w:80 flex" />
-        </div>
+      <div className="my-4 flex flex-wrap justify-between gap-2.5 rounded-md bg-surface p-6">
+        <div className="flex animate-pulse space-x-4">
+          <div className="h-[80px] w-[80px] rounded-full bg-gray-300" />
 
-        <div className="flex:wrap flex:row gap:10 ji:space-between flex ">
-          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
-        </div>
-
-        <div className="flex:wrap flex:row gap:10 ji:space-between flex ">
-          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
-        </div>
-
-        <div className="flex:wrap flex:row gap:10 ji:space-between flex ">
-          <div className="h:15 bg:gray-30 r:5 h:10 w:100" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:80%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:90%" />
-          <div className="h:15 bg:gray-30 r:5 h:10 w:95%" />
+          <div className="flex-1 space-y-6">
+            <div className="h-4 rounded bg-gray-300" />
+            <div className="h-4 rounded bg-gray-300" />
+            <div className="h-4 rounded bg-gray-300" />
+            <div className="h-4 rounded bg-gray-300" />
+          </div>
         </div>
       </div>
     )
@@ -81,7 +68,7 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
       {Object.entries(data.progression.summary).map(([raid]) => (
         <div key={raid}>{raid}</div>
       ))}
-      {/* <p>{data.progression.summary.map(raid => raid.name).join(', ')}</p> */}
+      {/* <p>{data.progression.summary.map((raid) => raid.name).join(", ")}</p> */}
     </div>
   ) : (
     <div>
@@ -92,10 +79,17 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
   return (
     <>
       <div
-        className={`my-5 flex justify-center gap-5 rounded-md p-5 ${
-          data.summary ? `bg-class-${data.summary.class.id}/30` : `bg-surface-300`
+        className={`relative my-5 flex justify-center gap-5 rounded-md p-5 ${
+          data.summary ? `bg-class-${data.summary.class.id}/70` : `bg-surface-300`
         }`}
       >
+        {onRemove && (
+          <div className="absolute top-0 right-0 p-3">
+            <Button variant="icon" className="hover:text-gray-200" type="button" onClick={onRemove}>
+              <CloseIcon className="h-7 w-7" />
+            </Button>
+          </div>
+        )}
         <Image
           className="flex self-center rounded-full"
           src={data.avatar}
@@ -109,5 +103,3 @@ export function CharacterPreview({ character }: CharacterPreviewProps) {
     </>
   )
 }
-
-export function RemoveButton() {}

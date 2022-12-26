@@ -1,24 +1,24 @@
-import type { CancelableRequest, Response } from '@rbp/http';
-import { HTTPClient } from '@rbp/http';
+import type { CancelableRequest, Response } from '@rbp/http'
+import { HTTPClient } from '@rbp/http'
 import type {
   ClientDefaults,
   ClientOptions,
-} from './interfaces/client-options.interface';
-import type { ResourceRequest } from './interfaces/resource-options.interface';
-import type { Locale } from './regions';
-import { RegionalLocalesMap } from './regions';
+} from './interfaces/client-options.interface'
+import type { ResourceRequest } from './interfaces/resource-options.interface'
+import type { Locale } from './regions'
+import { RegionalLocalesMap } from './regions'
 
 export abstract class BattleNetClient {
-  private readonly http: HTTPClient;
+  private readonly http: HTTPClient
 
-  public readonly defaults: ClientDefaults;
+  public readonly defaults: ClientDefaults
 
   constructor(options: ClientOptions) {
-    this.validateOptions(options);
+    this.validateOptions(options)
 
     this.defaults = {
       ...options.defaults,
-    };
+    }
 
     this.http = new HTTPClient({
       timeout: {
@@ -38,43 +38,52 @@ export abstract class BattleNetClient {
           authorizationUrl: `https://${this.defaults.region}.battle.net/oauth/token`,
         },
       },
-    });
+      ...(options.clientOptions || {}),
+    })
   }
 
   private validateOptions(options: ClientOptions) {
-    const { region, locale } = options.defaults;
+    const { region, locale } = options.defaults
 
-    const regionalLocales = RegionalLocalesMap[region].available;
+    const regionalLocales = RegionalLocalesMap[region].available
 
     if (locale && !regionalLocales.includes(locale)) {
-      throw new Error(`Invalid locale '${locale}' for region '${region}'.`);
+      throw new Error(`Invalid locale '${locale}' for region '${region}'.`)
     }
   }
 
   private getRegionLocaleOrDefault(locale?: Locale) {
-    const region = this.defaults.region;
+    const region = this.defaults.region
 
     if (!locale) {
-      return RegionalLocalesMap[region].default;
-    }
-    else if (RegionalLocalesMap[region].available.includes(locale)) {
-      return locale;
-    }
-    else {
-      throw new Error(`Invalid locale '${locale}' for region '${region}'.`);
+      return RegionalLocalesMap[region].default
+    } else if (RegionalLocalesMap[region].available.includes(locale)) {
+      return locale
+    } else {
+      throw new Error(`Invalid locale '${locale}' for region '${region}'.`)
     }
   }
 
-  public get<T = unknown>({ path, namespace, params, ...options }: ResourceRequest): CancelableRequest<Response<T>> {
-    const region = options.advanced?.region || this.defaults.region;
-    const locale = this.getRegionLocaleOrDefault(options.advanced?.locale);
+  public get<T = unknown>({
+    path,
+    namespace,
+    params,
+    ...options
+  }: ResourceRequest): CancelableRequest<Response<T>> {
+    const region = options.advanced?.region || this.defaults.region
+    const locale = this.getRegionLocaleOrDefault(options.advanced?.locale)
 
     return this.http.get<T>({
       url: `https://${region}.api.blizzard.com/${path}`,
       headers: {
-        ...(namespace ? { 'Battlenet-Namespace': `${namespace}-${region}` } : {}),
+        ...(namespace
+          ? { 'Battlenet-Namespace': `${namespace}-${region}` }
+          : {}),
         ...(options.advanced?.ifModifiedSince
-          ? { 'If-Modified-Since': options.advanced.ifModifiedSince.toUTCString() }
+          ? {
+              'If-Modified-Since':
+                options.advanced.ifModifiedSince.toUTCString(),
+            }
           : {}),
       },
       searchParams: {
@@ -82,6 +91,6 @@ export abstract class BattleNetClient {
         locale,
       },
       responseType: 'json',
-    });
+    })
   }
 }

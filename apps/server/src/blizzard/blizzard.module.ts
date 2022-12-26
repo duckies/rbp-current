@@ -1,12 +1,15 @@
-import { Module, Provider } from '@nestjs/common';
-import { WoWClient } from '@rbp/battle.net';
-import { BlizzardConfig } from '../app.config';
-import { HttpModule } from '../common/http/http.module';
-import { RateLimiterModule } from '../common/rate-limiter/rate-limiter.module';
+import { Module, Provider } from '@nestjs/common'
+import { WoWClient } from '@rbp/battle.net'
+import { BlizzardConfig } from '../app.config'
+import { HttpModule } from '../common/http/http.module'
+import { RateLimiterModule } from '../common/rate-limiter/rate-limiter.module'
+import { WINSTON_INSTANCE } from '../logger/logger.constants'
+import { WinstonLogger } from '../logger/logger.service'
 
 const WoWClientProvider: Provider = {
   provide: WoWClient,
-  useFactory: (config: BlizzardConfig) => {
+  inject: [BlizzardConfig, WINSTON_INSTANCE],
+  useFactory: (config: BlizzardConfig, logger: WinstonLogger) => {
     return new WoWClient({
       clientId: config.ID,
       clientSecret: config.SECRET,
@@ -14,10 +17,29 @@ const WoWClientProvider: Provider = {
         region: 'us',
         locale: 'en_US',
       },
-    });
+      clientOptions: {
+        hooks: {
+          beforeRequest: [
+            (options) => {
+              logger?.verbose({ message: options.url, options })
+            },
+          ],
+          afterResponse: [
+            (response) => {
+              logger?.verbose({
+                message: response.url,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                body: response.body,
+              })
+              return response
+            },
+          ],
+        },
+      },
+    })
   },
-  inject: [BlizzardConfig],
-};
+}
 
 @Module({
   imports: [
@@ -32,4 +54,4 @@ const WoWClientProvider: Provider = {
   providers: [WoWClientProvider],
   exports: [WoWClientProvider],
 })
-export class BlizzardModule { }
+export class BlizzardModule {}

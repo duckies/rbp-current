@@ -1,20 +1,23 @@
-import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { Module } from '@nestjs/common';
-import { EnvironmentVariables } from './app.config';
-import { AuthModule } from './auth/auth.module';
-import { BlizzardModule } from './blizzard/blizzard.module';
-import { BotModule } from './bot/bot.module';
-import { CharacterModule } from './character/character.module';
-import { ConfigModule } from './config/config.module';
-import { FormFieldModule } from './form-field/form-field.module';
-import { FormSubmissionModule } from './form-submission/form-submission.module';
-import { FormModule } from './form/form.module';
-import { PermissionModule } from './permission/permission.module';
-import { RoleModule } from './role/role.module';
-import { SlideModule } from './slide/slide.module';
+import { MikroOrmModule } from '@mikro-orm/nestjs'
+import { Module } from '@nestjs/common'
+import { EnvironmentVariables } from './app.config'
+import { logger } from './app.logger'
+import { AuthModule } from './auth/auth.module'
+import { BlizzardModule } from './blizzard/blizzard.module'
+import { BotModule } from './bot/bot.module'
+import { CharacterModule } from './character/character.module'
+import { ConfigModule } from './config/config.module'
+import { FormFieldModule } from './form-field/form-field.module'
+import { FormSubmissionModule } from './form-submission/form-submission.module'
+import { FormModule } from './form/form.module'
+import { WinstonModule } from './logger/logger.module'
+import { PermissionModule } from './permission/permission.module'
+import { RoleModule } from './role/role.module'
+import { SlideModule } from './slide/slide.module'
 
 @Module({
   imports: [
+    WinstonModule.forRoot(logger),
     ConfigModule.forRoot({
       schema: EnvironmentVariables,
       envSeparator: '__',
@@ -32,4 +35,4 @@ import { SlideModule } from './slide/slide.module';
     CharacterModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

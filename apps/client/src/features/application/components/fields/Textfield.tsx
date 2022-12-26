@@ -1,22 +1,19 @@
 import { FieldError } from "components/forms/shared/FieldError"
 import FieldWrapper from "components/forms/shared/InputWrapper"
 import Label from "components/forms/shared/Label"
-import type { FieldValues } from "react-hook-form"
+import type { FieldProps } from "features/application/useForm"
 import { FormFieldStyles } from "styles/components/forms"
-import type { FieldProps } from "types/forms"
 
-export type TextfieldProps<T extends FieldValues> = FieldProps<T> & {
-  id: string
+export type TextfieldProps = FieldProps & {
   label: string
-  className?: string
 }
 
-export function Textfield<T extends FieldValues>(props: TextfieldProps<T>) {
-  const { id, label, className, name, form, ...inputProps } = props
-  const { error } = form.getFieldState(name, form.formState)
+export const Textfield = (props: TextfieldProps) => {
+  const { id, label, form, ...inputProps } = props
+  const { error } = form.getFieldState(id, form.formState)
 
   return (
-    <div className={className}>
+    <div>
       <Label htmlFor={id}>{label}</Label>
       <FieldWrapper>
         <input
@@ -24,7 +21,7 @@ export function Textfield<T extends FieldValues>(props: TextfieldProps<T>) {
           id={id}
           className={FormFieldStyles()}
           {...inputProps}
-          {...form.register(name)}
+          {...form.register(id)}
         />
       </FieldWrapper>
       {error && <FieldError>{error.message}</FieldError>}
