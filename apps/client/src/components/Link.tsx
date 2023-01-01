@@ -15,12 +15,12 @@ export type LinkProps = DOMProps<"a"> &
     externalIcon?: boolean
   }
 
-const linkCSS = cva("inline-block", {
+const linkCSS = cva("", {
   variants: {
     style: {
       plain: "",
       default:
-        "after:ease relative whitespace-nowrap text-yellow-400 no-underline after:absolute after:bottom-[2px] after:left-0 after:h-[1px] after:w-0 after:rounded-full after:bg-yellow after:transition-[width] after:duration-200 hover:text-yellow hover:after:w-full hover:after:ease-out",
+        "inline-block after:ease relative whitespace-nowrap text-yellow-400 no-underline after:absolute after:bottom-[2px] after:left-0 after:h-[1px] after:w-0 after:rounded-full after:bg-yellow after:transition-[width] after:duration-200 hover:text-yellow hover:after:w-full hover:after:ease-out",
     },
   },
   defaultVariants: {

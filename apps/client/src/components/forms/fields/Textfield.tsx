@@ -13,7 +13,7 @@ export type TextfieldProps<T extends FieldValues> = FieldProps<T> & {
 
 export function Textfield<T extends FieldValues>(props: TextfieldProps<T>) {
   const { id, label, className, name, form, ...inputProps } = props
-  const { error } = form.getFieldState(name, form.formState)
+  const { error } = form.getFieldState(name as never, form.formState)
 
   return (
     <div className={className}>
@@ -24,7 +24,7 @@ export function Textfield<T extends FieldValues>(props: TextfieldProps<T>) {
           id={id}
           className={FormFieldStyles()}
           {...inputProps}
-          {...form.register(name)}
+          {...form.register(name as never)}
         />
       </FieldWrapper>
       {error && <FieldError>{error.message}</FieldError>}

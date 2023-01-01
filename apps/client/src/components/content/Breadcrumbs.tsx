@@ -15,7 +15,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ inclusive }) => {
   const breadcrumbs = useBreadcrumbs({ inclusive })
 
   return (
-    <nav className="h-[24px]" aria-label="breadcrumbs">
+    <nav className="mb-3 h-[24px]" aria-label="breadcrumbs">
       <ol className="flex">
         {breadcrumbs?.map(({ breadcrumb, href }, index) => {
           const isLast = index === breadcrumbs.length - 1

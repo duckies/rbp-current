@@ -15,7 +15,6 @@ const DynamicMechanic = dynamic(() =>
 
 const DynamicTabs = dynamic(() => import("../content/Tabs").then((module) => module.Tabs))
 const DynamicTab = dynamic(() => import("../content/Tabs").then((module) => module.Tab))
-
 const DynamicAlert = dynamic(() => import("../content/Alert").then((module) => module.Alert))
 
 const components = {

@@ -20,7 +20,7 @@ type SelectProps<T extends FieldValues> = Omit<DOMProps<"select">, "name" | "for
   }
 
 export function Select<T extends FieldValues>({ label, items, name, form }: SelectProps<T>) {
-  const { field, fieldState } = useController({ name, control: form.control })
+  const { field, fieldState } = useController({ name: name as never, control: form.control })
 
   const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 

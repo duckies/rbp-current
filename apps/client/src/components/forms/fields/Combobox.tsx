@@ -17,7 +17,7 @@ type ComboboxProps<T extends FieldValues> = FieldProps<T> & {
 
 export function Combobox<T extends FieldValues>(props: ComboboxProps<T>) {
   const { label, items, name, form, ...inputProps } = props
-  const { field, fieldState } = useController({ name, control: form.control })
+  const { field, fieldState } = useController({ name: name as never, control: form.control })
 
   const [query, setQuery] = useState("")
   const filteredItems =

@@ -25,7 +25,7 @@ const classes = cva([
 
 export function Textarea<T extends FieldValues>(props: TextareaProps<T>) {
   const { id, className, name, form, ...inputProps } = props
-  const { error } = form.getFieldState(name, form.formState)
+  const { error } = form.getFieldState(name as never, form.formState)
 
   return (
     <div>
