@@ -25,7 +25,7 @@ type DocumentCardInsetImageProps = {
 
 export const DocumentCardInsetImage: FC<DocumentCardInsetImageProps> = ({ disabled, src }) => {
   return (
-    <div className="absolute right-0 top-0 flex h-full w-[30%]">
+    <div className="absolute right-0 top-0 flex h-full w-[150px] lg:w-[300px]">
       <Image
         className={insetImageCSS({ style: disabled ? "grayscale" : "glow" })}
         src={src}
@@ -54,7 +54,7 @@ export const DocumentCard: FC<DocumentCardProps> = ({
   insetSrc,
 }) => {
   return (
-    <Card className="group relative overflow-hidden" href={href}>
+    <Card className="group relative overflow-hidden" {...(!disabled && { href })}>
       {insetSrc && <DocumentCardInsetImage src={insetSrc} disabled={disabled} />}
 
       <div className="relative z-10">

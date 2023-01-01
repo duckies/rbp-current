@@ -16,6 +16,7 @@ export const DocumentGrid: FC<DocumentGridProps> = ({ documents }) => {
           title={document.frontmatter.title}
           caption={document.frontmatter.excerpt || document.frontmatter.description}
           insetSrc={document.frontmatter.images?.inset}
+          disabled={document.frontmatter.disabled}
         />
       ))}
     </div>

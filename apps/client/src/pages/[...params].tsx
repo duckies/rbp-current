@@ -1,4 +1,5 @@
 import { Breadcrumbs } from "components/content/Breadcrumbs"
+import { DifficultyDropdown } from "components/content/Difficulty"
 import Hero from "components/Hero"
 import { getMarkdownLayout } from "components/layouts/Markdown"
 import { DocumentGrid } from "features/content/components/DocumentGrid"
@@ -7,7 +8,7 @@ import type { GetStaticPaths, GetStaticProps } from "next"
 import dynamic from "next/dynamic"
 import VaultBackground from "public/images/strategies/vault/vault-of-the-incarnates.jpg"
 import { BackgroundProvider } from "stores/background"
-import { DifficultyProvider } from "stores/difficulty"
+import { DifficultyLevels, DifficultyProvider } from "stores/difficulty"
 import type { Page } from "types"
 import type { Category, Document } from "utils/markdown"
 import { getDocumentStructure } from "utils/markdown"
@@ -29,9 +30,18 @@ export const DocumentPage: Page<Params> = (props) => {
       <>
         <DifficultyProvider>
           <Hero>
-            <Breadcrumbs />
-            <Hero.Title>{props.frontmatter.title}</Hero.Title>
-            <Hero.Caption>{props.frontmatter.description}</Hero.Caption>
+            <div className="flex flex-wrap">
+              <div className="flex-1">
+                <Breadcrumbs blacklist={DifficultyLevels as any} />
+                <Hero.Title>{props.frontmatter.title} </Hero.Title>
+                <Hero.Caption>{props.frontmatter.description}</Hero.Caption>
+              </div>
+              <div className="flex items-center">
+                {props.params.includes("strategies") && (
+                  <DifficultyDropdown className="inline-flex h-9" />
+                )}{" "}
+              </div>
+            </div>
           </Hero>
           <main className="prose prose-invert relative mx-auto max-w-none lg:prose-lg">
             <Component />
@@ -43,7 +53,7 @@ export const DocumentPage: Page<Params> = (props) => {
     return (
       <div>
         <Hero>
-          <Breadcrumbs />
+          <Breadcrumbs blacklist={DifficultyLevels as any} />
           <Hero.Title>{props.title}</Hero.Title>
           <Hero.Caption>{props.caption}</Hero.Caption>
         </Hero>
@@ -64,11 +74,12 @@ export const DocumentPage: Page<Params> = (props) => {
 
 export const getStaticProps: GetStaticProps = (ctx) => {
   const params: string[] = ctx.params?.params as string[]
+  const filteredParams = params.filter((param) => !["normal", "heroic", "mythic"].includes(param))
 
   const structure = getDocumentStructure()
 
   for (const [docParams, categoryOrDocument] of structure.entries()) {
-    if ((docParams as string[]).every((docParam, index) => docParam === params[index])) {
+    if ((docParams as string[]).every((docParam, index) => docParam === filteredParams[index])) {
       return {
         props: {
           params,
@@ -86,10 +97,25 @@ export const getStaticProps: GetStaticProps = (ctx) => {
 export const getStaticPaths: GetStaticPaths = () => {
   const structure = getDocumentStructure()
 
-  return {
-    paths: Array.from(structure.keys()).map((params) => ({
+  const paths = []
+  for (const [params, categoryOrDocument] of structure.entries()) {
+    const isDocument = "filePath" in categoryOrDocument
+
+    if (isDocument) {
+      for (const difficulty of ["normal", "heroic", "mythic"]) {
+        paths.push({
+          params: { params: [...params, difficulty] },
+        })
+      }
+    }
+
+    paths.push({
       params: { params },
-    })),
+    })
+  }
+
+  return {
+    paths,
     fallback: false,
   }
 }

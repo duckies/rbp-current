@@ -1,7 +1,7 @@
 import clsx from "clsx"
+import { ProseLink } from "components/content/prose/ProseLink"
 import { WarcraftIcon } from "components/content/WarcraftIcon"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
-import { Link } from "components/Link"
 import { motion } from "framer-motion"
 import { useWowhead } from "hooks/useWowhead"
 import type { ReactNode } from "react"
@@ -27,18 +27,13 @@ export function Mechanic({ id, name, caption, children }: MechanicProps) {
     <div className="relative my-4 max-w-none rounded-lg bg-surface-600 shadow-lg hover:bg-surface">
       <div className="not-prose flex gap-4 rounded-md p-4 hover:cursor-pointer" onClick={toggle}>
         <div className="flex items-center rounded-md">
-          <Link
-            to={`https://wowhead.com/spell=${id}`}
-            className="hide-wowhead"
-            style="plain"
-            externalIcon={false}
-          >
+          <ProseLink href={`https://wowhead.com/spell=${id}`} styleVariant="plain" icon={false}>
             <WarcraftIcon
               className="shadow-xl [box-shadow:0_0_0_1px_rgb(250_214_122)]"
               id={id}
               size={45}
             />
-          </Link>
+          </ProseLink>
         </div>
         <div className="flex flex-grow flex-col justify-between font-medium ">
           <span className="text-xl leading-6">{name}</span>

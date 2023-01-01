@@ -45,4 +45,8 @@
   .with-wowhead-icon:not(:where([data-wh-icon-added~="true"])) {
     @apply pl-[21px];
   }
+
+  .hide-wowhead-icon .iconsmall {
+    display: none;
+  }
 }
