@@ -1,6 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { ProfileEndpoint, WoWClient } from '@rbp/battle.net'
 import { isString } from '@rbp/shared'
+import { RequestError } from 'got-cjs'
+import { WinstonLogger } from '../logger/logger.service'
 import { Character } from './character.entity'
 import { EndpointHandler } from './character.service'
 import { CharacterStatus } from './embeddables/character-status.embeddable'
@@ -14,7 +16,7 @@ export type EndpointRequest =
 
 @Injectable()
 export class CharacterOrchestrator {
-  constructor(private readonly client: WoWClient) {}
+  constructor(private readonly client: WoWClient, private readonly logger: WinstonLogger) {}
 
   public getEndpointHandler<E extends ProfileEndpoint>(endpoint: E): EndpointHandler<E> {
     /**
@@ -46,41 +48,49 @@ export class CharacterOrchestrator {
     character: Character,
     extraArgs: Record<string, any> = {}
   ) {
-    const lastUpdatedAt = character.getStorage(endpoint)?.updatedAt
-    const handler = this.getEndpointHandler<E>(endpoint)
+    try {
+      const lastUpdatedAt = character.getStorage(endpoint)?.updatedAt
+      const handler = this.getEndpointHandler<E>(endpoint)
 
-    const response = await handler({
-      name: character.name,
-      realm: character.realm,
-      region: character.region,
-      ifModifiedSince: lastUpdatedAt,
-      ...extraArgs,
-    })
+      const response = await handler({
+        name: character.name,
+        realm: character.realm,
+        region: character.region,
+        ifModifiedSince: lastUpdatedAt,
+        ...extraArgs,
+      })
 
-    // If the response isn't modified, reset the 30-day stale data retention period.
-    // Note: `Got` does not throw an error if the response is a 304 Not Modified.
-    if (response.statusCode === HttpStatus.NOT_MODIFIED) {
-      character.getStorage(endpoint)!.updatedAt = new Date()
-      return character
+      // If the response isn't modified, reset the 30-day stale data retention period.
+      // `Got` does not throw an error if the response is a 304 Not Modified.
+      if (response.statusCode === HttpStatus.NOT_MODIFIED) {
+        character.getStorage(endpoint)!.updatedAt = new Date()
+        return character
+      }
+
+      const statusId =
+        endpoint === 'character-profile-status' || endpoint === 'character-profile-summary'
+          ? (response.body as any).id
+          : (response.body as any).character.id
+
+      if (!character.status) {
+        character.status = new CharacterStatus()
+        character.status.id = statusId
+      } else if (character.status.id !== statusId) {
+        character.deleteStorage(endpoint)
+        throw new CharacterIdMismatchError()
+      }
+
+      character.status.updatedAt = new Date()
+      const storage = character.getStorage(endpoint, true)
+      storage.set(response.body)
+      storage.updatedAt = new Date()
+    } catch (error) {
+      if (error instanceof RequestError) {
+        this.logger.warn({ message: 'Profile Endpoint Error', character, endpoint, error })
+      } else if (error instanceof CharacterIdMismatchError) {
+        this.logger.warn({ message: 'Character ID Mismatch', character, endpoint, error })
+      }
     }
-
-    const statusId =
-      endpoint === 'character-profile-status' || endpoint === 'character-profile-summary'
-        ? (response.body as any).id
-        : (response.body as any).character.id
-
-    if (!character.status) {
-      character.status = new CharacterStatus()
-      character.status.id = statusId
-    } else if (character.status.id !== statusId) {
-      character.deleteStorage(endpoint)
-      throw new CharacterIdMismatchError()
-    }
-
-    character.status.updatedAt = new Date()
-    const storage = character.getStorage(endpoint, true)
-    storage.set(response.body)
-    storage.updatedAt = new Date()
 
     return character
   }

@@ -37,8 +37,6 @@ export class DiscordProvider {
     const { body: tokens } = await this.authorize(code)
     const { body: profile } = await this.getProfile(tokens.access_token)
 
-    console.log(tokens, profile)
-
     const identity = await this.em.findOne(Identity, [profile.id, 'discord'], {
       populate: ['user'],
     })

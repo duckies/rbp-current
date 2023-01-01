@@ -1,50 +1,70 @@
-import { SqlEntityManager } from '@mikro-orm/knex';
-import { BadRequestException, GoneException, Injectable } from '@nestjs/common';
-import { Form } from '../form/form.entity';
-import { CreateFormSubmissionDTO } from './dto/create-form-submission.dto';
-import { FormSubmission } from './form-submission.entity';
+import { SqlEntityManager } from '@mikro-orm/knex'
+import { BadRequestException, GoneException, Injectable } from '@nestjs/common'
+import { CharacterService } from '../character/character.service'
+import { Form } from '../form/form.entity'
+import {
+  CreateFormSubmissionCharacterDTO,
+  CreateFormSubmissionDTO,
+} from './dto/create-form-submission.dto'
+import { FormSubmission } from './form-submission.entity'
 
 @Injectable()
 export class FormSubmissionService {
-  public readonly repository;
+  public readonly repository
 
-  constructor(private readonly em: SqlEntityManager) {
-    this.repository = em.getRepository(FormSubmission);
+  constructor(
+    private readonly em: SqlEntityManager,
+    private readonly characterService: CharacterService
+  ) {
+    this.repository = em.getRepository(FormSubmission)
   }
 
-  async create(
-    formId: number,
-    { responses }: CreateFormSubmissionDTO,
-  ) {
-    const form = await this.em.findOneOrFail(Form, formId);
+  async create(formId: number, { responses }: CreateFormSubmissionDTO) {
+    const form = await this.em.findOneOrFail(Form, formId)
 
     if (form.closed) {
-      throw new GoneException();
+      throw new GoneException()
     }
+
+    let characterDTOs: CreateFormSubmissionCharacterDTO[] = []
 
     for (const field of form.fields) {
-      const answer = responses[field.id];
+      const answer = responses[field.id]
 
-      if (field.required && answer === undefined) {
-        throw new BadRequestException(`Field "${field.id}" is required`);
-      }
-
-      if (!field.isAnswerValid(answer)) {
-        throw new BadRequestException(`Field "${field.id}" is invalid`);
+      if (answer === undefined) {
+        if (field.required) {
+          throw new BadRequestException(`Field "${field.id}" is required`)
+        }
+      } else if (!field.isAnswerValid(answer)) {
+        throw new BadRequestException(`Field "${field.id}" is invalid`)
+      } else if (field.type === 'character') {
+        characterDTOs = answer as any
       }
     }
 
-    const fieldIds = form.fields.getIdentifiers();
-    const invalidFields = Object.keys(responses).filter(key => !fieldIds.includes(key));
+    const fieldIds = form.fields.getIdentifiers()
+    const invalidFields = Object.keys(responses).filter((key) => !fieldIds.includes(key))
 
     if (invalidFields.length > 0) {
-      throw new BadRequestException(`Unknown fields: ${invalidFields.join(', ')}`);
+      throw new BadRequestException(`Unknown fields: ${invalidFields.join(', ')}`)
     }
 
-    const submission = this.em.create(FormSubmission, { responses, form });
+    const characters = await Promise.all(
+      characterDTOs.map(async ({ main, ...dto }) => {
+        const character = await this.characterService.upsert(dto)
 
-    await this.em.persist(submission).flush();
+        return { character, main }
+      })
+    )
 
-    return submission;
+    const submission = this.em.create(FormSubmission, {
+      responses,
+      form,
+      characters,
+    })
+
+    await this.em.persist(submission).flush()
+
+    return submission
   }
 }

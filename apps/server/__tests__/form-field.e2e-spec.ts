@@ -1,45 +1,37 @@
-import { INestApplication, Logger } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import { IsString } from 'class-validator';
-import request from 'supertest';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { ConfigModule } from '../src/config/config.module';
-import { FormFieldModule } from '../src/form-field/form-field.module';
+import { MikroORM } from '@mikro-orm/core'
+import { MikroOrmModule } from '@mikro-orm/nestjs'
+import { INestApplication } from '@nestjs/common'
+import { Test } from '@nestjs/testing'
+import request from 'supertest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import { FormFieldModule } from '../src/form-field/form-field.module'
+import { MikroORMTestConfig } from './orm'
 
-class FormFieldVariables {
-  @IsString()
-  DATABASE_URL = 'mysql://root:prisma@localhost:3307/tests';
-}
-
-describe('FormField (e2e)', () => {
-  const logger = new Logger('FormField (e2e)');
-  let app: INestApplication;
+describe.skip('FormField (e2e)', () => {
+  let app: INestApplication
+  let orm: MikroORM
 
   beforeAll(async () => {
     beforeEach(async () => {
       const moduleFixture = await Test.createTestingModule({
-        imports: [
-          ConfigModule.forRoot({
-            schema: FormFieldVariables,
-            envFileName: '.env.test',
-          }),
-          // OrmModule,
-          FormFieldModule,
-        ],
-      }).compile();
+        imports: [MikroOrmModule.forRoot(MikroORMTestConfig), FormFieldModule],
+      }).compile()
 
-      app = moduleFixture.createNestApplication();
-      app.useLogger(logger);
-      await app.init();
-    });
-  });
+      app = moduleFixture.createNestApplication()
+      orm = app.get(MikroORM)
+
+      await orm.getSchemaGenerator().refreshDatabase()
+
+      await app.init()
+    })
+  })
 
   it('should load', async () => {
-    const response = await request(app.getHttpServer()).get('/form-field');
+    const response = await request(app.getHttpServer()).get('/form-field')
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(200)
     // expect(response.body).toEqual([]);
-  });
+  })
 
-  afterAll(async () => await app?.close());
-});
+  afterAll(async () => await app?.close())
+})

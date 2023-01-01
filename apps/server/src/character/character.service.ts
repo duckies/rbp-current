@@ -1,7 +1,7 @@
 import { SqlEntityManager } from '@mikro-orm/knex'
 import { Injectable } from '@nestjs/common'
 import { ProfileEndpoint, ProfileEndpointResponseMap } from '@rbp/battle.net'
-import { capitalize } from '@rbp/shared'
+import { capitalize, isArray } from '@rbp/shared'
 import { CancelableRequest, Response } from 'got-cjs'
 import { Character } from './character.entity'
 import { CharacterOrchestrator } from './character.orchestrator'
@@ -36,7 +36,28 @@ export class CharacterService {
   /**
    * Locates or creates a character and populates it with basic data.
    */
-  public async upsert(findCharacterDTO: FindCharacterDTO) {
+  public async upsert(findCharacterDTO: FindCharacterDTO): Promise<Character>
+
+  /**
+   * Locates or creates characters and populates them with basic data.
+   */
+  public async upsert(findCharacterDTOs: FindCharacterDTO[]): Promise<Character[]>
+
+  public async upsert(findCharacterDTOs: FindCharacterDTO | FindCharacterDTO[]) {
+    let characterOrCharacters: Character | Character[]
+
+    if (isArray(findCharacterDTOs)) {
+      characterOrCharacters = await Promise.all(findCharacterDTOs.map((dto) => this._upsert(dto)))
+    } else {
+      characterOrCharacters = await this._upsert(findCharacterDTOs)
+    }
+
+    await this.em.flush()
+
+    return characterOrCharacters
+  }
+
+  private async _upsert(findCharacterDTO: FindCharacterDTO) {
     let character = await this.repository.findOne({ ...findCharacterDTO })
 
     if (!character) {
@@ -53,8 +74,6 @@ export class CharacterService {
       ],
       character
     )
-
-    await this.em.flush()
 
     return character
   }
