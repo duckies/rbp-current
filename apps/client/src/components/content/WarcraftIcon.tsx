@@ -42,7 +42,7 @@ export function WarcraftIcon({ id, size, ...props }: WarcraftIconProps) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ ease: "easeOut", duration: 1 }}
+      transition={{ ease: "easeOut", duration: 0.25 }}
     >
       <Image
         src={src}

@@ -30,16 +30,16 @@ export const DocumentPage: Page<Params> = (props) => {
       <>
         <DifficultyProvider>
           <Hero>
-            <div className="flex flex-wrap">
+            <div className="flex flex-col gap-4 lg:flex-row">
               <div className="flex-1">
                 <Breadcrumbs blacklist={DifficultyLevels as any} />
                 <Hero.Title>{props.frontmatter.title} </Hero.Title>
                 <Hero.Caption>{props.frontmatter.description}</Hero.Caption>
               </div>
-              <div className="flex items-center">
+              <div className="flex justify-center lg:items-center">
                 {props.params.includes("strategies") && (
-                  <DifficultyDropdown className="inline-flex h-9" />
-                )}{" "}
+                  <DifficultyDropdown className="inline-flex h-10" />
+                )}
               </div>
             </div>
           </Hero>
