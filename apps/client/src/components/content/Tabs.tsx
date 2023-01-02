@@ -101,7 +101,7 @@ export const Tabs: FC<TabsProps> = ({ header, children }) => {
     <>
       <div className="tabs group relative my-4 overflow-hidden rounded-lg bg-surface-600 p-4">
         <nav className={clsx("not-prose", header ? "" : "mb-3")}>
-          <ul className="flex gap-3">
+          <ul className="flex flex-wrap justify-center gap-3 md:justify-start">
             {tabs.map(({ label }, index) => {
               const isActive = index === page
 

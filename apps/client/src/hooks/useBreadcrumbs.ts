@@ -56,7 +56,7 @@ export const useBreadcrumbs = ({ inclusive, blacklist }: UseBreadcrumbOptions) =
 
       setBreadcrumbs([{ breadcrumb: "Home", href: "/" }, ...filteredPathArray])
     }
-  }, [router, includeLast])
+  }, [router, includeLast, blacklist])
 
   return breadcrumbs
 }
