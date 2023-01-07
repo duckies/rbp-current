@@ -9,13 +9,14 @@ const separatorCSS = cva(["mx-2 h-4 w-4 self-center"])()
 
 type BreadcrumbsProps = {
   inclusive?: boolean
+  blacklist?: string[]
 }
 
-export const Breadcrumbs: FC<BreadcrumbsProps> = ({ inclusive }) => {
-  const breadcrumbs = useBreadcrumbs({ inclusive })
+export const Breadcrumbs: FC<BreadcrumbsProps> = ({ inclusive, blacklist }) => {
+  const breadcrumbs = useBreadcrumbs({ inclusive, blacklist })
 
   return (
-    <nav className="h-[24px]" aria-label="breadcrumbs">
+    <nav className="mb-3 h-[24px]" aria-label="breadcrumbs">
       <ol className="flex">
         {breadcrumbs?.map(({ breadcrumb, href }, index) => {
           const isLast = index === breadcrumbs.length - 1

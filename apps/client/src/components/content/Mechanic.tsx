@@ -1,7 +1,7 @@
 import clsx from "clsx"
+import { ProseLink } from "components/content/prose/ProseLink"
 import { WarcraftIcon } from "components/content/WarcraftIcon"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
-import { Link } from "components/Link"
 import { motion } from "framer-motion"
 import { useWowhead } from "hooks/useWowhead"
 import type { ReactNode } from "react"
@@ -11,11 +11,12 @@ type MechanicProps = {
   name: string
   id: number
   caption?: string
+  pill?: string
   link: string
   children: ReactNode
 }
 
-export function Mechanic({ id, name, caption, children }: MechanicProps) {
+export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
   const [isOpen, setIsOpen] = useState(false)
   useWowhead()
 
@@ -26,25 +27,34 @@ export function Mechanic({ id, name, caption, children }: MechanicProps) {
   return (
     <div className="relative my-4 max-w-none rounded-lg bg-surface-600 shadow-lg hover:bg-surface">
       <div className="not-prose flex gap-4 rounded-md p-4 hover:cursor-pointer" onClick={toggle}>
-        <div className="flex items-center rounded-md">
-          <Link
-            to={`https://wowhead.com/spell=${id}`}
-            className="hide-wowhead"
-            style="plain"
-            externalIcon={false}
-          >
+        <div className="flex shrink-0 items-center rounded-md">
+          <ProseLink href={`https://wowhead.com/spell=${id}`} styleVariant="plain" icon={false}>
             <WarcraftIcon
               className="shadow-xl [box-shadow:0_0_0_1px_rgb(250_214_122)]"
               id={id}
               size={45}
             />
-          </Link>
+          </ProseLink>
         </div>
         <div className="flex flex-grow flex-col justify-between font-medium ">
           <span className="text-xl leading-6">{name}</span>
           {caption && <span className="text-base leading-[1] text-yellow-400">{caption}</span>}
         </div>
-        <div className={clsx("p-3 transition-transform duration-[300]", isOpen && "rotate-180")}>
+
+        {pill && (
+          <div className="flex items-center">
+            <span className="flex h-8 items-center rounded-full bg-yellow-400 py-2 px-4 text-sm font-medium text-black shadow-md">
+              {pill}
+            </span>
+          </div>
+        )}
+
+        <div
+          className={clsx(
+            "flex items-center p-3 transition-transform duration-[300]",
+            isOpen && "rotate-180"
+          )}
+        >
           <ChevronDownIcon className="h-5 w-5" />
         </div>
       </div>

@@ -42,6 +42,9 @@ const transition: Transition = {
 export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   const router = useRouter()
 
+  // TODO: More elegany way of ignoring router shallow updates.
+  const key = router.asPath.replace("/normal", "").replace("/heroic", "").replace("/mythic", "")
+
   return (
     <>
       <Header />
@@ -49,7 +52,7 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
       <Container className="min-h-[700px] pb-[90px]">
         <AnimatePresence initial={false}>
           <motion.div
-            key={router.asPath}
+            key={key}
             animate="in"
             initial="out"
             exit="out"

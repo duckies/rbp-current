@@ -3,7 +3,18 @@ import type { LinkProps } from "components/Link"
 import { Link } from "components/Link"
 import { useDifficulty } from "stores/difficulty"
 
-export function ProseLink({ href, ...props }: Omit<LinkProps, "style">) {
+type ProseLinkProps = Omit<LinkProps, "style"> & {
+  icon?: boolean
+  styleVariant: LinkProps["style"]
+}
+
+export function ProseLink({
+  href,
+  className,
+  icon = true,
+  styleVariant,
+  ...props
+}: ProseLinkProps) {
   const isWowheadLink = href?.includes("wowhead.com/spell=")
   const { level } = useDifficulty()
 
@@ -24,11 +35,13 @@ export function ProseLink({ href, ...props }: Omit<LinkProps, "style">) {
     <Link
       className={clsx(
         "text-yellow-400 hover:text-yellow-500",
-        isWowheadLink && "with-wowhead-icon"
+        isWowheadLink && icon ? "with-wowhead-icon" : "hide-wowhead-icon",
+        className
       )}
       externalIcon={false}
       data-wh-icon-size="small"
       href={href}
+      style={styleVariant}
       {...props}
     />
   )

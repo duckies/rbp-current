@@ -1,89 +1,92 @@
-import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { Type } from 'class-transformer'
+import { IsArray, IsBoolean, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
 
 export class ItemsDTO {
   @IsString()
-  label!: string;
+  text!: string
 
   @IsString()
-  value!: string;
+  value!: string
 }
 
-export class BaseCreateOptionsDTO {
+export class BaseOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  required?: boolean;
+  required?: boolean
 }
 
-export class CreateTextFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class TextFieldOptionsDTO extends BaseOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  multiline?: boolean;
+  multiline?: boolean
 }
 
-export class CreateNumberFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class NumberFieldOptionsDTO extends BaseOptionsDTO {
   @IsOptional()
   @IsNumber()
-  min?: number;
+  min?: number
 
   @IsOptional()
   @IsNumber()
-  max?: number;
+  max?: number
 }
 
-export class CreateCheckboxFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class CheckboxFieldOptionsDTO extends BaseOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  noFalse?: boolean;
+  noFalse?: boolean
 }
 
-export class CreateSelectFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class SelectFieldOptionsDTO extends BaseOptionsDTO {
   @IsArray()
   @ValidateNested()
   @Type(() => ItemsDTO)
-  items!: ItemsDTO[];
+  items!: ItemsDTO[]
 
   @IsOptional()
   @IsBoolean()
-  multiple?: boolean;
+  multiple?: boolean
 }
 
-export class CreateComboboxFieldOptionsDTO extends CreateSelectFieldOptionsDTO {
+export class ComboboxFieldOptionsDTO extends SelectFieldOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  custom?: boolean;
+  custom?: boolean
 }
 
-export class CreateRadioFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class RadioFieldOptionsDTO extends BaseOptionsDTO {
   @IsArray()
   @ValidateNested()
   @Type(() => ItemsDTO)
-  items!: ItemsDTO[];
+  items!: ItemsDTO[]
 }
 
-export class CreateCharacterFieldOptionsDTO extends BaseCreateOptionsDTO {
+export class CharacterFieldOptionsDTO extends BaseOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  multiple?: boolean;
+  multiple?: boolean
 
   @IsOptional()
   @IsBoolean()
-  requireMain?: boolean;
+  requireMain?: boolean
 }
 
-export type CreateFieldOptionsDTO =
-  | CreateTextFieldOptionsDTO
-  | CreateNumberFieldOptionsDTO
-  | CreateCheckboxFieldOptionsDTO
-  | CreateSelectFieldOptionsDTO
-  | CreateComboboxFieldOptionsDTO
-  | CreateRadioFieldOptionsDTO
-  | CreateCharacterFieldOptionsDTO
-  | BaseCreateOptionsDTO;
+export interface FormFieldOptions {
+  text: TextFieldOptionsDTO
+  number: NumberFieldOptionsDTO
+  checkbox: CheckboxFieldOptionsDTO
+  select: SelectFieldOptionsDTO
+  combobox: ComboboxFieldOptionsDTO
+  radio: RadioFieldOptionsDTO
+  character: CharacterFieldOptionsDTO
+}
+
+export type FormFieldOptionsDTO =
+  | TextFieldOptionsDTO
+  | NumberFieldOptionsDTO
+  | CheckboxFieldOptionsDTO
+  | SelectFieldOptionsDTO
+  | ComboboxFieldOptionsDTO
+  | RadioFieldOptionsDTO
+  | CharacterFieldOptionsDTO
+  | BaseOptionsDTO

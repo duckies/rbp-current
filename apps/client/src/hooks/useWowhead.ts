@@ -15,7 +15,6 @@ export function useWowhead() {
   }
 
   const refresh = () => {
-    console.log("Refreshing Wowhead links...")
     window.$WowheadPower!.refreshLinks()
   }
 
@@ -30,7 +29,7 @@ export function useWowhead() {
         attempts.current++
       } else {
         if (attempts.current >= 10) {
-          console.warn("Wowhead led to refresh after 10 attempts.")
+          console.warn("Wowhead refresh failed after 10 attempts.")
         }
         quit()
       }

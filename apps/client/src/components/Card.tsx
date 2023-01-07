@@ -1,6 +1,10 @@
 import clsx from "clsx"
+import { Link } from "components/Link"
+import { ConditionalWrapper } from "components/Wrapper"
 
-export interface CardProps extends React.ComponentPropsWithoutRef<"div"> {}
+export interface CardProps extends React.ComponentPropsWithoutRef<"div"> {
+  href?: string
+}
 export interface CardTitleProps extends React.ComponentPropsWithoutRef<"h3"> {}
 export interface CardCaptionProps extends React.ComponentPropsWithoutRef<"p"> {}
 
@@ -20,10 +24,22 @@ export function CardCaption({ children, className, ...props }: CardCaptionProps)
   )
 }
 
-export default function Card({ className, children, ...props }: CardProps) {
+export default function Card({ className, children, href, ...props }: CardProps) {
   return (
-    <div className={clsx("rounded-md bg-surface-700 p-8 shadow-md", className)} {...props}>
-      {children}
+    <div
+      className={clsx("rounded-md bg-surface-700 p-8 shadow-md", href ? "p-2" : "p-8", className)}
+      {...props}
+    >
+      <ConditionalWrapper
+        condition={!!href}
+        wrapper={(children) => (
+          <Link to={href} className="block h-full p-6" style="plain">
+            {children}
+          </Link>
+        )}
+      >
+        <>{children}</>
+      </ConditionalWrapper>
     </div>
   )
 }

@@ -2,22 +2,21 @@ import { Combobox as HeadlessCombobox } from "@headlessui/react"
 import { FieldError } from "components/forms/shared/FieldError"
 import { label as labelCSS } from "components/forms/shared/Label"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
-import type { Item } from "features/application/types"
-import type { FieldProps } from "features/application/useForm"
-import type { FC } from "react"
+import type { ControlledFieldProps, Item } from "features/application/types"
 import { useState } from "react"
 import { useController } from "react-hook-form"
 import { FormFieldStyles } from "styles/components/forms"
 import { listbox, option } from "styles/components/listbox"
 
-type ComboboxProps = FieldProps & {
+export type ComboboxProps = ControlledFieldProps & {
   items: Item[]
   label?: string
+  // This caused issues, not using for now.
   initialValue?: Item
 }
 
-export const Combobox: FC<ComboboxProps> = ({ id, label, items, form, ...inputProps }) => {
-  const { field, fieldState } = useController({ name: id, control: form.control })
+export function Combobox({ id, label, items, error, control }: ComboboxProps) {
+  const { field } = useController({ name: id, control })
   const [query, setQuery] = useState("")
   const filteredItems =
     query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()))
@@ -29,7 +28,7 @@ export const Combobox: FC<ComboboxProps> = ({ id, label, items, form, ...inputPr
 
       <div className="relative mt-1">
         <HeadlessCombobox.Input
-          {...inputProps}
+          // value={initialValue?.value}
           className={FormFieldStyles()}
           onChange={(e) => setQuery(e.target.value)}
           displayValue={(item: Item) => item?.text}
@@ -56,7 +55,7 @@ export const Combobox: FC<ComboboxProps> = ({ id, label, items, form, ...inputPr
         )}
       </div>
 
-      {fieldState.error && <FieldError>{fieldState.error.message}</FieldError>}
+      {error && <FieldError>{error}</FieldError>}
     </HeadlessCombobox>
   )
 }

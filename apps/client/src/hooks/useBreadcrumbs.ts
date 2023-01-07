@@ -18,9 +18,14 @@ type UseBreadcrumbOptions = {
    * If true, the current page will be shown as a breadcrumb.
    */
   inclusive?: boolean
+
+  /**
+   * An array of breadcrum strings to exclude.
+   */
+  blacklist?: string[]
 }
 
-export const useBreadcrumbs = ({ inclusive }: UseBreadcrumbOptions) => {
+export const useBreadcrumbs = ({ inclusive, blacklist }: UseBreadcrumbOptions) => {
   const router = useRouter()
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null)
   const includeLast = inclusive || false
@@ -37,12 +42,21 @@ export const useBreadcrumbs = ({ inclusive }: UseBreadcrumbOptions) => {
         }
       })
 
-      setBreadcrumbs([
-        { breadcrumb: "Home", href: "/" },
-        ...(includeLast ? pathArray : pathArray.slice(0, -1)),
-      ])
+      let filteredPathArray = pathArray
+
+      if (blacklist) {
+        filteredPathArray = filteredPathArray.filter(
+          (item) => !blacklist.includes(item.breadcrumb.toLowerCase())
+        )
+      }
+
+      if (!includeLast) {
+        filteredPathArray.pop()
+      }
+
+      setBreadcrumbs([{ breadcrumb: "Home", href: "/" }, ...filteredPathArray])
     }
-  }, [router, includeLast])
+  }, [router, includeLast, blacklist])
 
   return breadcrumbs
 }

@@ -4,11 +4,11 @@ import { isArray, isBoolean, isNumber, isPOJO, isString, isStringArray } from '@
 import { v4 as uuidv4 } from 'uuid'
 import { Form } from '../form/form.entity'
 import {
-  CreateCharacterFieldOptionsDTO,
-  CreateFieldOptionsDTO,
-  CreateRadioFieldOptionsDTO,
+  CharacterFieldOptionsDTO,
+  FormFieldOptions,
+  RadioFieldOptionsDTO,
 } from './dto/create-field-options.dto'
-import { FieldDiscriminator } from './interfaces/form-field.interface'
+import { DiscriminatedFormField } from './interfaces/discriminated-form-field.interface'
 
 export const FieldTypes = [
   'text',
@@ -23,7 +23,7 @@ export const FieldTypes = [
 export type FieldType = typeof FieldTypes[number]
 
 @Entity()
-export class FormField {
+export class FormField<T extends FieldType> {
   [OptionalProps]?: 'createdAt' | 'updatedAt'
 
   @Property({ primary: true })
@@ -33,7 +33,7 @@ export class FormField {
   label!: string
 
   @Enum(() => FieldTypes)
-  type!: FieldType
+  type!: T
 
   @Property({ nullable: true })
   description?: string
@@ -42,7 +42,7 @@ export class FormField {
   required?: boolean
 
   @Property({ nullable: true, type: 'json' })
-  options?: CreateFieldOptionsDTO
+  options!: FormFieldOptions[T]
 
   @Property({ type: 'smallint' })
   order!: number
@@ -57,13 +57,10 @@ export class FormField {
   form!: Form
 
   /**
-   * Validates the answer against the field type.
-   *
-   * 😠 I'm not smart enough to find a reasonable type discriminator for this.
+   * Validates a potential answer against the field type.
    */
   public isAnswerValid(answer: unknown): boolean {
-    // 🤔 Is there some better way to describe the class as a discriminated union?
-    const field = this as FieldDiscriminator
+    const field = this as DiscriminatedFormField
 
     switch (field.type) {
       case 'text':
@@ -71,11 +68,7 @@ export class FormField {
       case 'number':
         return isNumber(answer)
       case 'checkbox': {
-        if (field.options?.noFalse) {
-          return answer === true
-        }
-
-        return isBoolean(answer)
+        return field.options.noFalse ? answer === true : isBoolean(answer)
       }
       case 'radio':
         return isString(answer) && field.options.items.some((i) => i.value === answer)
@@ -84,7 +77,7 @@ export class FormField {
           return field.options.items.some((i) => i.value === answer)
         } else if (isArray(answer) && answer.length && field.options.multiple) {
           return answer.every((a) =>
-            (this.options as CreateRadioFieldOptionsDTO).items.some((i) => i.value === a)
+            (this.options as RadioFieldOptionsDTO).items.some((i) => i.value === a)
           )
         }
         return false
@@ -128,7 +121,7 @@ export class FormField {
     )
   }
 
-  private isCharacterAnswerValid(options: CreateCharacterFieldOptionsDTO, answer: unknown) {
+  private isCharacterAnswerValid(options: CharacterFieldOptionsDTO, answer: unknown) {
     const answers = isArray(answer) ? answer : [answer]
 
     // No characters!

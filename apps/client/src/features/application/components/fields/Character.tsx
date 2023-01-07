@@ -1,13 +1,13 @@
 import { RealmMap, Regions } from "@rbp/battle.net/constants"
 import type { FindCharacterDTO } from "@rbp/server"
 import Button from "components/Button"
+import { FieldError } from "components/forms/shared/FieldError"
 import { CharacterPreview } from "features/application/components/fields/CharacterPreview"
 import { Combobox } from "features/application/components/fields/Combobox"
 import { Select } from "features/application/components/fields/Select"
 import { Textfield } from "features/application/components/fields/Textfield"
-import type { FieldProps } from "features/application/useForm"
+import type { ControlledFieldProps } from "features/application/types"
 import { characterResolver } from "features/application/validators"
-import type { FC } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 
 export const RegionItems = Regions.map((r) => ({ text: r.toUpperCase(), value: r }))
@@ -20,9 +20,9 @@ export const Realms = Object.entries(RealmMap)
   }))
 
 export type CharacterDTO = FindCharacterDTO & { main?: boolean }
-export type CharacterFieldProps = FieldProps
+export type CharacterPickerProps = ControlledFieldProps & {}
 
-export const CharacterField: FC<CharacterFieldProps> = ({ id, form }) => {
+export function CharacterPicker({ id, register, control, error }: CharacterPickerProps) {
   // We create a nested form only to control the name, realm, region fields.
   const subForm = useForm({
     resolver: characterResolver,
@@ -34,7 +34,7 @@ export const CharacterField: FC<CharacterFieldProps> = ({ id, form }) => {
   })
 
   // Then we use `useFieldArray` to hookup to the parent form.
-  const { fields, append, remove } = useFieldArray({ name: id, control: form.control })
+  const { fields, append, remove } = useFieldArray({ name: id, control })
 
   const handleAddCharacter = () => {
     const characters = fields as any as Array<FindCharacterDTO & { id: string }>
@@ -65,10 +65,31 @@ export const CharacterField: FC<CharacterFieldProps> = ({ id, form }) => {
           </p>
 
           <div className="grid grid-cols-3 gap-4 md:gap-6">
-            <Select id="region" label="Region" items={RegionItems} form={subForm} />
-            <Combobox id="realm" label="Realm" items={Realms} form={subForm} />
-            <Textfield id="name" label="Name" form={subForm} />
+            <Select
+              id="region"
+              label="Region"
+              items={RegionItems}
+              register={subForm.register}
+              control={subForm.control}
+              error={subForm.formState.errors.region?.message}
+            />
+            <Combobox
+              id="realm"
+              label="Realm"
+              items={Realms}
+              register={subForm.register}
+              control={subForm.control}
+              error={subForm.formState.errors.realm?.message}
+            />
+            <Textfield
+              id="name"
+              label="Name"
+              register={subForm.register}
+              error={subForm.formState.errors.name?.message}
+            />
           </div>
+
+          <div>{error && <FieldError>{error}</FieldError>}</div>
         </div>
 
         <div className="flex justify-end bg-surface-600 px-7 py-5">
@@ -82,9 +103,9 @@ export const CharacterField: FC<CharacterFieldProps> = ({ id, form }) => {
         {fields.map(({ id: key, ...character }, index) => {
           return (
             <div key={key}>
-              <input type="hidden" {...form.register(`${id}.${index}.region`)} />
-              <input type="hidden" {...form.register(`${id}.${index}.realm`)} />
-              <input type="hidden" {...form.register(`${id}.${index}.name`)} />
+              <input type="hidden" {...register(`${id}.${index}.region`)} />
+              <input type="hidden" {...register(`${id}.${index}.realm`)} />
+              <input type="hidden" {...register(`${id}.${index}.name`)} />
               <CharacterPreview
                 character={character as FindCharacterDTO}
                 onRemove={() => handleRemoveCharacter(index)}

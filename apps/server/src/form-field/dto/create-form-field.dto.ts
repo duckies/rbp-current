@@ -1,44 +1,49 @@
-import { Type } from 'class-transformer';
+import { Type } from 'class-transformer'
 import {
-  IsDefined, IsIn,
+  IsDefined,
+  IsIn,
   IsNumber,
   IsOptional,
   IsString,
   Min,
   ValidateNested,
-} from 'class-validator';
-import { FieldType, FieldTypes } from '../form-field.entity';
-import { CreateCharacterFieldOptionsDTO, CreateFieldOptionsDTO, CreateSelectFieldOptionsDTO, CreateTextFieldOptionsDTO } from './create-field-options.dto';
+} from 'class-validator'
+import { FieldType, FieldTypes } from '../form-field.entity'
+import {
+  CharacterFieldOptionsDTO,
+  FormFieldOptionsDTO,
+  SelectFieldOptionsDTO,
+  TextFieldOptionsDTO,
+} from './create-field-options.dto'
 
 export class CreateFormFieldDTO {
   @IsString()
-  label!: string;
+  label!: string
 
   @IsOptional()
   @IsString()
-  description?: string;
+  description?: string
 
   @IsIn(FieldTypes)
-  type!: FieldType;
+  type!: FieldType
 
   @IsNumber()
   @Min(1)
-  order!: number;
+  order!: number
 
   @IsDefined()
   @ValidateNested()
   @Type(({ object }: any) => {
     switch (object.type) {
       case 'text':
-        return CreateTextFieldOptionsDTO;
+        return TextFieldOptionsDTO
       case 'select':
-        return CreateSelectFieldOptionsDTO;
+        return SelectFieldOptionsDTO
       case 'character':
-        return CreateCharacterFieldOptionsDTO;
+        return CharacterFieldOptionsDTO
       default:
-        throw new Error(`Unknown field type: ${object.type}`);
+        throw new Error(`Unknown field type: ${object.type}`)
     }
   })
-  options!: CreateFieldOptionsDTO;
+  options!: FormFieldOptionsDTO
 }
-

@@ -1,26 +1,18 @@
 import { Listbox } from "@headlessui/react"
 import { FieldError } from "components/forms/shared/FieldError"
 import { label as labelCSS } from "components/forms/shared/Label"
-import type { FieldProps } from "features/application/useForm"
-import type { FC } from "react"
+import type { ControlledFieldProps, Item } from "features/application/types"
 import { useController } from "react-hook-form"
 import { FormFieldStyles } from "styles/components/forms"
 import { listbox, option } from "styles/components/listbox"
-import type { DOMProps } from "types/shared"
 
-type Item = {
-  text: string
-  value: any
+export type SelectProps = ControlledFieldProps & {
+  label: string
+  items: Item[]
 }
 
-type SelectProps = Omit<DOMProps<"select">, "name" | "form"> &
-  FieldProps & {
-    label?: string
-    items: Item[]
-  }
-
-export const Select: FC<SelectProps> = ({ id, label, items, form }) => {
-  const { field, fieldState } = useController({ name: id, control: form.control })
+export function Select({ id, label, items, control }: SelectProps) {
+  const { field, fieldState } = useController({ name: id, control })
   const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 
   return (

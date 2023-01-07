@@ -1,11 +1,8 @@
 import { MikroORM } from '@mikro-orm/core'
-import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { FormFieldModule } from '../src/form-field/form-field.module'
-import { MikroORMTestConfig } from './orm'
 
 describe.skip('FormField (e2e)', () => {
   let app: INestApplication
@@ -14,7 +11,7 @@ describe.skip('FormField (e2e)', () => {
   beforeAll(async () => {
     beforeEach(async () => {
       const moduleFixture = await Test.createTestingModule({
-        imports: [MikroOrmModule.forRoot(MikroORMTestConfig), FormFieldModule],
+        // imports: [MikroOrmModule.forRoot(MikroORMTestConfig), FormFieldModule],
       }).compile()
 
       app = moduleFixture.createNestApplication()

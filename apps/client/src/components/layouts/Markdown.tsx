@@ -1,5 +1,5 @@
 import { MDXProvider } from "@mdx-js/react"
-import { Difficulty } from "components/content/Difficulty"
+import { Difficulty, DifficultyDropdown } from "components/content/Difficulty"
 import { Marker } from "components/content/Marker"
 import { ProseImage } from "components/content/prose/ProseImage"
 import { ProseLink } from "components/content/prose/ProseLink"
@@ -15,11 +15,10 @@ const DynamicMechanic = dynamic(() =>
 
 const DynamicTabs = dynamic(() => import("../content/Tabs").then((module) => module.Tabs))
 const DynamicTab = dynamic(() => import("../content/Tabs").then((module) => module.Tab))
-
 const DynamicAlert = dynamic(() => import("../content/Alert").then((module) => module.Alert))
 
 const components = {
-  a: ProseLink,
+  a: ProseLink as any,
   Image,
   ProseImage,
   Tabs: DynamicTabs,
@@ -28,6 +27,7 @@ const components = {
   Mechanic: DynamicMechanic,
   Video,
   Marker,
+  DifficultyDropdown,
   Difficulty,
 }
 

@@ -1,7 +1,10 @@
+import { isArray } from "@rbp/shared"
+import { useRouter } from "next/router"
 import type { FC, ReactNode } from "react"
 import { createContext, useContext, useMemo, useState } from "react"
 
-type DifficultyLevel = "normal" | "heroic" | "mythic"
+export const DifficultyLevels = ["normal", "heroic", "mythic"] as const
+export type DifficultyLevel = "normal" | "heroic" | "mythic"
 
 type DifficultyContextState = {
   level: DifficultyLevel
@@ -12,10 +15,18 @@ const DifficultyContext = createContext<DifficultyContextState | null>(null)
 
 type DifficultProviderProps = {
   children: ReactNode
+  defaultLevel?: DifficultyLevel
 }
 
 export const DifficultyProvider: FC<DifficultProviderProps> = ({ children }) => {
-  const [level, setLevel] = useState<DifficultyLevel>("heroic")
+  const router = useRouter()
+  const defaultLevel =
+    isArray(router.query.params) &&
+    DifficultyLevels.includes(router.query.params[router.query.params.length - 1] as any)
+      ? (router.query.params[router.query.params.length - 1] as DifficultyLevel)
+      : "heroic"
+
+  const [level, setLevel] = useState<DifficultyLevel>(defaultLevel)
 
   const value = useMemo(
     () => ({

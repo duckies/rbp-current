@@ -13,7 +13,7 @@ export type CharacterPreviewProps = {
 }
 
 export function CharacterPreview({ character, onRemove }: CharacterPreviewProps) {
-  const { data, status, error } = useCharacterLookup(character)
+  const { data, status } = useCharacterLookup(character)
 
   if (status === "error" && !data) {
     return (
