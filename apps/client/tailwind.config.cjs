@@ -93,7 +93,7 @@ module.exports = {
             "code::after": null,
             "code": {
               color: "var(--tw-prose-code)",
-              backgroundColor: "rgb(250 214 122 / 25%)",
+              backgroundColor: "rgb(144 144 144 / 25%)",
               borderRadius: "0.375rem",
               padding: "3px 6px",
               fontSize: "0.875rem",
@@ -119,7 +119,7 @@ module.exports = {
             "code::after": null,
             "code": {
               color: "var(--tw-prose-code)",
-              backgroundColor: "rgb(250 214 122 / 25%)",
+              backgroundColor: "rgb(144 144 144 / 25%)",
               borderRadius: "0.375rem",
               padding: "3px 6px",
               fontSize: "0.875rem",
