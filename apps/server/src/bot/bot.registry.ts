@@ -1,16 +1,17 @@
+import { Constructor } from '@mikro-orm/core'
 import { Injectable } from '@nestjs/common'
 import { isArray } from '@rbp/shared'
-import { ClientEvents } from 'discord.js'
 import { Command } from './classes/command.interaction'
 import { CommandNotFoundException, InteractionConflictException } from './exceptions'
 import { AnyInteractionType, ApplicationCommandOption } from './interfaces'
+import { Event, EventHandler } from './interfaces/events.interface'
 
 @Injectable()
 export class BotRegistry {
   public readonly commands = new Map<string, Command | ApplicationCommandOption>()
-  public readonly events = new Map<keyof ClientEvents, Function[]>()
+  public readonly events = new Map<Event, EventHandler[]>()
 
-  add(command: Command) {
+  addCommand(command: Command) {
     if (this.commands.has(command.name)) {
       throw new Error(`Duplicate root command name ${command.name}`)
     }
@@ -20,21 +21,11 @@ export class BotRegistry {
     return command
   }
 
-  addEvent(event: keyof ClientEvents, method: Function) {
-    const events = this.events.get(event)
-
-    if (events) {
-      events.push(method)
-    } else {
-      this.events.set(event, [method])
-    }
-  }
-
   /**
    * Traverses the command tree to find the node at the
    * end of the path or throws a `CommandNotFoundException`.
    */
-  get(path: string[], type?: AnyInteractionType | AnyInteractionType[]) {
+  getCommand(path: string[], type?: AnyInteractionType | AnyInteractionType[]) {
     let pointer = this.commands.get(path[0])
 
     for (let i = 1; i < path.length && pointer; i++) {
@@ -48,5 +39,15 @@ export class BotRegistry {
     }
 
     return pointer
+  }
+
+  addEvent(event: Event, instance: Constructor, method: Function) {
+    const handler = this.events.get(event)
+
+    if (handler) {
+      handler.push({ instance, method })
+    } else {
+      this.events.set(event, [{ instance, method }])
+    }
   }
 }

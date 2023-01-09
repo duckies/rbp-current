@@ -13,7 +13,7 @@ export interface ModalMetadata {
 /**
  * Decorates a method to handle the response to a modal by its id.
  */
-export function Modal(id: string, title: string): MethodDecorator {
+export function OnModal(id: string, title: string): MethodDecorator {
   return (_target, _key, descriptor: PropertyDescriptor) => {
     const metadata: ModalMetadata = { id, title }
 

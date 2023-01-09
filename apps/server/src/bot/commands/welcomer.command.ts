@@ -1,25 +1,26 @@
 import { Injectable } from '@nestjs/common'
 import { ChannelType, GuildMember } from 'discord.js'
+import { ConfigService } from '../../config/config.service'
 import { BotService } from '../bot.service'
-import { Event } from '../decorators/event.decorator'
+import { OnEvent } from '../decorators/event.decorator'
 
 export interface WelcomerConfigSchema {
+  channels: Record<string, string>
   lastMessage: string
 }
 
 @Injectable()
 export class WelcomerPlugin {
   constructor(
-    private readonly bot: BotService
-  ) // private readonly config: ConfigService<WelcomerConfigSchema, 'lastMessage'>
-  {}
+    private readonly bot: BotService,
+    private readonly config: ConfigService<WelcomerConfigSchema>
+  ) {}
 
-  @Event('guildMemberAdd')
+  @OnEvent('guildMemberAdd')
   async onGuildMemberAdd(member: GuildMember) {
     const channel = member.guild.channels.cache.get('142372929961721856')
 
     if (!channel || channel.type !== ChannelType.GuildText) {
-      console.warn('No message channel found.')
       return
     }
 
@@ -40,7 +41,7 @@ export class WelcomerPlugin {
     // await this.config.set('lastMessage', message.id)
   }
 
-  @Event('guildMemberRemove')
+  @OnEvent('guildMemberRemove')
   async onGuildMemberRemove(member: GuildMember) {
     const channel = member.guild.channels.cache.get('142372929961721856')
 

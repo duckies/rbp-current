@@ -40,19 +40,20 @@ export class BotExplorer implements OnModuleInit {
       command.addSubCommandGroup(subGroupMetadata)
     }
 
-    this.registery.add(command)
+    this.registery.addCommand(command)
 
     return command
   }
 
-  exploreMethod(target: Function) {
+  exploreMethod(instance: any, key: string) {
+    const target = instance[key] as Function
     const commandMetadata = this.accessor.getCommandMetadata(target)
     const useGroupsMetadata = this.accessor.getUseGroupsMetadata(target)
     const event = this.accessor.getEventMetadata(target)
 
     if (event) {
       this.logger.verbose(`Added event listener: ${event}`)
-      this.registery.addEvent(event, target)
+      this.registery.addEvent(event, instance, target)
     }
 
     if (!commandMetadata) {
@@ -68,7 +69,7 @@ export class BotExplorer implements OnModuleInit {
       const { groupName, subGroupName } = useGroupsMetadata
       const path = [groupName, subGroupName].filter((x) => !!x) as string[]
 
-      const commandOrGroup = this.registery.get(path)
+      const commandOrGroup = this.registery.getCommand(path)
 
       if (
         !commandOrGroup ||
@@ -78,13 +79,32 @@ export class BotExplorer implements OnModuleInit {
       }
 
       const subCommand = SubCommand.fromCommandMetadata(commandMetadata, target)
-      commandOrGroup.addSubCommand(subCommand, target)
+      return commandOrGroup.addSubCommand(subCommand, target)
     } else {
       const command = Command.fromCommandMetadata(commandMetadata, target)
 
-      this.registery.add(command)
+      return this.registery.addCommand(command)
     }
   }
+
+  // Not yet implemented.
+  // private explorePropertyMetadata(
+  //   target: Constructor & Record<string, any>,
+  //   key: string,
+  //   command?: Command | SubCommand
+  // ) {
+  //   const metadata = this.accessor.getOptionsMetadata(target, key)
+
+  //   if (!metadata) {
+  //     return
+  //   } else if (!command) {
+  //     throw new Error(OPTION_MISSING_COMMAND(target[key].name))
+  //   }
+
+  //   for (const option of metadata) {
+  //     command.addOption(option)
+  //   }
+  // }
 
   explore() {
     const instanceWrappers = this.discoveryService
@@ -100,9 +120,11 @@ export class BotExplorer implements OnModuleInit {
 
       this.exploreClass(metatype || instance.constructor)
 
-      this.metadataScanner.scanFromPrototype(instance, Object.getPrototypeOf(instance), (key) =>
-        this.exploreMethod(instance[key])
-      )
+      this.metadataScanner.scanFromPrototype(instance, Object.getPrototypeOf(instance), (key) => {
+        this.exploreMethod(instance, key)
+
+        // this.explorePropertyMetadata(instance, key, command)
+      })
     }
   }
 }

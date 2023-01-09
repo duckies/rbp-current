@@ -6,24 +6,35 @@ export interface ConfigSchema {
   [key: string]: any
 }
 
-@Injectable()
-export class ConfigService<S extends ConfigSchema, K extends Extract<keyof S, string>> {
-  constructor(private readonly em: SqlEntityManager) {}
+// , K extends Extract<keyof S, string>
 
-  public get(key: K): Promise<Config<K, S[K]> | null> {
-    return this.em.findOne(Config, key)
+@Injectable()
+export class ConfigService<S extends ConfigSchema> {
+  private readonly em: SqlEntityManager
+
+  constructor(em: SqlEntityManager) {
+    this.em = em.fork()
   }
 
-  public async set(key: K, value: S[K]): Promise<Config<K, S[K]>> {
+  public async get<K extends Extract<keyof S, string>>(key: K): Promise<S[K] | null> {
+    return (await this.em.findOne(Config, key))?.value || null
+  }
+
+  public async set<K extends Extract<keyof S, string>>(key: K, value: S[K]): Promise<S[K] | null> {
     let config = await this.em.findOne(Config, key)
 
     if (!config) {
+      console.log('Creating Config')
       config = new Config(key, value)
       this.em.persist(config)
+    } else {
+      console.log('Found Config, setting value', config, value)
+
+      config.value = value
     }
 
     await this.em.flush()
 
-    return config
+    return config?.value
   }
 }

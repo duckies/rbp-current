@@ -17,7 +17,12 @@ export class BotService extends Client implements OnModuleInit, OnApplicationBoo
 
   constructor(private readonly config: DiscordConfig, private readonly registery: BotRegistry) {
     super({
-      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessages,
+      ],
     })
   }
 
@@ -53,15 +58,16 @@ export class BotService extends Client implements OnModuleInit, OnApplicationBoo
   }
 
   private registerEvents() {
-    for (const [event, methods] of this.registery.events) {
+    for (const [event, handlers] of this.registery.events) {
       this.on(event, (...args) => {
-        for (const method of methods) {
+        for (const { instance, method } of handlers) {
           try {
-            method(...args)
-          } catch (error) {
-            this.logger.warn(
-              `Event handler for ${event} of method ${method.name} threw an error: ${error}}`
-            )
+            method.bind(instance)(...args)
+          } catch (error: any) {
+            this.logger.error(`${event} event handler error`, error?.stack, {
+              method: method.name,
+              instance: instance.name,
+            })
           }
         }
       })
@@ -94,7 +100,7 @@ export class BotService extends Client implements OnModuleInit, OnApplicationBoo
     const path = this.getChatInputCommandPath(interaction)
 
     try {
-      const command = this.registery.get(path)
+      const command = this.registery.getCommand(path)
       return (command as any).methodRef(interaction)
     } catch (error) {
       if (error instanceof CommandNotFoundException) {
