@@ -1,110 +1,108 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { DiscoveryService, MetadataScanner } from '@nestjs/core';
-import { Constructor } from '../common/interfaces';
-import { BotMetadataAccessor } from './bot.accessor';
-import { MISSING_COMMAND } from './bot.messages';
-import { BotRegistry } from './bot.registry';
-import { Command, SubCommand, SubCommandGroup } from './classes';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
+import { DiscoveryService, MetadataScanner } from '@nestjs/core'
+import { Constructor } from '../common/interfaces'
+import { BotMetadataAccessor } from './bot.accessor'
+import { MISSING_COMMAND } from './bot.messages'
+import { BotRegistry } from './bot.registry'
+import { Command, SubCommand, SubCommandGroup } from './classes'
 
 @Injectable()
 export class BotExplorer implements OnModuleInit {
-  private readonly logger = new Logger(BotExplorer.name);
+  private readonly logger = new Logger(BotExplorer.name)
 
   constructor(
     private readonly metadataScanner: MetadataScanner,
     private readonly discoveryService: DiscoveryService,
     private readonly accessor: BotMetadataAccessor,
-    private readonly registery: BotRegistry,
+    private readonly registery: BotRegistry
   ) {}
 
   onModuleInit() {
-    this.explore();
+    this.explore()
   }
 
   exploreClass(target: Constructor | Function) {
-    const groupMetadata = this.accessor.getGroupMetadata(target);
-    const subGroupMetadatas = this.accessor.getSubGroupMetadata(target);
+    const groupMetadata = this.accessor.getGroupMetadata(target)
+    const subGroupMetadatas = this.accessor.getSubGroupMetadata(target)
 
     if (!groupMetadata) {
       // SubGroups were declared without a group.
       if (subGroupMetadatas.length > 0) {
-        throw new Error(
-          `SubGroup "${target.name}" declared without declaring a group.`,
-        );
+        throw new Error(`SubGroup "${target.name}" declared without declaring a group.`)
       }
 
-      return;
+      return
     }
 
-    const command = Command.fromGroupMetadata(groupMetadata);
+    const command = Command.fromGroupMetadata(groupMetadata)
 
     for (const subGroupMetadata of subGroupMetadatas) {
-      command.addSubCommandGroup(subGroupMetadata);
+      command.addSubCommandGroup(subGroupMetadata)
     }
 
-    this.registery.add(command);
+    this.registery.add(command)
 
-    return command;
+    return command
   }
 
   exploreMethod(target: Function) {
-    const commandMetadata = this.accessor.getCommandMetadata(target);
-    const useGroupsMetadata = this.accessor.getUseGroupsMetadata(target);
+    const commandMetadata = this.accessor.getCommandMetadata(target)
+    const useGroupsMetadata = this.accessor.getUseGroupsMetadata(target)
+    const event = this.accessor.getEventMetadata(target)
+
+    if (event) {
+      this.logger.verbose(`Added event listener: ${event}`)
+      this.registery.addEvent(event, target)
+    }
 
     if (!commandMetadata) {
       // UseGroups were declared without a command.
       if (useGroupsMetadata) {
-        throw new Error(MISSING_COMMAND(target.name));
+        throw new Error(MISSING_COMMAND(target.name))
       }
 
-      return;
+      return
     }
 
     if (useGroupsMetadata) {
-      const { groupName, subGroupName } = useGroupsMetadata;
-      const path = [groupName, subGroupName].filter(x => !!x) as string[];
+      const { groupName, subGroupName } = useGroupsMetadata
+      const path = [groupName, subGroupName].filter((x) => !!x) as string[]
 
-      const commandOrGroup = this.registery.get(path);
+      const commandOrGroup = this.registery.get(path)
 
       if (
-        !commandOrGroup
-        || !(
-          commandOrGroup instanceof Command
-          || commandOrGroup instanceof SubCommandGroup
-        )
+        !commandOrGroup ||
+        !(commandOrGroup instanceof Command || commandOrGroup instanceof SubCommandGroup)
       ) {
-        throw new Error('Missing group or sub-group.');
+        throw new Error('Missing group or sub-group.')
       }
 
-      const subCommand = SubCommand.fromCommandMetadata(commandMetadata, target);
-      commandOrGroup.addSubCommand(subCommand, target);
-    }
-    else {
-      const command = Command.fromCommandMetadata(commandMetadata, target);
+      const subCommand = SubCommand.fromCommandMetadata(commandMetadata, target)
+      commandOrGroup.addSubCommand(subCommand, target)
+    } else {
+      const command = Command.fromCommandMetadata(commandMetadata, target)
 
-      this.registery.add(command);
+      this.registery.add(command)
     }
   }
 
   explore() {
     const instanceWrappers = this.discoveryService
       .getProviders()
-      .filter(wrapper => wrapper.isDependencyTreeStatic());
+      .filter((wrapper) => wrapper.isDependencyTreeStatic())
 
     for (const wrapper of instanceWrappers) {
-      const { instance, metatype } = wrapper;
+      const { instance, metatype } = wrapper
 
       if (!instance) {
-        continue;
+        continue
       }
 
-      this.exploreClass(metatype || instance.constructor);
+      this.exploreClass(metatype || instance.constructor)
 
-      this.metadataScanner.scanFromPrototype(
-        instance,
-        Object.getPrototypeOf(instance),
-        key => this.exploreMethod(instance[key]),
-      );
+      this.metadataScanner.scanFromPrototype(instance, Object.getPrototypeOf(instance), (key) =>
+        this.exploreMethod(instance[key])
+      )
     }
   }
 }

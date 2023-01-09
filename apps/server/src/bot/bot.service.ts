@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
+import { Injectable, Logger, OnApplicationBootstrap, OnModuleInit } from '@nestjs/common'
 import {
   ApplicationCommandType,
   ChatInputCommandInteraction,
@@ -12,12 +12,12 @@ import { BotRegistry } from './bot.registry'
 import { CommandNotFoundException } from './exceptions/command-not-found.exception'
 
 @Injectable()
-export class BotService extends Client implements OnModuleInit {
+export class BotService extends Client implements OnModuleInit, OnApplicationBootstrap {
   private readonly logger = new Logger('BotService')
 
   constructor(private readonly config: DiscordConfig, private readonly registery: BotRegistry) {
     super({
-      intents: [GatewayIntentBits.Guilds],
+      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
     })
   }
 
@@ -26,6 +26,10 @@ export class BotService extends Client implements OnModuleInit {
     this.on('interactionCreate', this.onInteraction.bind(this))
 
     this.login(this.config.BOT_TOKEN)
+  }
+
+  async onApplicationBootstrap() {
+    this.registerEvents()
   }
 
   onReady(_client: Client) {
@@ -46,6 +50,22 @@ export class BotService extends Client implements OnModuleInit {
     }
 
     return path
+  }
+
+  private registerEvents() {
+    for (const [event, methods] of this.registery.events) {
+      this.on(event, (...args) => {
+        for (const method of methods) {
+          try {
+            method(...args)
+          } catch (error) {
+            this.logger.warn(
+              `Event handler for ${event} of method ${method.name} threw an error: ${error}}`
+            )
+          }
+        }
+      })
+    }
   }
 
   onInteraction(interaction: Interaction) {
