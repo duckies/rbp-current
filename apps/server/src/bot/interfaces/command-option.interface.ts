@@ -1,12 +1,3 @@
-import {
-  APIApplicationCommandOption,
-  ApplicationCommandOptionType,
-} from 'discord.js'
+import { BasicCommandOption, SubCommand, SubCommandGroup } from '../commands'
 
-export interface ApplicationCommandOption<
-  T extends ApplicationCommandOptionType = any
-> {
-  type: T
-  options: Map<string, ApplicationCommandOption>
-  toJSON: () => APIApplicationCommandOption
-}
+export type CommandOption = SubCommand | SubCommandGroup | BasicCommandOption

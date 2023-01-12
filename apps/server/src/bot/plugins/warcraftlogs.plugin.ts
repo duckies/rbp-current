@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { ChannelType, Message } from 'discord.js'
-import { Command } from '../decorators/command.decorator'
-import { OnEvent } from '../decorators/event.decorator'
-import { Group } from '../decorators/group.decorator'
-import { SubGroup } from '../decorators/sub-group.decorator'
-import { UseGroups } from '../decorators/use-groups.decorator'
+import { Channel, ChannelType, ChatInputCommandInteraction, Message } from 'discord.js'
+import { Command, Group, OnEvent, Option, SubGroup, UseGroups } from '../decorators'
 
 const regex = /https:\/\/www\.warcraftlogs\.com\/reports\/([a-zA-Z0-9]+)/
 
@@ -17,7 +13,17 @@ export class WarcraftLogsCommand {
   debug() {}
 
   @Command('scree', 'Make screeching sounds')
-  scree() {}
+  scree(
+    interaction: ChatInputCommandInteraction,
+    @Option('sound', 'Sound to screech', { type: 'Channel' }) channel: Channel
+  ) {
+    console.log({
+      interaction,
+      channel,
+    })
+
+    interaction.reply('I love being on camarah!')
+  }
 
   @UseGroups('wcl', 'search')
   @Command('character', 'Search for a character')

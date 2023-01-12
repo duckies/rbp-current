@@ -1,0 +1,6 @@
+export { BasicCommandOption, CommandOption } from './command-option.class'
+export { Command } from './command.interaction'
+export { ChannelOption } from './options/channel.option'
+export { StringOption } from './options/string.option'
+export { SubCommandGroup } from './sub-command-group.interaction'
+export { SubCommand } from './sub-command.interaction'

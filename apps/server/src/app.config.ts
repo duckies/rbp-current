@@ -1,12 +1,5 @@
-import { Type } from 'class-transformer';
-import {
-  IsDefined,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { Type } from 'class-transformer'
+import { IsDefined, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
 
 enum Environment {
   Development = 'development',
@@ -17,49 +10,52 @@ enum Environment {
 
 export class DiscordConfig {
   @IsString()
-  ID!: string;
+  ID!: string
 
   @IsString()
-  SECRET!: string;
+  SECRET!: string
 
   @IsString()
-  REDIRECT!: string;
+  REDIRECT!: string
 
   @IsString()
-  BOT_TOKEN!: string;
+  BOT_TOKEN!: string
+
+  @IsString()
+  GUILD_ID!: string
 }
 
 export class BlizzardConfig {
   @IsString()
-  ID!: string;
+  ID!: string
 
   @IsString()
-  SECRET!: string;
+  SECRET!: string
 
   @IsString()
-  REDIRECT!: string;
+  REDIRECT!: string
 }
 
 export class EnvironmentVariables {
   @IsOptional()
   @IsEnum(Environment)
-  NODE_ENV = Environment.Development;
+  NODE_ENV = Environment.Development
 
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  PORT = 3000;
+  PORT = 3000
 
   @IsString()
-  JWT_SECRET!: string;
+  JWT_SECRET!: string
 
   @IsDefined()
   @Type(() => DiscordConfig)
   @ValidateNested()
-  DISCORD!: DiscordConfig;
+  DISCORD!: DiscordConfig
 
   @IsDefined()
   @Type(() => BlizzardConfig)
   @ValidateNested()
-  BLIZZARD!: BlizzardConfig;
+  BLIZZARD!: BlizzardConfig
 }

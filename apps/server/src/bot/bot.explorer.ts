@@ -1,13 +1,15 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { DiscoveryService, MetadataScanner } from '@nestjs/core'
 import { Constructor } from '../common/interfaces'
 import { BotMetadataAccessor } from './bot.accessor'
-import { MISSING_COMMAND } from './bot.messages'
+import { MISSING_COMMAND, OPTION_MISSING_COMMAND } from './bot.messages'
 import { BotRegistry } from './bot.registry'
-import { Command, SubCommand, SubCommandGroup } from './classes'
+import { Command, SubCommand } from './commands'
+import { ChannelOption } from './commands/options/channel.option'
+import { StringOption } from './commands/options/string.option'
 
 @Injectable()
-export class BotExplorer implements OnModuleInit {
+export class BotExplorer {
   private readonly logger = new Logger(BotExplorer.name)
 
   constructor(
@@ -17,11 +19,7 @@ export class BotExplorer implements OnModuleInit {
     private readonly registery: BotRegistry
   ) {}
 
-  onModuleInit() {
-    this.explore()
-  }
-
-  exploreClass(target: Constructor | Function) {
+  private exploreClassPrototype(target: Constructor | Function) {
     const groupMetadata = this.accessor.getGroupMetadata(target)
     const subGroupMetadatas = this.accessor.getSubGroupMetadata(target)
 
@@ -34,7 +32,7 @@ export class BotExplorer implements OnModuleInit {
       return
     }
 
-    const command = Command.fromGroupMetadata(groupMetadata)
+    const command = new Command(groupMetadata)
 
     for (const subGroupMetadata of subGroupMetadatas) {
       command.addSubCommandGroup(subGroupMetadata)
@@ -45,19 +43,18 @@ export class BotExplorer implements OnModuleInit {
     return command
   }
 
-  exploreMethod(instance: any, key: string) {
+  private exploreMethodPrototype(instance: any, key: string) {
     const target = instance[key] as Function
     const commandMetadata = this.accessor.getCommandMetadata(target)
     const useGroupsMetadata = this.accessor.getUseGroupsMetadata(target)
     const event = this.accessor.getEventMetadata(target)
 
     if (event) {
-      this.logger.verbose(`Added event listener: ${event}`)
       this.registery.addEvent(event, instance, target)
     }
 
+    // Any decorator beyond this point must also be accompanied by a Command.
     if (!commandMetadata) {
-      // UseGroups were declared without a command.
       if (useGroupsMetadata) {
         throw new Error(MISSING_COMMAND(target.name))
       }
@@ -68,45 +65,45 @@ export class BotExplorer implements OnModuleInit {
     if (useGroupsMetadata) {
       const { groupName, subGroupName } = useGroupsMetadata
       const path = [groupName, subGroupName].filter((x) => !!x) as string[]
+      const commandOrGroup = this.registery.getCommand(path, ['Command', 'SubCommandGroup'])
+      const subCommand = new SubCommand(commandMetadata, target)
 
-      const commandOrGroup = this.registery.getCommand(path)
-
-      if (
-        !commandOrGroup ||
-        !(commandOrGroup instanceof Command || commandOrGroup instanceof SubCommandGroup)
-      ) {
-        throw new Error('Missing group or sub-group.')
-      }
-
-      const subCommand = SubCommand.fromCommandMetadata(commandMetadata, target)
       return commandOrGroup.addSubCommand(subCommand, target)
     } else {
-      const command = Command.fromCommandMetadata(commandMetadata, target)
+      const command = new Command(commandMetadata, target)
 
       return this.registery.addCommand(command)
     }
   }
 
-  // Not yet implemented.
-  // private explorePropertyMetadata(
-  //   target: Constructor & Record<string, any>,
-  //   key: string,
-  //   command?: Command | SubCommand
-  // ) {
-  //   const metadata = this.accessor.getOptionsMetadata(target, key)
+  private explorePropertyMetadata(
+    target: Constructor & Record<string, any>,
+    key: string,
+    command: Command | SubCommand | void
+  ) {
+    const metadata = this.accessor.getOptionsMetadata(target, key)
 
-  //   if (!metadata) {
-  //     return
-  //   } else if (!command) {
-  //     throw new Error(OPTION_MISSING_COMMAND(target[key].name))
-  //   }
+    if (!metadata) {
+      return
+    } else if (!command) {
+      throw new Error(OPTION_MISSING_COMMAND(target[key].name))
+    }
 
-  //   for (const option of metadata) {
-  //     command.addOption(option)
-  //   }
-  // }
+    for (const option of metadata) {
+      switch (option.type) {
+        case 'String':
+          command.addOption(new StringOption(option))
+          break
+        case 'Channel':
+          command.addOption(new ChannelOption(option))
+          break
+        default:
+          throw new Error(`Unimplemented param option type: ${option.type}`)
+      }
+    }
+  }
 
-  explore() {
+  public explore() {
     const instanceWrappers = this.discoveryService
       .getProviders()
       .filter((wrapper) => wrapper.isDependencyTreeStatic())
@@ -118,12 +115,12 @@ export class BotExplorer implements OnModuleInit {
         continue
       }
 
-      this.exploreClass(metatype || instance.constructor)
+      this.exploreClassPrototype(metatype || instance.constructor)
 
       this.metadataScanner.scanFromPrototype(instance, Object.getPrototypeOf(instance), (key) => {
-        this.exploreMethod(instance, key)
+        const commandOrSubCommand = this.exploreMethodPrototype(instance, key)
 
-        // this.explorePropertyMetadata(instance, key, command)
+        this.explorePropertyMetadata(instance, key, commandOrSubCommand)
       })
     }
   }

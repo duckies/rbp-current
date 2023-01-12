@@ -1,5 +1,7 @@
 export * from './command.decorator'
+export * from './event.decorator'
 export * from './group.decorator'
 export * from './modal.decorator'
+export * from './option.decorator'
 export * from './sub-group.decorator'
 export * from './use-groups.decorator'

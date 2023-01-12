@@ -13,7 +13,7 @@ import {
 import { CommandMetadata } from './decorators/command.decorator'
 import { GroupMetadata } from './decorators/group.decorator'
 import { OptionMetadata } from './decorators/option.decorator'
-import { SubGroupMetadata } from './decorators/sub-group.decorator'
+import { SubCommandGroupMetadata } from './decorators/sub-group.decorator'
 import { UseGroupsMetadata } from './decorators/use-groups.decorator'
 
 @Injectable()
@@ -24,7 +24,7 @@ export class BotMetadataAccessor {
     return this.reflector.get(BOT_GROUP, target)
   }
 
-  getSubGroupMetadata(target: Constructor | Function): SubGroupMetadata[] {
+  getSubGroupMetadata(target: Constructor | Function): SubCommandGroupMetadata[] {
     return this.reflector.get(BOT_SUBGROUP, target) || []
   }
 

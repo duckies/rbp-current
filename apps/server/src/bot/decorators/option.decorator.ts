@@ -1,3 +1,5 @@
+import { SetOptional } from '@rbp/shared'
+import { ChannelType } from 'discord.js'
 import { BOT_OPTIONS } from '../bot.constants'
 
 export const OptionTypes = {
@@ -21,24 +23,40 @@ export interface OptionMetadata {
   required?: boolean
 }
 
+export interface StringOptionMetadata extends OptionMetadata {
+  min_length?: number
+  max_length?: number
+  autocomplete?: boolean
+}
+
+export interface ChannelOptionMetadata extends OptionMetadata {
+  types?: ChannelType
+}
+
 export function Option(
   name: string,
   description: string,
-  options: Omit<OptionMetadata, 'name' | 'description' | 'type' | 'index'> = {}
+  options: SetOptional<Omit<OptionMetadata, 'name' | 'description' | 'index'>, 'type'> = {}
 ): ParameterDecorator {
   return (target: object, key: string | symbol, index) => {
-    const metatype = Reflect.getMetadata('design:paramtypes', target, key)[index]?.name
+    let type = options.type
 
-    if (!(name in OptionTypes)) {
-      let message = `Option type (${metatype}) is not one of the supported types (${Object.keys(
-        OptionTypes
-      ).join(', ')})`
+    if (!type) {
+      const metatype = Reflect.getMetadata('design:paramtypes', target, key)[index]?.name
 
-      if (metatype === 'Object') {
-        message +=
-          "\nType inference is not supported and you must explicity specify the type to avoid this error, e.g. `message: string = 'Welcome!'`"
+      if (!(metatype in OptionTypes)) {
+        let message = `Option type (${metatype}) is not one of the supported types (${Object.keys(
+          OptionTypes
+        ).join(', ')})`
+
+        if (metatype === 'Object') {
+          message +=
+            "\nType inference is not supported and you must explicity specify the type to avoid this error, e.g. `message: string = 'Welcome!'`"
+        }
+        throw new Error(message)
       }
-      throw new Error(message)
+
+      type = metatype
     }
 
     const metadata = Reflect.getMetadata(BOT_OPTIONS, target, key) || []
@@ -52,7 +70,7 @@ export function Option(
           description,
           ...options,
           index,
-          type: metatype,
+          type,
         },
       ],
       target,

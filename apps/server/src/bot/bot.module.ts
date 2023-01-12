@@ -4,16 +4,14 @@ import { BotMetadataAccessor } from './bot.accessor'
 import { BotExplorer } from './bot.explorer'
 import { BotRegistry } from './bot.registry'
 import { BotService } from './bot.service'
-import { KeysCommand } from './commands/keys.command'
-import { WarcraftLogsCommand } from './commands/warcraftlogs.command'
-import { WelcomerPlugin } from './commands/welcomer.command'
+import { WarcraftLogsCommand } from './plugins/warcraftlogs.plugin'
+import { WelcomerPlugin } from './plugins/welcomer.plugin'
 
 @Module({
   imports: [DiscoveryModule],
   providers: [
     BotService,
     WarcraftLogsCommand,
-    KeysCommand,
     BotMetadataAccessor,
     BotExplorer,
     BotRegistry,

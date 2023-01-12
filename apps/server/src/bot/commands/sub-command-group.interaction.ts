@@ -2,33 +2,25 @@ import {
   APIApplicationCommandSubcommandGroupOption,
   ApplicationCommandOptionType,
 } from 'discord.js'
-import { SubGroupMetadata } from '../decorators/sub-group.decorator'
-import { ApplicationCommandOption } from '../interfaces'
+import { SubCommandGroupMetadata } from '../decorators'
+import { CommandOption } from './command-option.class'
 import { SubCommand } from './sub-command.interaction'
 
-export class SubCommandGroup implements ApplicationCommandOption {
+export class SubCommandGroup extends CommandOption {
   public readonly type = ApplicationCommandOptionType.SubcommandGroup
   public readonly name: string
   public readonly description: string
-  public readonly options = new Map<string, ApplicationCommandOption>()
+  public readonly options = new Map<string, SubCommand>()
 
-  constructor(name: string, description: string) {
+  constructor({ name, description }: SubCommandGroupMetadata) {
+    super()
     this.name = name
     this.description = description
   }
 
-  /**
-   * Creates a new sub-command-group which can contain sub-commands.
-   */
-  static fromSubGroupMetadata(metadata: SubGroupMetadata) {
-    return new SubCommandGroup(metadata.name, metadata.description)
-  }
-
   addSubCommand(subCommand: SubCommand) {
     if (this.options.has(subCommand.name)) {
-      throw new Error(
-        `Sub-command-group "${this.name}" already has an option named "${subCommand.name}"`
-      )
+      throw new Error(`Duplicate subcommand ${subCommand.name} for subcommand group ${this.name}`)
     }
 
     this.options.set(subCommand.name, subCommand)
@@ -39,6 +31,7 @@ export class SubCommandGroup implements ApplicationCommandOption {
       type: this.type,
       name: this.name,
       description: this.description,
+      options: [...this.options.values()].map((o) => o.toJSON()),
     }
   }
 }
