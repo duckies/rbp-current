@@ -2,17 +2,22 @@ import { RealmMap } from "@rbp/battle.net/constants"
 import type { FindCharacterDTO } from "@rbp/server"
 import Button from "components/Button"
 import { ArrowUpRight } from "components/icons/ArrowUpRight"
-import { CloseIcon } from "components/icons/Close"
+import { CloseIcon } from "components/icons/CloseIcon"
 import { useCharacterLookup } from "features/characters/queries"
 import Image from "next/image"
 
 export type CharacterPreviewProps = {
-  character: FindCharacterDTO
+  character: FindCharacterDTO & { main?: boolean }
   removable?: boolean
   onRemove?: () => void
+  onSetMain?: () => void
 }
 
-export function CharacterPreview({ character, onRemove }: CharacterPreviewProps) {
+export function CharacterPreview({
+  character: { main, ...character },
+  onRemove,
+  onSetMain,
+}: CharacterPreviewProps) {
   const { data, status } = useCharacterLookup(character)
 
   if (status === "error" && !data) {
@@ -83,11 +88,17 @@ export function CharacterPreview({ character, onRemove }: CharacterPreviewProps)
           data.summary ? `bg-class-${data.summary.class.id}/70` : `bg-surface-300`
         }`}
       >
+        <div>{main && "Main"}</div>
         {onRemove && (
           <div className="absolute top-0 right-0 p-3">
-            <Button variant="icon" className="hover:text-gray-200" type="button" onClick={onRemove}>
+            <Button intent="icon" className="hover:text-gray-200" type="button" onClick={onRemove}>
               <CloseIcon className="h-7 w-7" />
             </Button>
+          </div>
+        )}
+        {onSetMain && (
+          <div className="absolute bottom-0 right-0 p-3">
+            <Button onClick={onSetMain}>Set Main</Button>
           </div>
         )}
         <Image

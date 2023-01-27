@@ -187,7 +187,7 @@ module.exports = {
   },
   safelist: [
     {
-      pattern: /(text-color|bg)-class-(\d)/,
+      pattern: /(text-color|bg|border)-class-(\d)/,
     },
   ],
   plugins: [TailwindForms(), TailwindTypography()],

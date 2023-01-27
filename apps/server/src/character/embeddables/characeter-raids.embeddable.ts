@@ -1,7 +1,6 @@
-import { Embeddable, Property } from '@mikro-orm/core';
-import type { CharacterRaids as CharacterRaidsData } from '@rbp/battle.net';
-import { string } from 'zod';
-import { EndpointStorage } from '../interfaces/endpoint-storage.interface';
+import { Embeddable, Property } from '@mikro-orm/core'
+import type { CharacterRaids as CharacterRaidsData } from '@rbp/battle.net'
+import { EndpointStorage } from '../interfaces/endpoint-storage.interface'
 
 export interface CharacterRaidInstanceModeEncounter {
   id: number
@@ -39,31 +38,31 @@ export interface RaidSummary {
 @Embeddable()
 export class CharacterRaids implements EndpointStorage {
   @Property({ type: 'json', hidden: true })
-  expansions!: CharacterRaidExpansion[];
+  expansions!: CharacterRaidExpansion[]
 
   @Property()
-  updatedAt!: Date;
+  updatedAt!: Date
 
   @Property({ persist: false })
   get summary(): RaidSummary {
     return this.latestExpansion?.instances.reduce((instanceSummary, instance) => {
       instanceSummary[instance.name] = instance.modes.reduce((modeSummary, mode) => {
-        modeSummary[mode.difficulty] = `${mode.kills}/${mode.encounters_total}`;
-        return modeSummary;
-      }, {} as Record<string, any>);
-      return instanceSummary;
-    }, {} as Record<string, any>);
+        modeSummary[mode.difficulty] = `${mode.kills}/${mode.encounters_total}`
+        return modeSummary
+      }, {} as Record<string, any>)
+      return instanceSummary
+    }, {} as Record<string, any>)
   }
 
   @Property({ persist: false, hidden: true })
   get latestExpansion() {
-    return this.expansions?.reduce((prev, cur) => (prev.id > cur.id ? prev : cur));
+    return this.expansions?.reduce((prev, cur) => (prev.id > cur.id ? prev : cur))
   }
 
   set(data: CharacterRaidsData) {
     // Characters that have never killed anything have no data.
     if (!data.expansions) {
-      return;
+      return
     }
 
     this.expansions = data.expansions.map(({ expansion, instances }) => ({
@@ -85,6 +84,6 @@ export class CharacterRaids implements EndpointStorage {
           })),
         })),
       })),
-    }));
+    }))
   }
 }

@@ -9,6 +9,7 @@ export const FormFieldStyles = cva([
   "bg-neutral-900",
   "border-2 border-solid",
   "border-surface-400",
+  "focus:ring-1 outline-transparent focus:outline-offset-2",
   "focus:border-indigo-500",
   "focus:ring-indigo-500",
 ])

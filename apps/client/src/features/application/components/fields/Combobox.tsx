@@ -7,23 +7,25 @@ import { useState } from "react"
 import { useController } from "react-hook-form"
 import { FormFieldStyles } from "styles/components/forms"
 import { listbox, option } from "styles/components/listbox"
+import type { DOMProps } from "types/shared"
 
-export type ComboboxProps = ControlledFieldProps & {
-  items: Item[]
-  label?: string
-  // This caused issues, not using for now.
-  initialValue?: Item
-}
+export type ComboboxProps = ControlledFieldProps &
+  DOMProps<"div"> & {
+    items: Item[]
+    label?: string
+    // This caused issues, not using for now.
+    initialValue?: Item
+  }
 
-export function Combobox({ id, label, items, error, control }: ComboboxProps) {
-  const { field } = useController({ name: id, control })
+export function Combobox({ id, label, items, error, control, className, rules }: ComboboxProps) {
+  const { field } = useController({ name: id, control, rules })
   const [query, setQuery] = useState("")
   const filteredItems =
     query === "" ? items : items.filter((i) => i.text.toLowerCase().includes(query.toLowerCase()))
   const selectedItem = (field.value && items.find((i) => i.value === field.value)) || null
 
   return (
-    <HeadlessCombobox as="div" value={selectedItem} onChange={field.onChange}>
+    <HeadlessCombobox as="div" value={selectedItem} onChange={field.onChange} className={className}>
       <HeadlessCombobox.Label className={labelCSS()}>{label}</HeadlessCombobox.Label>
 
       <div className="relative mt-1">
@@ -34,8 +36,8 @@ export function Combobox({ id, label, items, error, control }: ComboboxProps) {
           displayValue={(item: Item) => item?.text}
         />
 
-        <HeadlessCombobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-          <ChevronDownIcon className="h-5 w-5" aria-hidden />
+        <HeadlessCombobox.Button className="absolute inset-y-0 right-1 flex items-center px-2">
+          <ChevronDownIcon className="h-5 w-5 text-gray-500" aria-hidden />
         </HeadlessCombobox.Button>
 
         {filteredItems.length > 0 && (

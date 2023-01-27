@@ -3,24 +3,22 @@ import { cva } from "cva"
 import React from "react"
 import type { DOMProps } from "types/shared"
 
-export type ButtonProps = DOMProps<"button"> & VariantProps<typeof button> & { loading?: boolean }
+export type ButtonProps = DOMProps<"button"> &
+  VariantProps<typeof ButtonStyles> & { loading?: boolean }
 
-const button = cva(
+const ButtonStyles = cva(
   [
     "inline-flex",
     "content-center",
     "items-center",
     "rounded-md",
-    "text-[15px]",
     "transition-colors",
     "duration-250",
   ],
   {
     variants: {
-      variant: {
-        unstyled: "",
-        base: ["px-3", "py-1", "bg-yellow-400", "hover:bg-yellow-200", "text-black"],
-        icon: ["w-7", "h-7", "rounded-full", "overflow-hidden", "content-center"],
+      varianty: {
+        button: ["text-black", "rounded-md"],
         outline: [
           "px-3",
           "py-1",
@@ -33,26 +31,32 @@ const button = cva(
           "hover:text-white",
         ],
       },
+      intent: {
+        primary: ["text-black", "bg-yellow-400", "hover:bg-yellow-200"],
+        secondary: ["bg-gray-400", "hover:bg-gray-200"],
+        tertiary: ["bg-surface-400", "hover: bg-surface-200"],
+      },
       state: {
         disabled: ["cursor-not-allowed", "opacity-50"],
       },
       size: {
-        small: ["w-[5px]", "h-[5px]"],
+        medium: ["px-3", "py-1"],
       },
     },
     defaultVariants: {
-      variant: "base",
+      intent: "primary",
+      size: "medium",
     },
   }
 )
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, size, className, children, loading, ...props }, forwardedRef) => {
+  ({ intent: variant, size, className, children, loading, ...props }, forwardedRef) => {
     return (
       <button
         ref={forwardedRef}
-        className={button({
-          variant,
+        className={ButtonStyles({
+          intent: variant,
           size,
           state: props.disabled ? "disabled" : null,
           className,

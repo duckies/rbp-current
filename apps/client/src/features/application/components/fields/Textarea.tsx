@@ -8,12 +8,16 @@ export type TextareaProps = FieldProps & {
   label: string
 }
 
-export function Textarea({ id, label, error, register }: TextareaProps) {
+export function Textarea({ id, label, error, register, rules }: TextareaProps) {
   return (
     <div>
       <Label htmlFor={`textarea-${id}`}>{label}</Label>
       <FieldWrapper>
-        <textarea id={`textarea-${id}`} className={FormFieldStyles()} {...register(id)} />
+        <textarea
+          id={`textarea-${id}`}
+          className={FormFieldStyles()}
+          {...register(id, { ...rules })}
+        />
       </FieldWrapper>
       {error && <FieldError>{error}</FieldError>}
     </div>

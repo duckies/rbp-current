@@ -64,7 +64,7 @@ export const DocumentCard: FC<DocumentCardProps> = ({
         {disabled ? (
           <p className="text-yellow-200">{disabledMessage}</p>
         ) : (
-          <Button variant="unstyled" className="">
+          <Button intent="unstyled" className="">
             Read More{" "}
             <IconArrowRight className="relative ml-1.5 h-5 w-5 transition-transform group-hover:translate-x-2" />
           </Button>

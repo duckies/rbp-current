@@ -8,5 +8,15 @@ export const useForm = (id: number) => {
   const { data, status, error } = useQuery<Form>(["form", id], () => getForm(id), { retry: false })
   const form = _useForm()
 
-  return useMemo(() => ({ data, status, error, form }), [data, status, error, form, id])
+  return useMemo(
+    () => ({
+      data,
+      status,
+      error,
+      form,
+    }),
+    [data, status, error, form, id]
+  )
 }
+
+export type UseFormReturn = ReturnType<typeof useForm>["form"]

@@ -36,8 +36,12 @@ export default function ApplyPage() {
         </Paper>
       )) || (
         <Paper className="flex flex-col gap-y-7">
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            {fields.map((field) => getFieldComponent(form, field))}
+          <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error(errors))}>
+            {fields.map((field) => (
+              <div key={field.id} className="my-4">
+                {getFieldComponent(form, field)}
+              </div>
+            ))}
 
             <div className="flex justify-end gap-3">
               <Button type="submit">Submit Application</Button>
