@@ -1,19 +1,22 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 
 @Entity()
 export class Slide {
   @PrimaryKey()
-  id!: number;
+  id!: number
 
   @Property()
-  title!: string;
+  title!: string
 
   @Property({ nullable: true })
-  caption?: string;
+  caption?: string
+
+  @Property()
+  url!: string
 
   @Property({ defaultRaw: 'now()' })
-  createdAt?: Date;
+  createdAt?: Date
 
   @Property({ onUpdate: () => new Date(), defaultRaw: 'now()' })
-  updatedAt?: Date;
+  updatedAt?: Date
 }

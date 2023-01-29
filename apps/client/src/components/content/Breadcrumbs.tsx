@@ -1,3 +1,5 @@
+"use client"
+
 import { ChevronRightIcon } from "components/icons/ChevonRight"
 import { cva } from "cva"
 import { useBreadcrumbs } from "hooks/useBreadcrumbs"

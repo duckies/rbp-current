@@ -1,0 +1,203 @@
+---
+title: Terros
+date: 2022-12-10
+description: He doesn't need legs where he isn't going.
+images:
+  inset: /images/strategies/vault/portraits/terros-inset.webp
+---
+
+Terros is a patchwerk boss (who notably lacks legs) with a focus on dropping pillars for tanks to break with a beam mechanic, a meteor soak mechanic, and a few minor mechanics requiring us to slowly rotate around his platform.
+
+## Mechanics
+
+Refer to [Mythic Trap — Terros](https://www.mythictrap.com/en/vault/terros/heroic) for detailed visuals and animations of the mechanics. They have been listed here for reference.
+
+<Mechanic id={380487} name="Rock Blast" caption="Split-meteor mechanic">
+
+A random player is targeted with a swirling vortex meteor mechanic. It deals 961k nature damage
+split evenly among players within 12 yards and leaves an [Aftershock](https://www.wowhead.com/spell=386400) which erupts at the impact location a few seconds later.
+
+<Alert type="warning">
+  This goes out at the same time as [Awakened Earth](https://www.wowhead.com/spell=381486).
+</Alert>
+<Alert>This mechanic can be solo'd with immunities. 🐢</Alert>
+
+</Mechanic>
+
+<Mechanic id={381486} name="Awakened Earth" caption="Pillars">
+  Several players are debuffed with [Awakened Earth](https://www.wowhead.com/spell=381486), marking them with a yellow arrow and surrounding them with a small circle. Upon expiration these spawn pillars of the same name that pulsate raid damage until destroyed. These should be placed in line with the primary tank position, or very close together but not stacked (splashing your debuff-mates), and *not in melee*.
+
+  <Alert type="warning">
+  This goes out at the same time as [Rock Blast](https://www.wowhead.com/spell=380487). These players should focus on placing their pillar in the correct spot and not soaking.
+</Alert>
+</Mechanic>
+
+<Mechanic id={381576} name="Seismic Assault" caption="Pillar-dying DoT">
+  Killing a pillar causes [Seismic Assault](https://www.wowhead.com/spell=381576), dealing 24k
+  damage to the entire raid and applying a DoT for 12 seconds, stacking.
+</Mechanic>
+
+<Mechanic id={377166} name="Resonating Annihilation" caption="Pizza-slice Frontal">
+  When Terros reaches 100 energy he casts a pizza-slice frontal which permanently covers a quarter
+  of the platform in miasma. It deals lethal (478k nature) damage to those caught in it, destroying
+  [Awakened Earth](https://www.wowhead.com/spell=381486) pillars in the process, and causes
+  [Fractured Rubble](https://www.wowhead.com/spell=378861) to fall from the ceiling which deals
+  impact damage and leaving behind miasma.
+</Mechanic>
+
+<Mechanic id={383073} name="Shattering Impact" caption="Swirly on Largest Player Clump">
+  Terros periodically casts [Shattering Impact](https://www.wowhead.com/spell=383073) as a large yellow circle which, if caught within, deals 252k nature damage and knocks players into the air. This mechanic also triggers [Fractured Rubble](https://www.wowhead.com/spell=378861) to fall from the ceiling.
+
+Testing suggests the mechanic targets the largest clump of players, which is typically melee due to the ranged players dealing with pillar mechanics.
+
+</Mechanic>
+
+<Mechanic id={376279} name="Concussive Slam" caption="Tank Laser Beam">
+  Terros will emit a line of energy at the active tank that deals 242k physical damage and increases damage taken by 30% for 45 seconds, stacking. [Concussive Slam](https://www.wowhead.com/spell=376279) will destroy any [Awakened Earth](https://www.wowhead.com/spell=381486) pillars in the path of the beam.
+
+In the same spirit as Halondrus, the beam is used to break pillars.
+
+</Mechanic>
+
+<Mechanic id={396351} name="Infused Fallout" caption="Clearable DoT" pill="Mythic">
+
+On Mythic, Terros will periodically debuff everyone with [Infused Fallout](https://www.wowhead.com/spell=396351), dealing 9k ticking damage every second until cleared. It can be cleared by touching another player with the debuff, but doing so causes [Explosive Reaction](https://www.wowhead.com/spell=391322), dealing 16k damage to the raid for every debuff removed. Furthermore, shortly thereafter [Reactive Bedrock](https://wowhead.com/spell=394347) erupts from the ground dealing 256k damage to anyone hit.
+
+<Alert type="info">
+
+The pillars are fast! Keep moving.
+
+</Alert>
+
+</Mechanic>
+
+<Mechanic id={377505} name="Frenzied Devastation" caption="Soft Enrage">
+  If the entire platform is filled with [Resonant Aftermath](https://www.wowhead.com/spell=382458)
+  puddles then Terros enrages, casting [Frenzied Devastation](https://www.wowhad.com/spell=377505)
+  repeatedly until our faces are melted off.
+</Mechanic>
+
+<Mechanic id={388393} name="Tectonic Barrage" caption="Lonely Boss Screeching">
+  If no player is within the bosses range he will cast [Tectonic
+  Barrage](https://www.wowhead.com/spell=388393) repeatedly.
+</Mechanic>
+
+## Strategy
+
+### Changes
+
+There are two changes to the fight on mythic:
+
+1. [Rock Blast](https://www.wowhead.com/spell=380487), or the meteor soaking mechanic, no longer splits damage across those soaking but instead deals damage to the entire raid, lowered by the number of people soaking. With everyone soaking both versions of the mechanic have the same result. However, if you don't soak on mythic you are still hit anyway and everyone will take more damage because of it.
+2. [Infused Fallout](https://www.wowhead.com/spell=396351) is a DoT that Terros applies to the entire raid that will deal ticking damage until cleared ala touching someone else with the DoT. Unsurprisingly, doing so causes the raid to take `16,061` nature damage per stack cleared, and shortly after [Reactive Bedrock](https://www.wowhead.com/spell=394347) pillars erupt from where the DoTs were cleared, dealing `256,978` nature damage to anyone hit.
+
+   He casts this after every [Shattering Impact](https://www.wowhead.com/spell=383073), or the big yellow circle we bait and dodge, and [Resonating Annihilation](https://www.wowhead.com/spell=377166), the pizza slice that deletes a quarter of the room.
+
+### Strategy
+
+There are two pillars (teehee) to the strategy:
+
+1. Breaking all of the pillars at the same time using the first [Concussive Slam](https://www.wowhead.com/spell=376279). This is because the second [Concussive Slam](https://www.wowhead.com/spell=376279) occurs after [Infused Fallout](https://www.wowhead.com/spell=396351) and leaving pillars up makes the burst of damage from clearing these debuffs more dangerous.
+2. Stacking most of the raid during [Infused Fallout](https://www.wowhead.com/spell=396351) to immediately clear the debuffs barring a few select ranged as everyone clearing at once is too much damage.
+
+The fight is scripted and callouts will be generously provided, so if any of the following is confusing I recommend watching the provided kill videos to get a better idea of the movement.
+
+#### Fight Cadence
+
+These are the mechanics and their order for every pie slice:
+
+1. Soak — [Rock Blast](https://www.wowhead.com/spell=380487)
+2. Pillar Break 1 — [Concussive Slam](https://www.wowhead.com/spell=376279)
+3. Dodge Big Circle — [Shattering Impact](https://www.wowhead.com/spell=383073)
+4. Clear Debuffs — [Infused Fallout](https://www.wowhead.com/spell=396351)
+5. Pillar Break 2 (Backup) — [Concussive Slam](https://www.wowhead.com/spell=376279)
+6. Repeat 1-5 one more time.
+7. Pie Slice — [Resonating Annihilation](https://www.wowhead.com/spell=377166)
+8. Clear Debuffs — [Infused Fallout](https://www.wowhead.com/spell=396351)
+
+Each mechanic has a specific way of dealing with it. Aside from dodging things, these are the three big orchestrated movements:
+
+- Always soak the [Rock Blast](https://www.wowhead.com/spell=380487) unless you have a pillar debuff and need to place it outside of the circle to keep it in line with the other pillars.
+- When we're baiting [Shattering Impact](https://www.wowhead.com/spell=383073) everyone will be stacked in melee except for 4 (?) ranged. These chosen ranged will be far enough from melee so their [Fractured Rubble](https://www.wowhead.com/spell=378861) miasma isn't in the way, and spread from each other so that they don't clear their [Infused Fallout](https://www.wowhead.com/spell=396351) debuffs until told to.
+- Always dodge the [Shattering Impact](https://www.wowhead.com/spell=383073) _to the right_ because [Fractured Rubble](https://www.wowhead.com/spell=378861) will spawn under us afterward. We want to bait the miasma away from the direction we're moving. The raid will then move back to the left to avoid the rubble.
+
+### Example
+
+Here is an example of fight placement for one round of mechanics.
+
+<Tabs>
+
+  <Tab label="Part 1">
+  
+    <ProseImage src="/images/strategies/vault/terros-rp-1.png" width="1394" height="500" alt="" />
+
+    Everyone helps soak the [Rock Blast](https://www.wowhead.com/spell=380487). The people with pillars form a central line as it's a lot easier to tell where to go if it's just "in the middle", and so people can more easily get away from the pillars without getting stuck.
+
+    It's acceptable for 1-2 of the people with pillars to be outside of the circle if it helps maintain a line for the tanks. Everyone else should be inside the circle.
+
+  </Tab>
+
+  <Tab label="Part 2">
+    
+    <ProseImage src="/images/strategies/vault/terros-rp-2.png" width="1394" height="500" alt="" />
+
+    Dodge the aftershock after soaking.
+
+  </Tab>
+
+  <Tab label="Part 3">
+    
+    <ProseImage src="/images/strategies/vault/terros-rp-3.png" width="1394" height="500" alt="" />
+
+    The tanks will then break all of the pillars.
+
+  </Tab>
+
+  <Tab label="Part 4">
+    
+    <ProseImage src="/images/strategies/vault/terros-rp-4.png" width="1394" height="500" alt="" />
+
+    After the pillars are broken the raid will stack together to bait the [Shattering Impact](https://www.wowhead.com/spell=383073) except for any ranged assigned not to.
+
+  </Tab>
+
+  <Tab label="Part 5">
+    
+    <ProseImage src="/images/strategies/vault/terros-rp-5.png" width="1394" height="500" alt="" />
+
+    The raid dodges the [Shattering Impact](https://www.wowhead.com/spell=383073).
+
+  </Tab>
+
+  <Tab label="Part 6">
+    
+    <ProseImage src="/images/strategies/vault/terros-rp-6.png" width="1394" height="500" alt="" />
+
+    The raid then moves to the left to avoid the [Fractured Rubble](https://www.wowhead.com/spell=378861) miasma, back where we started when baiting for the [Shattering Impact](https://www.wowhead.com/spell=383073).
+
+    After this, either another [Rock Blast](https://www.wowhead.com/spell=380487) will be coming for the raid to soak or it's pie-slice time.
+
+  </Tab>
+
+</Tabs>
+
+## Videos
+
+<figure>
+  <Video src="https://www.youtube.com/watch?v=qzMDOuzcHJQ" />
+  <figcaption>
+    This kill video clearly shows proper pillar placement and movements for [Shattering
+    Impact](https://www.wowhead.com/spell=383073) and the resulting [Fractured
+    Rubble](https://www.wowhead.com/spell=378861).
+  </figcaption>
+</figure>
+
+<figure>
+  <Video src="https://www.youtube.com/watch?v=s2EAF42jtqM" />
+  <figcaption>
+    Stankie explains the mechanics better than they execute them in the video. They are
+    inappropriately spread throughout much of the video which leads to miasma all over the place.
+    Once you understand the mechanics look at the previous video for a better example of how they
+    should be executed.
+  </figcaption>
+</figure>

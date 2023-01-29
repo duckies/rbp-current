@@ -1,26 +1,25 @@
-import frontmatter from "remark-frontmatter"
+import { withContentlayer } from "next-contentlayer"
 
-/** @type {import('next').NextConfig} */
-export default {
+export default withContentlayer({
   pageExtensions: ["tsx", "mdx"],
   reactStrictMode: true,
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.mdx?$/,
-      use: [
-        {
-          loader: "@mdx-js/loader",
-          /** @type {import('@mdx-js/loader').Options} */
-          options: {
-            remarkPlugins: [frontmatter],
-            providerImportSource: "@mdx-js/react",
-          },
-        },
-      ],
-    })
+  // webpack: (config) => {
+  //   config.module.rules.push({
+  //     test: /\.mdx?$/,
+  //     use: [
+  //       {
+  //         loader: "@mdx-js/loader",
+  //         /** @type {import('@mdx-js/loader').Options} */
+  //         options: {
+  //           remarkPlugins: [frontmatter],
+  //           providerImportSource: "@mdx-js/react",
+  //         },
+  //       },
+  //     ],
+  //   })
 
-    return config
-  },
+  //   return config
+  // },
   images: {
     remotePatterns: [
       {
@@ -42,6 +41,12 @@ export default {
     ],
   },
   experimental: {
-    appDir: false,
+    appDir: true,
+    fontLoaders: [
+      {
+        loader: "@next/font/google",
+        options: { subsets: ["latin"] },
+      },
+    ],
   },
-}
+})

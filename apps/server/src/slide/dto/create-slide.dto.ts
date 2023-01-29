@@ -1,10 +1,13 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator'
 
 export class CreateSlideDTO {
   @IsString()
-  title!: string;
+  title!: string
 
   @IsOptional()
   @IsString()
-  caption?: string;
+  caption?: string
+
+  @IsString()
+  url!: string
 }

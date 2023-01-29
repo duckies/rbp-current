@@ -7,4 +7,4 @@ module.exports = {
     require.resolve("prettier-plugin-organize-imports"),
     require.resolve("prettier-plugin-tailwindcss"),
   ],
-};
+}

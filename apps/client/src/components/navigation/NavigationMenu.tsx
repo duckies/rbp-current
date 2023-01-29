@@ -8,7 +8,7 @@ import { cva } from "cva"
 import type { ImageProps } from "next/image"
 import Image from "next/image"
 import NextLink from "next/link"
-import { useRouter } from "next/router"
+import { usePathname } from "next/navigation"
 import type { DOMProps } from "types/shared"
 import navigationMenuStyles from "./navigation-menu.module.css"
 
@@ -120,8 +120,7 @@ function Trigger({ children }: NavigationTriggerProps) {
 type NavigationLinkProps = LinkProps & Radix.NavigationMenuLinkProps
 
 function Link({ to, ...props }: NavigationLinkProps) {
-  const router = useRouter()
-  const isActive = router.asPath === to
+  const isActive = usePathname() === to
 
   return (
     <Radix.NavigationMenuLink asChild active={isActive}>

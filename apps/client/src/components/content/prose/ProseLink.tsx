@@ -1,11 +1,13 @@
+"use client"
+
 import clsx from "clsx"
 import type { LinkProps } from "components/Link"
 import { Link } from "components/Link"
-import { useDifficulty } from "stores/difficulty"
+import { usePathname } from "next/navigation"
 
 type ProseLinkProps = Omit<LinkProps, "style"> & {
   icon?: boolean
-  styleVariant: LinkProps["style"]
+  styleVariant?: LinkProps["style"]
 }
 
 export function ProseLink({
@@ -16,16 +18,16 @@ export function ProseLink({
   ...props
 }: ProseLinkProps) {
   const isWowheadLink = href?.includes("wowhead.com/spell=")
-  const { level } = useDifficulty()
+  const difficulty = usePathname()?.split("/").pop() || "heroic"
 
   if (isWowheadLink) {
     const url = new URL(href!)
     const params = url.searchParams
 
-    if (level === "mythic") {
+    if (difficulty === "mythic") {
       params.delete("dd")
     } else {
-      params.set("dd", level === "heroic" ? "15" : "14")
+      params.set("dd", difficulty === "heroic" ? "15" : "14")
     }
 
     href = url.toString()

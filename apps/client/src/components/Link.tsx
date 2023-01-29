@@ -1,8 +1,9 @@
+"use client"
+
 import { ArrowUpRight } from "components/icons/ArrowUpRight"
 import type { VariantProps } from "cva"
 import { cva } from "cva"
 import NextLink from "next/link"
-import { useRouter } from "next/router"
 import type { FC, ReactNode } from "react"
 import type { DOMProps } from "types/shared"
 
@@ -36,9 +37,10 @@ export const Link: FC<LinkProps> = ({
   externalIcon = true,
   ...props
 }) => {
-  const router = useRouter()
+  // const router = useRouter()
   const isExternal = to && (to.startsWith("http") || to.startsWith("mailto:"))
-  const isActive = to && !isExternal && router.asPath === to
+  // const isActive = to && !isExternal && router.asPath === to
+  const isActive = false
   const classNames = linkCSS({ style, className })
 
   if (to && !isExternal) {

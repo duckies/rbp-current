@@ -1,4 +1,4 @@
-import { useRouter } from "next/router"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export interface Breadcrumb {
@@ -26,13 +26,14 @@ type UseBreadcrumbOptions = {
 }
 
 export const useBreadcrumbs = ({ inclusive, blacklist }: UseBreadcrumbOptions) => {
-  const router = useRouter()
+  const path = usePathname()
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null)
   const includeLast = inclusive || false
 
+  // TODO: I assume `usePathname` is available on the server, so `useEffect` is not necessary anymore.
   useEffect(() => {
-    if (router) {
-      const linkPath = router.asPath.split("/")
+    if (path) {
+      const linkPath = path.split("/")
       linkPath.shift()
 
       const pathArray = linkPath.map((path, index) => {
@@ -56,7 +57,7 @@ export const useBreadcrumbs = ({ inclusive, blacklist }: UseBreadcrumbOptions) =
 
       setBreadcrumbs([{ breadcrumb: "Home", href: "/" }, ...filteredPathArray])
     }
-  }, [router, includeLast, blacklist])
+  }, [path, includeLast, blacklist])
 
   return breadcrumbs
 }

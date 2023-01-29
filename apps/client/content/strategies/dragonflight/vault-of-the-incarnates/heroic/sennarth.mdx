@@ -1,0 +1,207 @@
+---
+title: Sennarth the Cold Breath
+date: 2022-12-12
+description: The only person I've met with a name that started with "Sen" was a personal trainer named Seneca who made me flip tires till I threw up.
+images:
+  inset: /images/strategies/vault/portraits/sennarth-the-cold-breath-inset.webp
+---
+
+Sennarth 🕸️ is the first interesting boss in my opinion. Featuring a peculiar corkscrew room, heavy movement mechanics, and lots of little ways choose how to interact with the fight.
+
+## Mechanics
+
+Refer to [MythicTrap — Sennarth](https://www.mythictrap.com/en/vault/sennarth) for detailed visuals and animations of the mechanics. They have been listed here for absolutely no reason, at all.
+
+### Phase 1
+
+<Mechanic id={372765} name="Breath of Ice" caption="Ice Patches">
+  Sennarth spits out a bunch of [Icy Ground](https://www.wowhead.com/spell=372765?dd=15) patches
+  that deal 19,273 damage per second to players standing in them and causing them to *slide around*.
+</Mechanic>
+
+<Mechanic id={371976} name="Chilling Blast" caption="DoT, Spread">
+  Sennarth debuffs several players, dealing 35,334 damage every second for 5 seconds and causing
+  [Frost Expulsion](https://www.wowhead.com/spell=371979) upon expiration, dealing 108,103 frost
+  damage to all other players within 4 yards.
+</Mechanic>
+
+<Mechanic id={372082} name="Enveloping Webs" caption="Miasma-Bombing DoT">
+  
+Sennarth inflicts 19,200 physical damage to several players and causes them to drop [Sticky Webbing](https://www.wowhead.com/spell=372030) on the ground every second for 6 seconds.
+
+Players with this debuff should continue moving to avoid bombarding themselves with [Sticky Webbing](https://www.wowhead.com/spell=372030) stacks. Gaining 10 stacks of this debuff will entomb the player with [Wrapped in Webs](https://www.wowhead.com/spell=372044). However, standing in [Sticky Webbing](https://www.wowhead.com/spell=372030) will prevent the player from being gripped off the platform by [Gossamer Burst](https://www.wowhead.com/spell=373405).
+
+</Mechanic>
+
+<Mechanic id={373405} name="Gossamer Burst" caption="Grip Off Platform">
+  Sennarth inflicts 156,211 damage to the raid and attaches webs to every player. After a short delay she will rapidly attempt to pull everyone off of the platform to their death.
+
+Classes that have immunities to movement impairing effects, teleports, or high-speed movement can run against the mechanic and use their utility. Everyone else, or players focusing on their damage, can step into [Sticky Webbing](https://www.wowhead.com/spell=372030) until the effect ends and they will not move at all.
+
+</Mechanic>
+
+<Mechanic id={372736} name="Permafrost" caption="Old Platforms Deadly">
+  The boss deals 6,424 frost damage every second, stacking, to players who remain on platforms she
+  has left. If we leave an entombed player behind they'll die to this before the webbing falls off.
+</Mechanic>
+
+<Mechanic id={385083} name="Web Blast" caption="Tank Swap">
+  Standard tank swap ability, recommended to swap at 5-8 stacks.
+</Mechanic>
+
+#### Frostbreath Arachnid
+
+This is a tanked add which spawns once per platform that should be focused down.
+
+<Mechanic id={374112} name="Freezing Breath" caption="Frontal Cone">
+  This is the same as the boss ability, [Breath of Ice](https://www.wowhead.com/spell=372765) only
+  with a frontal component. Tanks just need to keep it facing away from the raid.
+</Mechanic>
+
+<Mechanic id={373817} name="Chilling Aura" caption="Ramping Raid Damage">
+  While the Frostbreath Arachnid is alive it will pulse 36,039 frost damage to the raid, and increases the damage done by this ability by 20% every time it deals damage. This damage is not avoidable, so the add should be focused down.
+
+The spider also physically grows in size, which is horrifying.
+
+</Mechanic>
+
+#### Caustic Spiderlings
+
+<Mechanic
+  id={372045}
+  name="Caustic Eruption"
+  caption="Removes webbing and frees web-trapped players"
+>
+  Killing a Caustic Spiderling causes it to pop, dealing 48,065 splash damage to players within 5
+  yards. Notably, this explosion also removes [Sticky Webbing](https://www.wowhead.com/spell=372030)
+  from the ground *and* player as well as freeing anyone [Wrapped in
+  Webs](https://www.wowhead.com/spell=372044).
+
+They do have an aggro table, but their health is low enough that they are likely to die to random cleave damage. This has the benefit of removing webbing from the platform randomly, but if a player is entombed tanks should be prepared to herd a spider to the player to free them.
+
+</Mechanic>
+
+### Phase 2
+
+<Mechanic id={372540} name="Apex of Ice" caption="Interrupt">
+  Phase 2 trigger mechanic that Sennarth starts channeling when she reaches the final platform. This
+  permanently covers the platform in [Ice Patch](https://www.wowhead.com/spell=372765) and deals
+  increasing raid damage until she is interrupted. This should be interrupted as soon as possible.
+</Mechanic>
+
+<Mechanic id={372648} name="Pervasive Cold" caption="Soft Enrage Vulnerability">
+  Players are increasingly vulnerable to frost damage on the final platform. This acts as a soft
+  enrage.
+</Mechanic>
+
+<Mechanic id={373559} name="Glacial Plume" caption="Landmines">
+  When the boss casts [Chilling Blast](https://www.wowhead.com/spell=371976), the spread mechanic from the first phase, players will now leave a [Glacial Plume](https://www.wowhead.com/spell=373559) in their wake. This acts as a landmine that lasts until a player steps on it, dealing 96,130 frost damage and knocking them back.
+
+  <Alert>These can be immunity soaked</Alert>
+</Mechanic>
+
+<Mechanic id={371983} name="Repelling Burst" caption="Knockback">
+
+[Gossamer Burst](https://www.wowhead.com/spell=373405) is replaced with [Repelling
+Burst](https://www.wowhead.com/spell=371983) which knocks players back instead. It is more
+dangerous now as you will also slide backward because of the ice on the platform, making it easy for
+players to be pushed into a [Glacial Plume](https://www.wowhead.com/spell=373559) which can easily
+kill them.
+
+This can still be negated with [Sticky Webbing](https://www.wowhead.com/spell=372030).
+
+</Mechanic>
+
+<Mechanic id={373048} name="Suffocating Webs" caption="Enveloping Webs v2.0">
+
+Sennarth cheats and casts [Enveloping Webs](https://www.wowhead.com/spell=372082) but will only drop [Sticky Webbing](https://www.wowhead.com/spell=372030) at the end of the debuff as well as knocking back the player and instantly entombing them.
+
+This will only target the active tank.
+
+</Mechanic>
+
+## Heroic Strategy
+
+Sennarth has an interesting corkscrew room layout that we ascend throughout the fight. The boss starts hanging from the ceiling off the edge of the platform and will ascend to the next platform on a timer. The fight is the same for the first three platforms and switches to phase 2 on the fourth and final platform.
+
+### Phase 1
+
+<figure>
+  <ProseImage
+    src="/images/strategies/vault/sennarth-rp-1.png"
+    width="1394"
+    height="784"
+    alt="Phase 1"
+  />
+  <figcaption>
+    Notice the ranged player moving between the ranged and melee stacks with the [Enveloping
+    Webs](https://www.wowhead.com/spell=372082) debuff so melee can use their webs if needed.
+  </figcaption>
+</figure>
+
+- Practice Covid 6ft guidelines. Aside from falling off the platform, the most damaging ability is the splash component of [Chilling Blast](https://www.wowhead.com/spell=371976). The [Icy Ground](https://www.wowhead.com/spell=372765) patches peppered on the platform will force players to position with little consistency anyways.
+- Have a plan for [Gossamer Burst](https://www.wowhead.com/spell=373405) at all times. Compared to push or pull mechanics in the past, this mechanic shows a web "arrow" on your person for 5 whole seconds to warn you of the impending grip because it is **very fast**. If you are caught unprepared there is no guarantee you have the time to save yourself during the grip.
+
+  1. Using [Sticky Webbing](https://www.wowhead.com/spell=372030) is the safest option for most classes as it negates the grip and grants the most uptime. While this does apply a stacking movement impairing effect it can be removed by standing in a Spiderling explosion which happens often and does negligible damage. _However_, do not overstay your welcome in the webbing and get yourself entombed.
+  2. If your plan is to use a blink, teleport, or movement nullification ability be sure you are consistent. Trying to big brain some last-second disengage only to fly horizontally into oblivion is only going to just make for a funny `gif` and get you yelled at.
+  3. If your plan is to use a speed-increasing ability it's recommended to be relatively far back in the room. You can also run against the mechanic without a speed increase or webbing by being in the back of the room when the pull happens. I would only recommend this to be done out of necessity and not as someone's usual approach.
+  4. Regardless of approach I heavily recommend finding a WeakAura that counts down when the grip is going to start. This will reduce the cognitive load necessary to deal with the mechanic.
+
+  <Alert type="warning">
+    There is conflicting information on whether or not getting gripped and sliding into webbing is
+    meant to stop or slow you. Some reports claim it slows, or doesn't work at all. It is known that
+    standing in webbing *before* the grip starts will prevent you from moving entirely.
+  </Alert>
+
+- Focus down the Frostbreath Arachnid which spawns shortly after arriving on each new platform.
+- As seen in the RaidPlan figure above, when a player is targeted by [Enveloping Webs](https://www.wowhead.com/spell=372082) and is thus being bombarded with [Sticky Webbing](https://www.wowhead.com/spell=372030) it is recommended to place them between the melee and ranged. As in, melee moves backwards with the debuff, ranged move forward, room permitting. Placing webs in the far back of the room takes longer and makes the grip more dangerous.
+
+### Phase 1 "Intermission"
+
+<figure>
+  <ProseImage
+    src="/images/strategies/vault/sennarth-rp-2.png"
+    width="1394"
+    height="784"
+    alt="Phase 1"
+  />
+  <figcaption>
+    Each circle is a pillar that can be used to block yourself from falling off the platform during
+    [Gossamer Burst](https://www.wowhead.com/spell=373405), but the red ones in the middle are a
+    little riskier.
+  </figcaption>
+</figure>
+
+After a while, the boss will slowly and ominously ascend a ramp to the next stretch of the platform. This is still part of phase 1 and she will cast all of the same mechanics during her escalator ride.
+
+[Gossamer Burst](https://www.wowhead.com/spell=373405) is more deadly during this intermission as the [Sticky Webbing](https://www.wowhead.com/spell=372030) is much more scarce. Gold-star players which get [Enveloping Webs](https://www.wowhead.com/spell=372082) can place [Sticky Webbing](https://www.wowhead.com/spell=372030) on the ramp shortly before she starts to ascend.
+
+### Phase 2
+
+The second phase begins on the fourth and final platform.
+
+<figure>
+  <ProseImage
+    src="/images/strategies/vault/sennarth-rp-3.png"
+    width="1394"
+    height="784"
+    alt="Phase 1"
+  />
+  <figcaption>
+    The <Marker type="skull" /> is where players with [Suffocating
+    Webs](https://www.wowhead.com/spell=373048) should huddle together so they aren't knocked too
+    far back, and are centrally grouped to be cleared by Spiderlings.
+  </figcaption>
+</figure>
+
+- Sennarth descends to the fourth platform and then starts channeling [Apex of Ice](https://www.wowhead.com/spell=372540) — permanently covering the entire platform in the slippery [Icy Ground](https://www.wowhead.com/spell=372765) as well as taking 99% reduced damage and pulsing increasing raid damage until this cast is interrupted.
+- Everyone becomes progressively more vulnerable to frost damage through [Pervasive Cold](https://www.wowhead.com/spell=372648), acting as her soft-enrage.
+- Players should remain spread out to avoid cleaving each other with [Chilling Blast](https://www.wowhead.com/spell=371976) as well as avoiding the [Glacial Plume](https://www.wowhead.com/spell=373559) landmines these debuffs now leave in their wake.
+- Instead of gripping, the boss now does a knockback called [Repelling Burst](https://www.wowhead.com/spell=371983). Players should avoid getting knocked off the platform or into [Glacial Plume](https://www.wowhead.com/spell=373559) by using [Sticky Webbing](https://www.wowhead.com/spell=372030), utility, or proper aiming.
+- [Suffocating Webs](https://www.wowhead.com/spell=373048) will entomb those affected, knocking them back, and will only drop a single [Sticky Webbing](https://www.wowhead.com/spell=372030). This will also be cast on the active tank each time which forces a taunt swap. Players with this mechanic should huddle near melee by the active tank so they are in an ideal position to be freed with Spiderlings along with the now-entombed tank.
+
+## Video
+
+<figure>
+  <Video src="https://www.youtube.com/watch?v=XlK8b8---KQ" />
+</figure>

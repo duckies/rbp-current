@@ -1,11 +1,15 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator'
 
 export class UpdateSlideDTO {
   @IsOptional()
   @IsString()
-  title?: string;
+  title?: string
 
   @IsOptional()
   @IsString()
-  caption?: string;
+  caption?: string
+
+  @IsOptional()
+  @IsString()
+  url?: string
 }

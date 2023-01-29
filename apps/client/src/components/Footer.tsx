@@ -1,3 +1,5 @@
+"use client"
+
 import { Container } from "components/Container"
 import DiscordLogo from "components/icons/Discord"
 import { Link } from "components/Link"

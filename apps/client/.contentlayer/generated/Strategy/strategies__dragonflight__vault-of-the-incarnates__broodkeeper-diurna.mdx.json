@@ -1,0 +1,33 @@
+{
+  "title": "Broodkeeper Diurna",
+  "description": "You'd think she'd stop putting her staff down after we used it to kill her first dozen children.",
+  "date": "2022-12-26T00:00:00.000Z",
+  "images": {
+    "inset": "/images/strategies/vault/portraits/broodkeeper-diurna-inset.webp",
+    "type": "Images",
+    "_raw": {}
+  },
+  "draft": false,
+  "body": {
+    "raw": "\n## Mechanics\n\nHiya\n",
+    "code": "var Component=(()=>{var h=Object.create;var i=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var m=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var x=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports),g=(e,t)=>{for(var r in t)i(e,r,{get:t[r],enumerable:!0})},a=(e,t,r,o)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let s of l(t))!f.call(e,s)&&s!==r&&i(e,s,{get:()=>t[s],enumerable:!(o=p(t,s))||o.enumerable});return e};var j=(e,t,r)=>(r=e!=null?h(m(e)):{},a(t||!e||!e.__esModule?i(r,\"default\",{value:e,enumerable:!0}):r,e)),_=e=>a(i({},\"__esModule\",{value:!0}),e);var d=x((y,c)=>{c.exports=_jsx_runtime});var D={};g(D,{default:()=>k,frontmatter:()=>b});var n=j(d()),b={title:\"Broodkeeper Diurna\",description:\"You'd think she'd stop putting her staff down after we used it to kill her first dozen children.\",date:new Date(16720128e5),images:{inset:\"/images/strategies/vault/portraits/broodkeeper-diurna-inset.webp\"},disabled:!0};function u(e){let t=Object.assign({h2:\"h2\",p:\"p\"},e.components);return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(t.h2,{children:\"Mechanics\"}),`\n`,(0,n.jsx)(t.p,{children:\"Hiya\"})]})}function w(e={}){let{wrapper:t}=e.components||{};return t?(0,n.jsx)(t,Object.assign({},e,{children:(0,n.jsx)(u,e)})):u(e)}var k=w;return _(D);})();\n;return Component;"
+  },
+  "_id": "strategies/dragonflight/vault-of-the-incarnates/broodkeeper-diurna.mdx",
+  "_raw": {
+    "sourceFilePath": "strategies/dragonflight/vault-of-the-incarnates/broodkeeper-diurna.mdx",
+    "sourceFileName": "broodkeeper-diurna.mdx",
+    "sourceFileDir": "strategies/dragonflight/vault-of-the-incarnates",
+    "contentType": "mdx",
+    "flattenedPath": "strategies/dragonflight/vault-of-the-incarnates/broodkeeper-diurna"
+  },
+  "type": "Strategy",
+  "path": "strategies/broodkeeper-diurna",
+  "expansion": {
+    "slug": "dragonflight",
+    "name": "Dragonflight"
+  },
+  "instance": {
+    "slug": "vault-of-the-incarnates",
+    "name": "Vault of the Incarnates"
+  }
+}

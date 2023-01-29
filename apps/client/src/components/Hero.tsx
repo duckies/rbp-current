@@ -1,3 +1,5 @@
+import { cn } from "utils/cn"
+
 export interface HeroTitleProps {
   children: React.ReactNode
 }
@@ -8,6 +10,7 @@ export interface HeroCaptionProps {
 
 export interface HeroProps {
   children: React.ReactNode
+  className?: string
 }
 
 export function HeroTitle({ children }: HeroTitleProps) {
@@ -15,11 +18,11 @@ export function HeroTitle({ children }: HeroTitleProps) {
 }
 
 export function HeroCaption({ children }: HeroCaptionProps) {
-  return <p className="text-center text-xl text-gray-300 lg:text-left">{children}</p>
+  return <p className="text-center text-xl text-gray-100 lg:text-left">{children}</p>
 }
 
-export default function Hero({ children }: HeroProps) {
-  return <section className="relative py-20">{children}</section>
+export default function Hero({ children, className }: HeroProps) {
+  return <section className={cn("relative py-20", className)}>{children}</section>
 }
 
 Hero.Title = HeroTitle

@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx"
 import { ProseLink } from "components/content/prose/ProseLink"
 import { WarcraftIcon } from "components/content/WarcraftIcon"

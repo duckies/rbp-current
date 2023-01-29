@@ -1,28 +1,23 @@
+"use client"
+
 import { Container } from "components/Container"
 import Logo from "components/icons/Logo"
 import { Link } from "components/Link"
 import { NavigationMenu } from "components/navigation/NavigationMenu"
-import type { FC } from "react"
-// import DiscordLogo from "components/icons/Discord"
-// import { login } from "hooks/auth"
-// import { Avatar } from "./Avatar"
-// import { Button } from "./Button"
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "./Dropdown"
+import { cn } from "utils/cn"
 
-export const Header: FC = () => {
-  // const { user, logout } = useAuth()
+type HeaderProps = {
+  className?: string
+}
 
-  // const onLogout = () => {
-  //   logout()
-  // }
-
+export function Header({ className }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full py-2 before:absolute before:inset-0 before:bg-surface-800/90 before:backdrop-blur-md before:content-['']">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full py-2 before:absolute before:inset-0 before:bg-surface-800/80 before:backdrop-blur-sm before:content-['']",
+        className
+      )}
+    >
       <Container className="relative flex">
         <div className="flex items-center gap-2">
           <Link className="flex h-10 w-10" to="/" style="plain">
