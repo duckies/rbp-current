@@ -21,12 +21,12 @@ export default async function IndexPage() {
 
       <Container className="mb-[90px]">
         <div className="grid grid-cols-12">
-          <div className="col-span-8 grid gap-4">
+          <div className="col-span-12 grid gap-4 md:col-span-8">
             <h2 className="text-2xl font-semibold">Latest Announcements</h2>
             {latestPosts.map((post) => (
               <Card key={post._id} href={post.path}>
                 <Card.Title>{post.title}</Card.Title>
-                <Card.Caption>{post.description}</Card.Caption>
+                <Card.Caption>{post.excerpt}</Card.Caption>
               </Card>
             ))}
           </div>

@@ -17,6 +17,8 @@ export type Announcement = {
   title: string
   /** Description for hero caption. */
   description: string
+  /** Excerpt used for announcement listings. */
+  excerpt: string
   /** Date of the strategy release. */
   date: IsoDateTimeString
   images?: Images | undefined

@@ -125,6 +125,11 @@ export const Announcement = defineDocumentType(() => ({
       description: "Description for hero caption.",
       required: true,
     },
+    excerpt: {
+      type: "string",
+      description: "Excerpt used for announcement listings.",
+      required: true,
+    },
     date: {
       type: "date",
       description: "Date of the strategy release.",

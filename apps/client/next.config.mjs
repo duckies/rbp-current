@@ -49,4 +49,13 @@ export default withContentlayer({
       },
     ],
   },
+  webpack: (config) => {
+    // Hide the webpack warnings from contentlayer.
+    // https://github.com/contentlayerdev/contentlayer/issues/313
+    config.infrastructureLogging = {
+      level: "error",
+    }
+
+    return config
+  },
 })

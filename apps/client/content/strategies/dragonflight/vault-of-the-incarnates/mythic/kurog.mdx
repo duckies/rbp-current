@@ -211,4 +211,117 @@ Refer to [MythicTrap — Kurog Grimtotem](https://www.mythictrap.com/en/vault/ku
   </Tab>
 </Tabs>
 
+## Mythic Changes
+
+Kurog will now summon an elemental in phase 1 corresponding to his active altar, turning this into a 2-target cleave fight.
+
+- These new elementals share a frontal ability flavored by their element — [Flame Smite](https://www.wowhead.com/spell=393309), [Frost Smite](https://www.wowhead.com/spell=393297), [Earth Smite](https://www.wowhead.com/spell=391268), and [Storm Smite](https://www.wowhead.com/spell=393429). Each hit deals `256,977` fire, frost, or nature damage with a unique secondary effect.
+  - The flame one lobs fire on the ground nearby.
+  - The frost one slows the tank (or anyone else hit).
+  - The earth one applies a large healing absorb to the tank (or anyone else hit).
+  - The lightning one causes the tank (or anyone else hit) to become electrified, dealing massive damage to any players within 12 yards of them for 5 seconds.
+- They also have 1-2 other abilities:
+  - **Flamewrought Eradicator** casts [Raging Inferno](https://www.wowhead.com/spell=391555), converting any [Magma Pools](https://www.wowhead.com/spell=374554) Kurog created into Raging Infernos. Infernos last for 15 seconds and can be soaked by players, dealing `54,608` fire damage every second and consuming part of the magma pool. If the inferno expires without being fully consumed a _Smoldering Hellion_ add is summoned, which casts things and is just generally annoying.
+  - **Frostwrought Dominator** will mimic Kurog and cast [Frigid Torrent](https://www.wowhead.com/spell=391019) when Kurog casts it for double the icy-ball dodging goodness. The Dominator also has a persistent aura, [Icy Tempest](https://www.wowhead.com/spell=391272), requiring players to be within 10 yards of at least 2 other players lest they become [Frozen Solid](https://www.wowhead.com/spell=372517) for 10 seconds.
+  - **Earthwrought Smasher** casts [Erupting Bedrock](https://www.wowhead.com/spell=395893), the rippling ground dodging mechanic, the same as Kurog's just now more often I suppose.
+  - **Stormwrought Despoiler** casts [Orb Lightning](https://www.wowhead.com/spell=374620), requiring players to chase down and soak orbs giving the player a light, 10 minute DoT or it explodes, dealing `289,100` nature damage to the raid. However, with our strategy we will not be summoning this add (intentionally, anyway).
+
+The intermission adds now bring mechanics from phase 1 with them.
+
+- **Blazing Fiend** now also casts [Searing Carnage](https://www.wowhead.com/spell=391499), the flame dance mechanic.
+- **Frozen Destroyer** now also casts [Absolute Zero](https://www.wowhead.com/spell=372456), the dual-meteor soaking mechanic.
+- **Tectonic Crusher** now also casts [Seismic Rupture](https://www.wowhead.com/spell=374705/seismic-rupture), spawning ground circles that erupt into the little adds.
+- **Thundering Ravager** now also casts [Thunder Strike](https://www.wowhead.com/spell=374217/thunder-strike), the lightning swirls that must be soaked in phase 1. We have not seen this mechanic in heroic lately, but in mythic, these swirls will be in the central circle of the room, instead of randomly in a quadrant.
+
 ## Mythic Strategy
+
+The elementals summoned from activating an altar have a lot of health and don't despawn when Kurog enters the intermission, which would lead to a wipe if one made it there. This means each phase 1 must consist of only a single altar. However, there is a major complication where Kurog picks the intermission elementals based on altar stacks:
+
+- The 2 highest stack counts are the elements he chooses.
+- _If one of the 2 highest stacks is tied with a third or fourth, those other elements can be chosen randomly._
+- Elementals in the intermission can only be fought once, so the second intermission is set based on the first.
+
+For example, if we sat in fire till the first intermission he would have 30 fire stacks and 1 stack of all other elements. The first highest is "30" fire, so he picks a fire elemental. Next he sees "1" tied with all other elements, so he picks another element at random. This has a 2 in 3 chance of causing an instant wipe. To combat this, we will get Kurog to 30 stacks then wiggle him to the storm altar at approximately 97 energy, giving us a stack of storm but not staying in the altar long enough to spawn the add. This sets the altar count to approximately 30 fire, 2 storm, 1 frost, 1 earth, guaranteeing we get the fire and lightning elemental in the intermission.
+
+The downside to this strategy is there is a very tight window where it's appropriate to get Kurog into the storm altar quadrant. Do it too early and we get an add that wipes us, too late and we have a 2 in 3 chance of getting a lethal intermission elemental combo and wiping.
+
+With all of that said, the fight will follow this order:
+
+1. **Phase 1** — Fire altar, dip into storm altar for the last tick.
+2. **Intermission** — Fire and lightning elemental intermission. We leave Kurog in the middle of the room for 2-3 seconds to desync the future elementals to make earth and frost dodging mechanics easier.
+3. **Phase 1** — Earth altar until intermission. We don't need to touch frost as we've already killed the other two elementals.
+4. **Intermission** — Earth and frost elemental intermission.
+5. **Phase 1** — Frost altar until enrage.
+
+### Phase 1
+
+<figure>
+  <ProseImage
+    src="/images/strategies/vault/raidplans/kurog-rp-1.jpg"
+    height="784"
+    width="1394"
+    alt=""
+    quality="90"
+  />
+  <figcaption>
+    The <Marker type="star" /> marker is the stack point for [Searing
+    Carnage](https://www.wowhead.com/spell=374022) dancing, and the other markers are ranged bait
+    points for [Magma Burst](https://www.wowhead.com/spell=382563) pools.
+  </figcaption>
+</figure>
+
+Ranged will bait on the perimeter markers for [Magma Burst](https://www.wowhead.com/spell=382563) pools and stack with melee on <Marker type="star" /> for the [Searing
+Carnage](https://www.wowhead.com/spell=374022) dance. The fight is scripted so there is a dance after every 2 pool baits, with the sequence labeled in the picture.
+
+1. <Marker type="square" /> — Ranged baiting pools
+2. <Marker type="triangle" /> — Ranged baiting pools
+3. <Marker type="star" /> — Everyone stacking for dance
+
+   Everyone moves according to their dance WeakAura, left if you don't have the debuff and right if you do. Players moving with the debuff will need to stutter-step to avoid running out of room.
+
+4. <Marker type="moon" /> — Ranged baiting pools
+5. <Marker type="diamond" /> — Ranged baiting pools
+6. <Marker type="star" /> — Everyone stacking for dance. The add needs to be dead by now `~1:30`.
+7. <Marker type="moon" /> — Ranged baiting pools.
+
+   The elemental should be dead by now, so the pools aren't converted into the soaking mechanic.
+
+Soaking is assigned by immunities or tankier specializations, e.g.
+
+```
+{square} Rogue
+{triangle} Mage
+{moon} Monk
+{diamond} Hunter
+```
+
+### Intermission 1
+
+<ProseImage
+  src="/images/strategies/vault/raidplans/kurog-rp-2.jpg"
+  height="784"
+  width="1394"
+  alt=""
+  quality="90"
+/>
+
+This intermission will feature fire and lightning elementals with the lightning elemental being kill priority. The raid will start on <Marker type="triangle" /> to bait the [Searing
+Carnage](https://www.wowhead.com/spell=374022) dance. When the dance starts everyone ignores their WeakAura and moves as a group into the middle of the room.
+
+Afterward, everyone will remain stacked in melee for baiting dances unless lightning soaks are about to come out in which case the 6 ranged players will disengage from the group to soak them. There are caveats to the dance movements, but in general, your priority is to move together as a group, but if you're separated do not cut off the group.
+
+<Alert type="warning">
+
+While the lightning elemental is alive healers should be in melee range of this or the other elemental as it jumps to healers and we don't want it teleporting out of range. However, the tank should be the only person inside of the lightning elemental's hitbox as it will then pick them for the "get out of the raid" mechanic.
+
+</Alert>
+
+## Weakauras
+
+- [Searing Carnage Direction Arrow (grimtotem)](https://wago.io/SxHOCR1WK) provides directional arrows for the fire dance. Players without the debuff get a red arrow that has them go left, and players with the debuff get a green arrow that has them go right.
+- [Kurog Grimtotem - Dance](https://wago.io/4saOA8G4D) is a countdown bar for the phase 1 fire dance. It has ticks on the bar to indicate when the fire lands, allowing stutter-stepping.
+- **Tanks** [NGAndersson - Kurog Phase Timing](https://wago.io/SxHOCR1WK) provides a visual for the tanks to know when to move the boss to the lightning altar just before the intermission.
+
+## Video
+
+<Video src="https://www.youtube.com/watch?v=Ct-_mDghBno" />
