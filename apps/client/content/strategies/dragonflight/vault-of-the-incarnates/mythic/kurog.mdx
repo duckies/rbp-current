@@ -227,7 +227,7 @@ Kurog will now summon an elemental in phase 1 corresponding to his active altar,
 
 The intermission adds now bring mechanics from phase 1 with them.
 
-- **Blazing Fiend** now also casts [Searing Carnage](https://www.wowhead.com/spell=391499), the flame dance mechanic.
+- **Blazing Fiend** now also casts [Searing Carnage](https://www.wowhead.com/spell=374022), the flame dance mechanic.
 - **Frozen Destroyer** now also casts [Absolute Zero](https://www.wowhead.com/spell=372456), the dual-meteor soaking mechanic.
 - **Tectonic Crusher** now also casts [Seismic Rupture](https://www.wowhead.com/spell=374705/seismic-rupture), spawning ground circles that erupt into the little adds.
 - **Thundering Ravager** now also casts [Thunder Strike](https://www.wowhead.com/spell=374217/thunder-strike), the lightning swirls that must be soaked in phase 1. We have not seen this mechanic in heroic lately, but in mythic, these swirls will be in the central circle of the room, instead of randomly in a quadrant.
@@ -252,7 +252,7 @@ With all of that said, the fight will follow this order:
 4. **Intermission** — Earth and frost elemental intermission.
 5. **Phase 1** — Frost altar until enrage.
 
-### Phase 1
+### Phase 1 — Altar of Flame
 
 <figure>
   <ProseImage
@@ -304,22 +304,62 @@ Soaking is assigned by immunities or tankier specializations, e.g.
   quality="90"
 />
 
-This intermission will feature fire and lightning elementals with the lightning elemental being kill priority. The raid will start on <Marker type="triangle" /> to bait the [Searing
-Carnage](https://www.wowhead.com/spell=374022) dance. When the dance starts everyone ignores their WeakAura and moves as a group into the middle of the room.
+This intermission will feature fire and lightning elementals with the lightning elemental being kill priority. The raid will stack on <Marker type="skull" />, or wherever the adds converge, to bait the [Searing
+Carnage](https://www.wowhead.com/spell=374022) dance. When the dance starts everyone ignores their WeakAura and moves as a group into the middle of the room. The only lightning soaks immediately follow this first dance. The rest of the intermission is a general priority:
 
-Afterward, everyone will remain stacked in melee for baiting dances unless lightning soaks are about to come out in which case the 6 ranged players will disengage from the group to soak them. There are caveats to the dance movements, but in general, your priority is to move together as a group, but if you're separated do not cut off the group.
+- Stay grouped in melee and follow others during the dance, healers are _required_ to stay in melee as the lightning elemental lusts for healers.
+- If you're not grouped when the dance starts, do not cut off the main group with your flames.
+- Don't enter the earth quadrant, as the flame elemental spawns fire puddles near players and that's where we're going next.
+- If the lightning elemental fixates you with [Lethal Current](https://www.wowhead.com/spell=391696/lethal-current) move out of the group, and try not to be inside the lightning elemental's hitbox in the future.
 
-<Alert type="warning">
+We are not in a rush to kill the flame elemental as we can wait a minor amount of time to recharge our cooldowns; Thaerhum may call a DPS stop depending on the timing. Once the intermission ends, however, we will try to leave Kurog in the center of the room for 2-3 seconds to desync his altar mechanic timings from the elemental timings, otherwise, we have to dodge 2 earth ripple mechanics simultaneously.
 
-While the lightning elemental is alive healers should be in melee range of this or the other elemental as it jumps to healers and we don't want it teleporting out of range. However, the tank should be the only person inside of the lightning elemental's hitbox as it will then pick them for the "get out of the raid" mechanic.
+### Phase 1 — Altar of earth
 
-</Alert>
+<figure>
+  <ProseImage
+    src="/images/strategies/vault/raidplans/kurog-rp-3.jpg"
+    height="784"
+    width="1394"
+    alt=""
+    quality="90"
+  />
+  <figcaption>
+    The add will be stacked with the group except for the 2nd [Erupting
+    Bedrock](https://www.wowhead.com/spell=395893/erupting-bedrock).
+  </figcaption>
+</figure>
+
+The second and most dangerous altar of the fight is earth. The earth altar itself presents fewer mechanics, but the ticking damage is increased as a consequence which will test the healers, tanks, and everyone's ability to use personals. Everyone will remain stacked on the boss, only moving to dodge [Erupting
+Bedrock](https://www.wowhead.com/spell=395893/erupting-bedrock) ripples.
+
+- [Enveloping Earth](https://www.wowhead.com/spell=391055/enveloping-earth) is the most lethal mechanic to individual players as a `432,678` healing absorb shield. The elemental's tank frontal applies the same healing absorb to the tank. A WeakAura linked below will tell players when to use health pots/stones when they have the shield during the later parts of the phase. Some classes are likely to simply die if they get this shield multiple times in a row.
+- [Seismic Rupture](https://www.wowhead.com/spell=374705/seismic-rupture) spawns earthen swirlies that summon the Earth Breaker addlets. A quick stun when they spawn is helpful so tanks have some time to get aggro, and then nuked down so they don't kill the tanks.
+- [Erupting Bedrock](https://www.wowhead.com/spell=395893/erupting-bedrock) are the concentric miasma rings on the ground that erupt around the boss, and on mythic the elemental as well. If we're successful with keeping Kurog in the middle of the room to desync him the 3 instances of this ability will look like this:
+
+  1. Kurog will cast it first, the mechanic finishes, then the elemental casts it.
+  2. Kurog starts his, then the elemental starts. This overlap is dangerous, so a tank will preemptively move the elemental out of the group to make it easier to dodge.
+  3. The elemental should be dead by this point, however, the raid will be taking incredible damage from the earth altar stacks and healers will be impaired by the movement here.
+
+### Intermission 2
+
+> Not written.
+
+### Phase 2 — Frost Add
+
+> Not written.
+
+### Enrage
+
+> Not written
 
 ## Weakauras
 
 - [Searing Carnage Direction Arrow (grimtotem)](https://wago.io/SxHOCR1WK) provides directional arrows for the fire dance. Players without the debuff get a red arrow that has them go left, and players with the debuff get a green arrow that has them go right.
 - [Kurog Grimtotem - Dance](https://wago.io/4saOA8G4D) is a countdown bar for the phase 1 fire dance. It has ticks on the bar to indicate when the fire lands, allowing stutter-stepping.
-- **Tanks** [NGAndersson - Kurog Phase Timing](https://wago.io/SxHOCR1WK) provides a visual for the tanks to know when to move the boss to the lightning altar just before the intermission.
+- [Kurog_M_HealAbsorb_Personal](https://wago.io/BG6o0SO_B) warns you to use a personal if you have the healing absorb above 19 earth stacks and you're low.
+- (**Healers**) [Vault of the Incarnates - Glows](https://wago.io/8Pm7cbqJi) glows someone's raid frame with a noteworthy ability, which in this fight is the healing absorbs.
+- (**Tanks**) [NGAndersson - Kurog Phase Timing](https://wago.io/SxHOCR1WK) provides a visual for the tanks to know when to move the boss to the lightning altar just before the intermission.
 
 ## Video
 
