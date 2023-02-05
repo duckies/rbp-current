@@ -1,20 +1,22 @@
-import { cva } from 'cva'
-import { forwardRef } from 'react'
+import { forwardRef } from "react"
+import { cn } from "utils/cn"
 
-export interface PaperProps extends React.ComponentPropsWithRef<'div'> {}
-
-const classes = cva(['p-8', 'bg-surface-700', 'rounded-md', 'shadow-lg'])
+type PaperProps = React.ComponentPropsWithRef<"div">
 
 export const Paper = forwardRef<HTMLDivElement, PaperProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <div className={classes({ class: className })} {...props} ref={ref}>
+      <div
+        className={cn("rounded-md bg-surface-700 p-8 shadow-lg", className)}
+        {...props}
+        ref={ref}
+      >
         {children}
       </div>
     )
-  },
+  }
 )
 
-Paper.displayName = 'Paper'
+Paper.displayName = "Paper"
 
 export default Paper

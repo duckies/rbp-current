@@ -5,6 +5,7 @@ module.exports = {
     "sort-imports": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "no-console": "off",
+    "@next/next/no-html-link-for-pages": "off",
   },
   settings: {
     "mdx/code-blocks": true,

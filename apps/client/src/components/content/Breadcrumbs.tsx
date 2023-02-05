@@ -1,20 +1,15 @@
 "use client"
 
 import { ChevronRightIcon } from "components/icons/ChevonRight"
-import { cva } from "cva"
 import { useBreadcrumbs } from "hooks/useBreadcrumbs"
 import Link from "next/link"
-import type { FC } from "react"
-
-const breadcrumbCSS = cva(["text-gray-300 hover:text-white transition-color hidden lg:flex"])()
-const separatorCSS = cva(["mx-2 h-4 w-4 self-center"])()
 
 type BreadcrumbsProps = {
   inclusive?: boolean
   blacklist?: string[]
 }
 
-export const Breadcrumbs: FC<BreadcrumbsProps> = ({ inclusive, blacklist }) => {
+export function Breadcrumbs({ inclusive, blacklist }: BreadcrumbsProps) {
   const breadcrumbs = useBreadcrumbs({ inclusive, blacklist })
 
   return (
@@ -24,9 +19,12 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ inclusive, blacklist }) => {
           const isLast = index === breadcrumbs.length - 1
 
           return (
-            <li key={href} className={breadcrumbCSS}>
+            <li
+              key={href}
+              className="transition-color hidden text-gray-300 hover:text-white lg:flex"
+            >
               <Link href={href}>{breadcrumb}</Link>
-              {!isLast && <ChevronRightIcon className={separatorCSS} />}
+              {!isLast && <ChevronRightIcon className="mx-w h-4 w-4 self-center" />}
             </li>
           )
         })}

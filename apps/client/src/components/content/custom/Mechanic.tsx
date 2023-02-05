@@ -1,13 +1,12 @@
 "use client"
 
-import clsx from "clsx"
+import { WarcraftIcon } from "components/content/custom/WarcraftIcon"
 import { ProseLink } from "components/content/prose/ProseLink"
-import { WarcraftIcon } from "components/content/WarcraftIcon"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
 import { motion } from "framer-motion"
 import { useWowhead } from "hooks/useWowhead"
-import type { ReactNode } from "react"
 import { useState } from "react"
+import { cn } from "utils/cn"
 
 type MechanicProps = {
   name: string
@@ -15,7 +14,7 @@ type MechanicProps = {
   caption?: string
   pill?: string
   link: string
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
@@ -52,7 +51,7 @@ export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
         )}
 
         <div
-          className={clsx(
+          className={cn(
             "flex items-center p-3 transition-transform duration-[300]",
             isOpen && "rotate-180"
           )}
@@ -80,7 +79,7 @@ export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
             },
           }}
           transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
-          className={clsx("relative overflow-hidden border-t border-gray-800")}
+          className={cn("relative overflow-hidden border-t border-gray-800")}
           aria-expanded={isOpen}
         >
           {children}

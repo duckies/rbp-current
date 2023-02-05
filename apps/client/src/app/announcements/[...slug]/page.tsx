@@ -1,6 +1,6 @@
 import { Breadcrumbs } from "components/content/Breadcrumbs"
+import { MDX } from "components/content/MDX"
 import Hero from "components/Hero"
-import { MDX } from "components/MDX"
 import { allAnnouncements } from "content"
 import { notFound } from "next/navigation"
 

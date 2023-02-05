@@ -3,7 +3,6 @@
 import type { Transition, Variants } from "framer-motion"
 import { AnimatePresence, LazyMotion, m } from "framer-motion"
 import { usePathname } from "next/navigation"
-import type { ReactNode } from "react"
 
 const variants: Variants = {
   in: {
@@ -19,7 +18,7 @@ const transition: Transition = {
 }
 
 type LayoutAnimationProps = {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 async function loadFeatures() {

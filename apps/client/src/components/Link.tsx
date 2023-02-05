@@ -4,13 +4,12 @@ import { ArrowUpRight } from "components/icons/ArrowUpRight"
 import type { VariantProps } from "cva"
 import { cva } from "cva"
 import NextLink from "next/link"
-import type { FC, ReactNode } from "react"
 import type { DOMProps } from "types/shared"
 
 export type LinkProps = DOMProps<"a"> &
   VariantProps<typeof linkCSS> & {
     to?: string
-    children?: ReactNode
+    children?: React.ReactNode
     className?: string
     passHref?: boolean
     externalIcon?: boolean
@@ -29,14 +28,7 @@ const linkCSS = cva("", {
   },
 })
 
-export const Link: FC<LinkProps> = ({
-  to,
-  style,
-  className,
-  children,
-  externalIcon = true,
-  ...props
-}) => {
+export function Link({ to, style, className, children, externalIcon = true, ...props }: LinkProps) {
   // const router = useRouter()
   const isExternal = to && (to.startsWith("http") || to.startsWith("mailto:"))
   // const isActive = to && !isExternal && router.asPath === to

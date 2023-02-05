@@ -1,10 +1,10 @@
-import Card from "components/Card"
+import { Card } from "components/Card"
 import { Carousel } from "components/Carousel"
 import { Container } from "components/Container"
 import { Footer } from "components/Footer"
 import { Header } from "components/Header"
 import { allAnnouncements } from "content"
-import { getSlides } from "features/slides/api"
+import { getSlides } from "lib/slides"
 
 export default async function IndexPage() {
   const slides = await getSlides()
@@ -31,6 +31,8 @@ export default async function IndexPage() {
             ))}
           </div>
         </div>
+
+        {/* <SessionDebug /> */}
       </Container>
 
       <Footer />

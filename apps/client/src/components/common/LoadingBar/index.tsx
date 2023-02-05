@@ -4,7 +4,11 @@ import { useRouter } from "next/router"
 import NProgress from "nprogress"
 import { useEffect, useRef } from "react"
 
-export default function LoadingBar({ delay = 100 }) {
+type LoadingBarProps = {
+  delay?: number
+}
+
+export function LoadingBar({ delay = 100 }: LoadingBarProps) {
   const router = useRouter()
   const timeout = useRef<NodeJS.Timeout | undefined>()
 

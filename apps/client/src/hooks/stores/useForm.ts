@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import CharacterSelector from "components/forms/fields/Character"
 import { Textarea } from "components/forms/fields/Textarea"
 import { Textfield } from "components/forms/fields/Textfield"
-import { $get } from "lib/utils/fetch"
+import { $get } from "utils/fetch"
 
 export function getForm(id: number) {
   return $get<Form>(`/form/${id}`)

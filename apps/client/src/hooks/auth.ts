@@ -1,8 +1,8 @@
 import type { Provider, User } from "@rbp/server"
 import config from "lib/config"
-import { $get } from "lib/utils/fetch"
 import type { GetServerSidePropsContext } from "next"
 import nookies from "nookies"
+import { $get } from "utils/fetch"
 
 export function login() {
   const params = new URLSearchParams({

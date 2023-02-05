@@ -28,10 +28,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "src/**/*.mjs",
-    "src/**/*.cjs",
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/**/*",
     "next.config.mjs",
     ".next/types/**/*.ts",
     ".contentlayer/generated"

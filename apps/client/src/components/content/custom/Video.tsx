@@ -1,14 +1,13 @@
 "use client"
 
 import Image from "next/image"
-import type { FC } from "react"
 import { useState } from "react"
 
 type VideoProps = {
   src: string
 }
 
-export const Video: FC<VideoProps> = ({ src }) => {
+export function Video({ src }: VideoProps) {
   const [active, setActive] = useState(false)
   const id = src.match(/\?v=([^&]*)/)?.[1]
   const url = `https://www.youtube.com/embed/${id}?&autoplay=1`

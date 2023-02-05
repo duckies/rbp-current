@@ -1,6 +1,6 @@
 import Button from "components/Button"
 import type { CardProps } from "components/Card"
-import Card from "components/Card"
+import { Card } from "components/Card"
 import { IconArrowRight } from "components/icons/ArrowRight"
 import { cva } from "cva"
 import Image from "next/image"

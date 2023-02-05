@@ -1,16 +1,15 @@
 "use client"
 
-import { RadioGroup } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenuItemIndicator, RadioGroup } from "@radix-ui/react-dropdown-menu"
 import { capitalize } from "@rbp/shared"
 import Button from "components/Button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
-  ItemIndicator,
-  RadioItem,
 } from "components/Dropdown"
-import CheckIcon from "components/icons/CheckIcon"
+import { CheckIcon } from "components/icons/CheckIcon"
 import { ChevronDownIcon } from "components/icons/ChevronDown"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "utils/cn"
@@ -68,14 +67,14 @@ export function DifficultyDropdown({ className, available }: DifficultyDropdownP
             {levels.map((level) => {
               const disabled = !available.includes(level)
               return (
-                <RadioItem key={level} value={level} disabled={disabled}>
-                  <ItemIndicator>
+                <DropdownMenuRadioItem key={level} value={level} disabled={disabled}>
+                  <DropdownMenuItemIndicator>
                     <CheckIcon className={cn("mr-2 inline-block h-4 w-4")} />
-                  </ItemIndicator>
+                  </DropdownMenuItemIndicator>
                   <span className={cn(disabled && "select-none text-gray-500")}>
                     {capitalize(level)}
                   </span>
-                </RadioItem>
+                </DropdownMenuRadioItem>
               )
             })}
           </RadioGroup>

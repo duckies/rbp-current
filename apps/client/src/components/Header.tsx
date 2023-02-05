@@ -1,9 +1,19 @@
 "use client"
 
+import { Avatar } from "components/Avatar"
+import Button from "components/Button"
 import { Container } from "components/Container"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/Dropdown"
 import Logo from "components/icons/Logo"
 import { Link } from "components/Link"
 import { NavigationMenu } from "components/navigation/NavigationMenu"
+import { signIn, signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { cn } from "utils/cn"
 
 type HeaderProps = {
@@ -11,6 +21,9 @@ type HeaderProps = {
 }
 
 export function Header({ className }: HeaderProps) {
+  const { data } = useSession()
+  const router = useRouter()
+
   return (
     <header
       className={cn(
@@ -81,30 +94,30 @@ export function Header({ className }: HeaderProps) {
           </NavigationMenu>
         </nav>
 
-        {/* <div className="flex items-center gap-1.5">
-          {user ? (
+        <div className="relative flex items-center gap-1.5">
+          {data && data.user?.avatar ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="icon">
-                    <Avatar user={user} priority />
+                    <Avatar src={data.user.avatar} size={80} alt={data.user.discord.identifier} />
                   </Button>
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent sideOffset={5} collisionPadding={5}>
-                  <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
-                  <DropdownMenuItem>
-                    Discord <DiscordLogo />
+                  <DropdownMenuItem onClick={() => router.push("/dashboard")}>
+                    Dashboard
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
           ) : (
-            <Button variant="outline" onClick={login}>
+            <Button variant="outline" onClick={() => signIn("discord")}>
               Login
             </Button>
           )}
-        </div> */}
+        </div>
       </Container>
     </header>
   )

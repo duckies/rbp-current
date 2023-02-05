@@ -8,6 +8,12 @@ import Square from "public/images/markers/square.png"
 import Star from "public/images/markers/star.png"
 import Triangle from "public/images/markers/triangle.png"
 
+/**
+ * TODO: Can we dynamically load these marker images? Loading them all at once is
+ * a bit wasteful, but making a bunch of smaller components seems more annoying, though
+ * likely the easiest solution.
+ */
+
 const Markers = {
   moon: Moon,
   skull: Skull,
@@ -22,7 +28,8 @@ const Markers = {
 type MarkerProps = {
   type: keyof typeof Markers
 }
-export const Marker = ({ type }: MarkerProps) => {
+
+export function Marker({ type }: MarkerProps) {
   const name = type.charAt(0).toUpperCase() + type.slice(1)
 
   return (

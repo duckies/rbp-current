@@ -1,34 +1,18 @@
-import type { User } from '@rbp/server';
-import type { ImageProps } from 'next/image';
-import Image from 'next/image';
+"use client"
 
-export interface AvatarProps extends Omit<ImageProps, 'src' | 'alt'> {
-  user: User
+import type { ImageProps } from "next/image"
+import Image from "next/image"
+import { cn } from "utils/cn"
+
+type AvatarProps = Omit<ImageProps, "src"> & {
+  src: string
   size?: number
 }
 
-export function getAvatar(user: User) {
-  const discord = user.identities.find(i => i.provider === 'discord')!;
-
-  if (discord.avatar) {
-    return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
-  }
-
-  const discriminator = +discord.identifier.split('#')[1];
-  return `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
-}
-
-export function Avatar({ user, size = 40, ...props }: AvatarProps) {
-  const avatar = getAvatar(user);
-
+export function Avatar({ src, size = 80, className, ...props }: AvatarProps) {
   return (
-    <Image
-      src={avatar}
-      className="object-cover"
-      alt="Discord Avatar"
-      height={size}
-      width={size}
-      {...props}
-    />
-  );
+    <div className={cn("overflow-hidden rounded-full", className)}>
+      <Image src={src} height={size} width={size} {...props} />
+    </div>
+  )
 }

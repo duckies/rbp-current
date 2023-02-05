@@ -1,15 +1,14 @@
 import { SqlEntityManager } from '@mikro-orm/knex'
 import { Injectable } from '@nestjs/common'
 import got from 'got-cjs'
-import { DiscordConfig } from '../../app.config'
 import { User } from '../../user/user.entity'
+import { TokenDTO } from '../dto/tokens.dto'
 import { Identity } from '../identity/identity.entity'
-import { DiscordTokenResponse } from '../interfaces/discord-token-response.interface'
 import { DiscordUser } from '../interfaces/discord-user.interface'
 
 @Injectable()
 export class DiscordProvider {
-  constructor(private readonly config: DiscordConfig, private readonly em: SqlEntityManager) {}
+  constructor(private readonly em: SqlEntityManager) {}
 
   async getProfile(accessToken: string) {
     return got.get<DiscordUser>('https://discord.com/api/users/@me', {
@@ -20,27 +19,11 @@ export class DiscordProvider {
     })
   }
 
-  async authorize(code: string) {
-    return got.post<DiscordTokenResponse>('https://discord.com/api/v10/oauth2/token', {
-      responseType: 'json',
-      form: {
-        client_id: this.config.ID,
-        client_secret: this.config.SECRET,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: this.config.REDIRECT,
-      },
-    })
-  }
-
-  async handleCallback(code: string) {
-    const { body: tokens } = await this.authorize(code)
+  async handleCallback(tokens: TokenDTO) {
     const { body: profile } = await this.getProfile(tokens.access_token)
 
-    console.log(tokens, profile)
-
     const identity = await this.em.findOne(Identity, [profile.id, 'discord'], {
-      populate: ['user'],
+      populate: ['user.identities'],
     })
 
     if (!identity) {
@@ -53,7 +36,7 @@ export class DiscordProvider {
             avatar: profile.avatar,
             accessToken: tokens.access_token,
             refreshToken: tokens.refresh_token,
-            expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
+            expiresAt: new Date(tokens.expires_at),
           },
         ],
       })
@@ -69,7 +52,7 @@ export class DiscordProvider {
       avatar: profile.avatar,
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
-      expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
+      expiresAt: new Date(tokens.expires_at),
     })
 
     await this.em.flush()

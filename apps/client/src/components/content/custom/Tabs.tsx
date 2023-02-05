@@ -1,19 +1,12 @@
 "use client"
 
-import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { useWowhead } from "hooks/useWowhead"
-import type { FC, ReactElement, ReactNode } from "react"
 import { isValidElement, useState } from "react"
-import type { DOMProps } from "types/shared"
+import { cn } from "utils/cn"
 
-type TabsProps = DOMProps<"div"> & {
-  children: ReactNode[]
-  header?: boolean
-}
-
-export const getParsedTabs = (children: ReactNode[]) => {
-  const tabs: Array<{ label: string; component: ReactElement }> = []
+export function getParsedTabs(children: React.ReactNode[]) {
+  const tabs: Array<{ label: string; component: React.ReactElement }> = []
 
   for (const child of children) {
     if (isValidElement(child)) {
@@ -27,7 +20,12 @@ export const getParsedTabs = (children: ReactNode[]) => {
   return tabs
 }
 
-export const Tabs: FC<TabsProps> = ({ header, children }) => {
+type TabsProps = {
+  children: React.ReactNode[]
+  header?: boolean
+}
+
+export function Tabs({ header, children }: TabsProps) {
   const [page, setPage] = useState(0)
   const tabs = getParsedTabs(children)
 
@@ -52,14 +50,14 @@ export const Tabs: FC<TabsProps> = ({ header, children }) => {
   return (
     <>
       <div className="tabs group relative my-4 overflow-hidden rounded-lg bg-surface-600 p-4">
-        <nav className={clsx("not-prose", header ? "" : "mb-3")}>
+        <nav className={cn("not-prose", !header && "mb-3")}>
           <ul className="flex flex-wrap justify-center gap-3 md:justify-start">
             {tabs.map(({ label }, index) => {
               const isActive = index === page
 
               return (
                 <li
-                  className={clsx(
+                  className={cn(
                     "list-none rounded-md p-2 text-base font-medium",
                     isActive ? "bg-yellow-300  text-black" : "cursor-pointer"
                   )}
@@ -72,7 +70,7 @@ export const Tabs: FC<TabsProps> = ({ header, children }) => {
             })}
           </ul>
           <span
-            className={clsx(
+            className={cn(
               "indicator absolute top-0 bottom-0 left-0 my-auto overflow-hidden rounded-lg bg-surface-400 shadow-2xl transition"
             )}
           ></span>
@@ -88,8 +86,10 @@ export const Tabs: FC<TabsProps> = ({ header, children }) => {
 
 type TabProps = {
   label?: string
-  children: ReactNode
+  children: React.ReactNode
   onClick?: () => void
 }
 
-export const Tab: FC<TabProps> = ({ children }) => <>{children}</>
+export function Tab({ children }: TabProps) {
+  return <>{children}</>
+}

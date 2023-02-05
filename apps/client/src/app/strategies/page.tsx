@@ -106,7 +106,8 @@ export default function StrategiesPage() {
                     <Image
                       className="rounded-lg"
                       src={`/images/strategies/vault/portraits/${encounter.slug}.png`}
-                      fill
+                      height="90"
+                      width="90"
                       alt=""
                     />
                   </div>

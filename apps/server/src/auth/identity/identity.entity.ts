@@ -1,34 +1,34 @@
-import { Entity, Enum, ManyToOne, PrimaryKeyType, Property } from '@mikro-orm/core';
-import { User } from '../../user/user.entity';
+import { Entity, Enum, ManyToOne, PrimaryKeyType, Property } from '@mikro-orm/core'
+import { User } from '../../user/user.entity'
 
-export const Providers = ['battle.net', 'discord'];
-export type Provider = 'battle.net' | 'discord';
+export const Providers = ['battle.net', 'discord']
+export type Provider = 'battle.net' | 'discord'
 
 @Entity()
 export class Identity {
-  [PrimaryKeyType]?: [string, Provider];
+  [PrimaryKeyType]?: [string, Provider]
 
   @Property({ primary: true })
-  id!: string;
+  id!: string
 
   @Enum({ items: () => Providers, primary: true })
-  provider!: Provider;
+  provider!: Provider
 
   @Property()
-  identifier!: string;
+  identifier!: string
 
   @Property({ nullable: true })
-  avatar?: string;
+  avatar?: string
 
   @Property({ hidden: true })
-  accessToken!: string;
+  accessToken!: string
 
   @Property({ hidden: true })
-  refreshToken?: string;
+  refreshToken?: string
 
   @Property()
-  expiresAt!: Date;
+  expiresAt!: Date
 
-  @ManyToOne(() => User)
-  user!: User;
+  @ManyToOne(() => User, { hidden: true })
+  user!: User
 }

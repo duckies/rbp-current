@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { $get } from "lib/utils/fetch"
+import { $get } from "utils/fetch"
 
-export const useSpell = (id: number) => {
+export function useSpell(id: number) {
   return useQuery(
     ["wowhead", "spell", id],
     () =>

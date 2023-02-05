@@ -1,8 +1,8 @@
 import { Breadcrumbs } from "components/content/Breadcrumbs"
+import { DifficultyDropdown } from "components/content/custom/DifficultyPicker"
+import { MDX } from "components/content/MDX"
 import Hero from "components/Hero"
-import { MDX } from "components/MDX"
 import { allStrategies } from "content"
-import { DifficultyDropdown } from "features/content/components/DifficultyPicker"
 import { notFound } from "next/navigation"
 
 type StrategiesPageProps = {
