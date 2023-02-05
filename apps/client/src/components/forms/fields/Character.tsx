@@ -2,11 +2,9 @@ import type { RealmSlug, Region } from "@rbp/battle.net/constants"
 import { RealmMap, Regions } from "@rbp/battle.net/constants"
 import type { FindCharacterDTO } from "@rbp/server"
 import Button from "components/Button"
-import { CharacterPreview } from "components/character/preview"
 import { Combobox } from "components/forms/fields/Combobox"
 import { Select } from "components/forms/fields/Select"
 import { Textfield } from "components/forms/fields/Textfield"
-import { characterResolver } from "features/Application/validators"
 import type { FieldValues } from "react-hook-form"
 import { useFieldArray, useForm } from "react-hook-form"
 import type { ArrayFieldProps } from "types/forms"
@@ -37,7 +35,7 @@ export default function CharacterSelector({
   form,
 }: CharacterPickerProps<CharacterSelectorSchema>) {
   const subForm = useForm<CharacterSelectorSchema>({
-    resolver: characterResolver,
+    // resolver: characterResolver,
     defaultValues: {
       region: "us",
       realm: null as never,
@@ -90,7 +88,7 @@ export default function CharacterSelector({
               <input type="hidden" {...form.register(`${name}.${index}.region` as any)} />
               <input type="hidden" {...form.register(`${name}.${index}.realm` as any)} />
               <input type="hidden" {...form.register(`${name}.${index}.name` as any)} />
-              <CharacterPreview character={character} />
+              {/* <CharacterPreview character={character} /> */}
             </div>
           )
         })}
