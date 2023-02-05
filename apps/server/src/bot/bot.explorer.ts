@@ -6,6 +6,7 @@ import { MISSING_COMMAND, OPTION_MISSING_COMMAND } from './bot.messages'
 import { BotRegistry } from './bot.registry'
 import { Command, SubCommand } from './commands'
 import { ChannelOption } from './commands/options/channel.option'
+import { NumberOption } from './commands/options/number.option'
 import { StringOption } from './commands/options/string.option'
 
 @Injectable()
@@ -50,7 +51,7 @@ export class BotExplorer {
     const event = this.accessor.getEventMetadata(target)
 
     if (event) {
-      this.registery.addEvent(event, instance, target)
+      this.registery.addEvent(event, instance, target.bind(instance))
     }
 
     // Any decorator beyond this point must also be accompanied by a Command.
@@ -66,11 +67,10 @@ export class BotExplorer {
       const { groupName, subGroupName } = useGroupsMetadata
       const path = [groupName, subGroupName].filter((x) => !!x) as string[]
       const commandOrGroup = this.registery.getCommand(path, ['Command', 'SubCommandGroup'])
-      const subCommand = new SubCommand(commandMetadata, target)
 
-      return commandOrGroup.addSubCommand(subCommand, target)
+      return commandOrGroup.addSubCommand(commandMetadata, target.bind(instance))
     } else {
-      const command = new Command(commandMetadata, target)
+      const command = new Command(commandMetadata, target.bind(instance))
 
       return this.registery.addCommand(command)
     }
@@ -96,6 +96,12 @@ export class BotExplorer {
           break
         case 'Channel':
           command.addOption(new ChannelOption(option))
+          break
+        case 'Number':
+          command.addOption(new NumberOption(option))
+          break
+        case 'Integer':
+          command.addOption(new NumberOption(option))
           break
         default:
           throw new Error(`Unimplemented param option type: ${option.type}`)

@@ -1,9 +1,9 @@
-import { IncomingHttpHeaders } from 'http'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import type { Request } from 'express'
+import { IncomingHttpHeaders } from 'http'
+import { User } from '../../user/user.entity'
 import { UserService } from '../../user/user.service'
 import { AuthService } from '../auth.service'
-import { User } from '../../user/user.entity'
 
 export type RequestWithAuth = Request & { user: User }
 
@@ -11,8 +11,8 @@ export type RequestWithAuth = Request & { user: User }
 export class JWTGuard implements CanActivate {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
-  ) { }
+    private readonly userService: UserService
+  ) {}
 
   getBearerTokenFromHeader(headers: IncomingHttpHeaders) {
     return headers.authorization?.split(' ')[1]
@@ -25,9 +25,12 @@ export class JWTGuard implements CanActivate {
     if (typeof token === 'string') {
       const { id }: { id: number } = this.authService.verifyJWT(token)
 
-      const user = await this.userService.repository.findOne({ id }, {
-        populate: ['identities'],
-      })
+      const user = await this.userService.repository.findOne(
+        { id },
+        {
+          populate: ['identities'],
+        }
+      )
 
       if (user) {
         request.user = user

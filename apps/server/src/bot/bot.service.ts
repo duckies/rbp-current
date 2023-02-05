@@ -7,7 +7,10 @@ import {
   GatewayIntentBits,
   Interaction,
   InteractionType,
+  REST,
+  Routes,
 } from 'discord.js'
+import { HTTPError } from 'got-cjs'
 import { DiscordConfig } from '../app.config'
 import { BotExplorer } from './bot.explorer'
 import { BotRegistry } from './bot.registry'
@@ -48,24 +51,24 @@ export class BotService extends Client implements OnModuleInit {
     this.logger.log(`Discord is Ready`)
   }
 
-  // private async setApplicationGuildCommands() {
-  //   const rest = new REST({ version: '10' }).setToken(this.config.BOT_TOKEN)
+  private async setApplicationGuildCommands() {
+    const rest = new REST({ version: '10' }).setToken(this.config.BOT_TOKEN)
 
-  //   try {
-  //     const commands = [...this.registery.commands.values()].map((c) => c.toJSON())
+    try {
+      const commands = [...this.registery.commands.values()].map((c) => c.toJSON())
 
-  //     const data = await rest.put(
-  //       Routes.applicationGuildCommands(this.config.ID, this.config.GUILD_ID),
-  //       {
-  //         body: commands,
-  //       }
-  //     )
+      const data = await rest.put(
+        Routes.applicationGuildCommands(this.config.ID, this.config.GUILD_ID),
+        {
+          body: commands,
+        }
+      )
 
-  //     console.log(data)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+      console.log(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   private getChatInputCommandPath(interaction: ChatInputCommandInteraction) {
     const subCommandGroup = interaction.options.getSubcommandGroup(false)
@@ -106,7 +109,8 @@ export class BotService extends Client implements OnModuleInit {
       case InteractionType.ApplicationCommand:
         switch (interaction.commandType) {
           case ApplicationCommandType.ChatInput:
-            return this.handleChatInputCommand(interaction)
+            this.handleChatInputCommand(interaction)
+            break
           case ApplicationCommandType.Message:
           case ApplicationCommandType.User:
         }
@@ -148,21 +152,33 @@ export class BotService extends Client implements OnModuleInit {
     })
   }
 
-  handleChatInputCommand(interaction: ChatInputCommandInteraction) {
+  private async handleChatInputCommand(interaction: ChatInputCommandInteraction) {
     const path = this.getChatInputCommandPath(interaction)
 
     try {
       const command = this.registery.getCommand(path, ['ExecutableCommand', 'SubCommand'])
       const options = this.getInteractionOptions(command, interaction)
 
-      return command.methodRef(interaction, ...options)
+      await command.methodRef(interaction, ...options)
     } catch (error: any) {
+      this.logger.error(error.message, error.stack)
+
+      let message: string
+
       if (error instanceof CommandNotFoundException) {
-        interaction.reply('I could not find that command, it may be unimplemented.')
+        message = 'I could not find that command. It may be unimplemented.'
       } else if (error instanceof CommandMismatchException) {
-        interaction.reply("I found something, but it wasn't a command 😕")
+        message = "I found something, but it wasn't a command 😕"
+      } else if (error instanceof HTTPError) {
+        message = 'Void lords are blocking my networking spells, try again later 😕'
       } else {
-        interaction.reply("Something... something about this command isn't right 🤔")
+        message = 'Something went wrong while executing this command. 😕'
+      }
+
+      if (interaction.deferred || interaction.replied) {
+        await interaction.editReply(message)
+      } else {
+        await interaction.reply(message)
       }
     }
   }

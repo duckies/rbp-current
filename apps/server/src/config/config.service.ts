@@ -24,12 +24,9 @@ export class ConfigService<S extends ConfigSchema> {
     let config = await this.em.findOne(Config, key)
 
     if (!config) {
-      console.log('Creating Config')
       config = new Config(key, value)
       this.em.persist(config)
     } else {
-      console.log('Found Config, setting value', config, value)
-
       config.value = value
     }
 

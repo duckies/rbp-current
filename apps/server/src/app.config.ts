@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer'
 import { IsDefined, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { WarcraftLogsConfig } from './warcraft-logs/warcraft-logs.config'
 
 enum Environment {
   Development = 'development',
@@ -58,4 +59,9 @@ export class EnvironmentVariables {
   @Type(() => BlizzardConfig)
   @ValidateNested()
   BLIZZARD!: BlizzardConfig
+
+  @IsDefined()
+  @Type(() => WarcraftLogsConfig)
+  @ValidateNested()
+  WARCRAFT_LOGS!: WarcraftLogsConfig
 }

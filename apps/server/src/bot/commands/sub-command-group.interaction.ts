@@ -2,7 +2,8 @@ import {
   APIApplicationCommandSubcommandGroupOption,
   ApplicationCommandOptionType,
 } from 'discord.js'
-import { SubCommandGroupMetadata } from '../decorators'
+import { DUPLICATE_OPTION } from '../bot.messages'
+import { CommandMetadata, SubCommandGroupMetadata } from '../decorators'
 import { CommandOption } from './command-option.class'
 import { SubCommand } from './sub-command.interaction'
 
@@ -18,12 +19,18 @@ export class SubCommandGroup extends CommandOption {
     this.description = description
   }
 
-  addSubCommand(subCommand: SubCommand) {
-    if (this.options.has(subCommand.name)) {
-      throw new Error(`Duplicate subcommand ${subCommand.name} for subcommand group ${this.name}`)
+  setOption<T extends SubCommand>(name: string, option: T): T {
+    if (this.options.has(name)) {
+      throw new Error(DUPLICATE_OPTION(this.name, name))
     }
 
-    this.options.set(subCommand.name, subCommand)
+    this.options.set(name, option)
+
+    return option
+  }
+
+  addSubCommand(commandMetadata: CommandMetadata, method: Function) {
+    this.setOption(commandMetadata.name, new SubCommand(commandMetadata, method))
   }
 
   toJSON(): APIApplicationCommandSubcommandGroupOption {

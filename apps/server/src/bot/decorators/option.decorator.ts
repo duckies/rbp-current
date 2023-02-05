@@ -33,6 +33,13 @@ export interface ChannelOptionMetadata extends OptionMetadata {
   types?: ChannelType
 }
 
+export interface NumberOptionMetadata extends OptionMetadata {
+  min_value?: number
+  max_value?: number
+}
+
+export type IntegerOptionMetadata = NumberOptionMetadata
+
 export function Option(
   name: string,
   description: string,
