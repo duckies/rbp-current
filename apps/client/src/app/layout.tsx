@@ -30,8 +30,6 @@ const wowheadScript = `var wowhead_tooltips = {"colorlinks": false, "iconizelink
 export default async function RootLayout({ children }: RootLayoutProps) {
   const session = await getServerSession(options)
 
-  console.log(session)
-
   return (
     <>
       <html lang="en">

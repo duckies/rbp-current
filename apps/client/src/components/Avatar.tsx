@@ -9,10 +9,10 @@ type AvatarProps = Omit<ImageProps, "src"> & {
   size?: number
 }
 
-export function Avatar({ src, size = 80, className, ...props }: AvatarProps) {
+export function Avatar({ src, size = 80, alt, className, ...props }: AvatarProps) {
   return (
     <div className={cn("overflow-hidden rounded-full", className)}>
-      <Image src={src} height={size} width={size} {...props} />
+      <Image src={src} height={size} width={size} alt={alt} {...props} />
     </div>
   )
 }
