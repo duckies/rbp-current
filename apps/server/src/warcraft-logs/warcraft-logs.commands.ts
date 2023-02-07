@@ -145,7 +145,7 @@ export class WarcraftLogsCommands {
         segment.fights.map(
           (f) =>
             `:crossed_swords: [${f.name}](https://www.warcraftlogs.com/reports/${report.code}${
-              f.killed ? `#fight=${f.id}` : '#fight=latest'
+              f.killed ? `#fight=${f.id}` : '#fight=last'
             }) ${
               f.killed
                 ? f.attempts === 1
