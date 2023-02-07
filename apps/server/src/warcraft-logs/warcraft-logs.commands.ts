@@ -144,9 +144,9 @@ export class WarcraftLogsCommands {
       segments: this.paginate(
         segment.fights.map(
           (f) =>
-            `:crossed_swords: [${f.name}](https://www.warcraftlogs.com/reports/${
-              report.code
-            }#fight=${f.id}) ${
+            `:crossed_swords: [${f.name}](https://www.warcraftlogs.com/reports/${report.code}${
+              f.killed ? `#fight=${f.id}` : '#fight=latest'
+            }) ${
               f.killed
                 ? f.attempts === 1
                   ? `one-shot.`
