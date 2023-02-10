@@ -44,6 +44,7 @@ export class BotService extends Client implements OnModuleInit {
     this.on('interactionCreate', this.onInteraction.bind(this))
     this.registerEvents()
 
+    // console.log(JSON.stringify([...this.registery.commands.values()][0].toJSON(), null, 2))
     this.login(this.config.BOT_TOKEN)
   }
 
@@ -161,24 +162,30 @@ export class BotService extends Client implements OnModuleInit {
 
       await command.methodRef(interaction, ...options)
     } catch (error: any) {
-      this.logger.error(error.message, error.stack)
+      try {
+        this.logger.error(error.message, error.stack)
 
-      let message: string
+        let message: string
 
-      if (error instanceof CommandNotFoundException) {
-        message = 'I could not find that command. It may be unimplemented.'
-      } else if (error instanceof CommandMismatchException) {
-        message = "I found something, but it wasn't a command 😕"
-      } else if (error instanceof HTTPError) {
-        message = 'Void lords are blocking my networking spells, try again later 😕'
-      } else {
-        message = 'Something went wrong while executing this command. 😕'
-      }
+        if (error instanceof CommandNotFoundException) {
+          // Ignore unknown commands, as I'm probably working on them locally.
+          return
+          // message = 'I could not find that command. It may be unimplemented.'
+        } else if (error instanceof CommandMismatchException) {
+          message = "I found something, but it wasn't a command 😕"
+        } else if (error instanceof HTTPError) {
+          message = 'Void lords are blocking my networking spells, try again later 😕'
+        } else {
+          message = 'Something went wrong while executing this command. 😕'
+        }
 
-      if (interaction.deferred || interaction.replied) {
-        await interaction.editReply(message)
-      } else {
-        await interaction.reply(message)
+        if (interaction.deferred || interaction.replied) {
+          await interaction.editReply(message)
+        } else {
+          await interaction.reply(message)
+        }
+      } catch (internalError: any) {
+        this.logger.error(internalError.message, internalError.stack)
       }
     }
   }

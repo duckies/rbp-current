@@ -6,6 +6,7 @@ import { MISSING_COMMAND, OPTION_MISSING_COMMAND } from './bot.messages'
 import { BotRegistry } from './bot.registry'
 import { Command, SubCommand } from './commands'
 import { ChannelOption } from './commands/options/channel.option'
+import { IntegerOption } from './commands/options/integer.option'
 import { NumberOption } from './commands/options/number.option'
 import { StringOption } from './commands/options/string.option'
 
@@ -75,6 +76,7 @@ export class BotExplorer {
       return this.registery.addCommand(command)
     }
   }
+  
 
   private explorePropertyMetadata(
     target: Constructor & Record<string, any>,
@@ -101,10 +103,8 @@ export class BotExplorer {
           command.addOption(new NumberOption(option))
           break
         case 'Integer':
-          command.addOption(new NumberOption(option))
+          command.addOption(new IntegerOption(option))
           break
-        default:
-          throw new Error(`Unimplemented param option type: ${option.type}`)
       }
     }
   }

@@ -64,6 +64,7 @@ export class BotRegistry {
     }
 
     if (!pointer) {
+      console.log('Could not find', path, type)
       throw new CommandNotFoundException()
     }
 

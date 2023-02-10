@@ -7,7 +7,6 @@ import fs from 'fs'
 import { set } from 'lodash'
 import { resolve } from 'path'
 import type { Constructor, Dictionary } from '../common/interfaces'
-import { ConfigService } from './config.service'
 import type { ConfigModuleOptions } from './interfaces'
 
 @Module({})
@@ -75,7 +74,6 @@ export class ConfigModule {
         provide: schema,
         useValue: config,
       },
-      ConfigService,
       ...this.getNestedProviders(config),
     ]
 

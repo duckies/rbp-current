@@ -1,25 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { APIEmbed, ChannelType, CommandInteraction, Message } from 'discord.js'
+import {
+  ActionRowBuilder,
+  APIEmbed,
+  ButtonBuilder,
+  ButtonStyle,
+  ChannelType,
+  ChatInputCommandInteraction,
+  CommandInteraction,
+  Message,
+  MessageOptions,
+  TextChannel,
+} from 'discord.js'
 import { BotService } from '../bot/bot.service'
-import { Command, Group, OnEvent, Option, UseGroups } from '../bot/decorators'
-import { ConfigService } from '../config/config.service'
+import { Command, Group, OnEvent, Option, SubGroup, UseGroups } from '../bot/decorators'
+import { StoreService } from '../bot/stores/store.service'
 import { Fight, Report } from './interfaces/report.interface'
 import { Difficulty, Expansion, Zone } from './interfaces/zones.interface'
 import { WarcraftLogsService } from './warcraft-logs.service'
 
 const regex = /https:\/\/www\.warcraftlogs\.com\/reports\/([a-zA-Z0-9]+)/
 
-interface WarcraftLogsConfig {
-  monitoring: Record<string, string>
-}
-
 @Injectable()
+@SubGroup('settings', 'WarcraftLogs configuration')
 @Group('logs', 'WarcraftLogs tools and resources')
 export class WarcraftLogsCommands {
   constructor(
     private readonly wclService: WarcraftLogsService,
-    private readonly config: ConfigService<WarcraftLogsConfig>,
+    private readonly store: StoreService,
     private readonly bot: BotService
   ) {}
 
@@ -33,22 +41,27 @@ export class WarcraftLogsCommands {
 
     const report = await this.wclService.getReport('3AvqtNJYWrVHPkCd')
 
-    const embed = await this.buildReportEmbed(report)
+    const { embed, components } = await this.buildReportEmbed(report)
 
-    await interaction.editReply({ embeds: [embed] })
-    // const reports = await this.wclService.getReports({ limit: 1 })
-    // const single = limit === 1
-    // const embeds: APIEmbed[] = []
+    await interaction.editReply({ embeds: [embed], components })
+  }
 
-    // for (const report of reports.data.reportData.reports.data) {
-    //   embeds.push({
-    //     title: single ? 'Latest WarcraftLogs Report' : `Last ${limit} WarcraftLogs Reports`,
-    //     url: single ? `https://www.warcraftlogs.com/reports/${report.code}` : undefined,
-    //     description: report.title,
-    //   })
-    // }
+  @UseGroups('logs', 'settings')
+  @Command('set-channel', 'Sets the channel for posting WarcraftLogs reports.')
+  private async setChannel(
+    interaction: ChatInputCommandInteraction,
+    @Option('channel', 'Channel reports are sent to.', {
+      type: 'Channel',
+      types: [ChannelType.GuildText],
+      required: true,
+    })
+    channel: TextChannel
+  ) {
+    await interaction.deferReply()
 
-    // return interaction.editReply({ embeds })
+    await this.store.set('wcl', 'channel', channel.id)
+
+    return interaction.editReply({ content: `Channel set to ${channel}` })
   }
 
   private getFightMetadata(fight: Fight, expansions: Expansion[]) {
@@ -88,7 +101,9 @@ export class WarcraftLogsCommands {
     return pages
   }
 
-  private async buildReportEmbed(report: Report): Promise<APIEmbed> {
+  private async buildReportEmbed(
+    report: Report
+  ): Promise<{ embed: APIEmbed; components: MessageOptions['components'] }> {
     const zones = await this.wclService.getZones()
 
     const zoneSegments: Array<{
@@ -139,6 +154,8 @@ export class WarcraftLogsCommands {
       }
     }
 
+    // TODO: `#fight=last` should only apply if it's the last fight to display.
+    // Otherwise clicking an old fight won't link to this fight.
     const segments = zoneSegments.map((segment) => ({
       name: `${segment.difficulty.name} ${segment.zone?.name || 'No Zone'}`,
       segments: this.paginate(
@@ -158,23 +175,37 @@ export class WarcraftLogsCommands {
     }))
 
     return {
-      title: 'Really Bad WarcraftLogs',
-      url: `https://www.warcraftlogs.com/reports/${report.code}`,
-      description: `*${report.title}*`,
-      thumbnail: report.zone
-        ? {
-            url: `https://assets.rpglogs.com/img/warcraft/zones/zone-${report.zone.id}.png`,
-            height: 200,
-            width: 200,
-          }
-        : undefined,
-      timestamp: new Date(report.endTime).toISOString(),
-      fields: [
-        ...segments.flatMap((s) =>
-          s.segments.map((v, i) => ({
-            name: `${s.name} ${s.segments.length > 1 ? `(${i + 1}/${segments.length})` : ''}`,
-            value: v,
-          }))
+      embed: {
+        title: 'Really Bad WarcraftLogs',
+        url: `https://www.warcraftlogs.com/reports/${report.code}`,
+        description: `*${report.title}*`,
+        thumbnail: report.zone
+          ? {
+              url: `https://assets.rpglogs.com/img/warcraft/zones/zone-${report.zone.id}.png`,
+              height: 200,
+              width: 200,
+            }
+          : undefined,
+        timestamp: new Date(report.endTime).toISOString(),
+        fields: [
+          ...segments.flatMap((s) =>
+            s.segments.map((v, i) => ({
+              name: `${s.name} ${s.segments.length > 1 ? `(${i + 1}/${segments.length})` : ''}`,
+              value: v,
+            }))
+          ),
+        ],
+      },
+      components: [
+        new ActionRowBuilder<ButtonBuilder>().addComponents(
+          new ButtonBuilder()
+            .setLabel('WarcraftLogs')
+            .setStyle(ButtonStyle.Link)
+            .setURL(`https://www.warcraftlogs.com/reports/${report.code}`),
+          new ButtonBuilder()
+            .setLabel('Wipefest')
+            .setStyle(ButtonStyle.Link)
+            .setURL(`https://www.wipefest.gg/report/${report.code}`)
         ),
       ],
     }
@@ -191,24 +222,26 @@ export class WarcraftLogsCommands {
       const id = url.match(regex)?.[1] as string
 
       const report = await this.wclService.getReport(id)
-      const embed = await this.buildReportEmbed(report)
+      const { embed, components } = await this.buildReportEmbed(report)
       const channel = message.guild?.channels.cache.get('291817201055432704')
 
       if (channel && channel.type === ChannelType.GuildText) {
-        const embedMessage = await channel.send({ embeds: [embed] })
+        const embedMessage = await channel.send({
+          embeds: [embed],
+          components,
+        })
 
-        const monitoring = (await this.config.get('monitoring')) || {}
-        await this.config.set('monitoring', { ...monitoring, [id]: embedMessage.id })
+        const monitoring = (await this.store.get('wcl', 'monitoring')) || {}
+        await this.store.set('wcl', 'monitoring', { ...monitoring, [id]: embedMessage.id })
       }
     }
   }
 
   @Cron(CronExpression.EVERY_MINUTE)
   async scan() {
-    const monitoring = await this.config.get('monitoring')
+    const monitoring = await this.store.get('wcl', 'monitoring')
 
     if (!monitoring || !Object.keys(monitoring).length) {
-      console.log(monitoring)
       return
     }
 
@@ -219,7 +252,7 @@ export class WarcraftLogsCommands {
     for (const [id, messageId] of Object.entries(monitoring)) {
       try {
         const report = await this.wclService.getReport(id)
-        const embed = await this.buildReportEmbed(report)
+        const { embed, components } = await this.buildReportEmbed(report)
 
         // If last updated an hour ago, it's stale.
         if (new Date(report.endTime).getTime() < new Date().getTime() - 1000 * 60 * 60) {
@@ -234,7 +267,7 @@ export class WarcraftLogsCommands {
         }
 
         const message = await channel.messages.fetch(messageId)
-        await message.edit({ embeds: [embed] })
+        await message.edit({ embeds: [embed], components })
       } catch (error) {
         if (error instanceof NotFoundException) {
           delete monitoring[id]
@@ -242,6 +275,6 @@ export class WarcraftLogsCommands {
       }
     }
 
-    await this.config.set('monitoring', monitoring)
+    await this.store.set('wcl', 'monitoring', monitoring)
   }
 }

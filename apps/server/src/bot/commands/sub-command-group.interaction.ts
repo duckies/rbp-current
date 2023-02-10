@@ -30,7 +30,7 @@ export class SubCommandGroup extends CommandOption {
   }
 
   addSubCommand(commandMetadata: CommandMetadata, method: Function) {
-    this.setOption(commandMetadata.name, new SubCommand(commandMetadata, method))
+    return this.setOption(commandMetadata.name, new SubCommand(commandMetadata, method))
   }
 
   toJSON(): APIApplicationCommandSubcommandGroupOption {

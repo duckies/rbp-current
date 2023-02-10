@@ -15,7 +15,7 @@ export const OptionTypes = {
 
 export type OptionType = keyof typeof OptionTypes
 
-export interface OptionMetadata {
+export interface BaseOptionMetadata {
   name: string
   description: string
   type: OptionType
@@ -23,27 +23,42 @@ export interface OptionMetadata {
   required?: boolean
 }
 
-export interface StringOptionMetadata extends OptionMetadata {
+export interface StringOptionMetadata extends BaseOptionMetadata {
+  type: 'String'
   min_length?: number
   max_length?: number
   autocomplete?: boolean
 }
 
-export interface ChannelOptionMetadata extends OptionMetadata {
-  types?: ChannelType
+export interface ChannelOptionMetadata extends BaseOptionMetadata {
+  type: 'Channel'
+  types?: ChannelType[]
 }
 
-export interface NumberOptionMetadata extends OptionMetadata {
+export interface NumberOptionMetadata extends BaseOptionMetadata {
+  type: 'Number'
   min_value?: number
   max_value?: number
 }
 
-export type IntegerOptionMetadata = NumberOptionMetadata
+export interface IntegerOptionMetadata extends BaseOptionMetadata {
+  type: 'Integer'
+  min_value?: number
+  max_value?: number
+}
+
+export type OptionMetadata =
+  | StringOptionMetadata
+  | ChannelOptionMetadata
+  | NumberOptionMetadata
+  | IntegerOptionMetadata
+
+type Options = SetOptional<OptionMetadata, 'name' | 'description' | 'index' | 'type'>
 
 export function Option(
   name: string,
   description: string,
-  options: SetOptional<Omit<OptionMetadata, 'name' | 'description' | 'index'>, 'type'> = {}
+  options: Options = {}
 ): ParameterDecorator {
   return (target: object, key: string | symbol, index) => {
     let type = options.type

@@ -7,7 +7,7 @@ export class ChannelOption extends BasicCommandOption {
   public readonly name: string
   public readonly description: string
   public readonly required?: boolean
-  public readonly types?: ChannelType
+  public readonly types?: ChannelType[]
 
   constructor({ name, description, required, types }: ChannelOptionMetadata) {
     super()

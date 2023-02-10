@@ -11,6 +11,7 @@ export class Command {
   public readonly name: string
   public readonly description: string
   public readonly methodRef?: Function
+  public readonly defaultPermissions?: string
   public readonly options = new Map<string, SubCommand | SubCommandGroup | BasicCommandOption>()
 
   constructor({ name, description }: CommandMetadata, method?: Function) {
@@ -49,6 +50,7 @@ export class Command {
       type: this.type,
       name: this.name,
       description: this.description,
+      default_member_permissions: this.defaultPermissions,
       options: [...this.options.values()].map((o) => o.toJSON()),
     }
   }
