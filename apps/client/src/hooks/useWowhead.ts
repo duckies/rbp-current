@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from "react"
 
+/**
+ * Dirty hack that manually refreshes the Wowhead tooltip links on the page.
+ */
 export function useWowhead() {
   const interval = useRef<ReturnType<typeof setInterval> | undefined>()
   const attempts = useRef(0)

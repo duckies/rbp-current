@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: mysql
+    restart: unless-stopped
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    tmpfs:
+      - /var/lib/mysql

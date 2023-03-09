@@ -1,6 +1,7 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { Module } from '@nestjs/common'
 import { ScheduleModule } from '@nestjs/schedule'
+import { LoggerModule } from 'nestjs-pino'
 import { EnvironmentVariables } from './app.config'
 import { AuthModule } from './auth/auth.module'
 import { BlizzardModule } from './blizzard/blizzard.module'
@@ -17,6 +18,17 @@ import { WarcraftLogsModule } from './warcraft-logs/warcraft-logs.module'
 
 @Module({
   imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        customProps: () => ({
+          context: 'HTTP',
+        }),
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty', options: { singleLine: true } }
+            : undefined,
+      },
+    }),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       schema: EnvironmentVariables,

@@ -1,26 +1,10 @@
-import {
-  Entity,
-  Enum,
-  ManyToOne,
-  OptionalProps,
-  Property,
-} from '@mikro-orm/core';
-import { RealmSlug, RealmSlugs, Region, Regions } from '@rbp/battle.net';
-import {
-  isArray,
-  isBoolean,
-  isNumber,
-  isPOJO,
-  isString,
-  isStringArray,
-} from '@rbp/shared';
-import { v4 as uuidv4 } from 'uuid';
-import { Form } from '../form/form.entity';
-import {
-  CreateCharacterFieldOptionsDTO, CreateFieldOptionsDTO,
-  CreateRadioFieldOptionsDTO,
-} from './dto/create-field-options.dto';
-import { FieldDiscriminator } from './interfaces/form-field.interface';
+import { Entity, Enum, ManyToOne, OptionalProps, Property } from '@mikro-orm/core'
+import { RealmSlug, RealmSlugs, Region, Regions } from '@rbp/battle.net'
+import { isArray, isBoolean, isNumber, isPOJO, isString, isStringArray } from '@rbp/shared'
+import { v4 as uuidv4 } from 'uuid'
+import { Form } from '../form/form.entity'
+import { CharacterFieldOptionsDTO, FormFieldOptionsMap } from './dto/field-options.dto'
+import { DiscriminatedFormField } from './interfaces'
 
 export const FieldTypes = [
   'text',
@@ -30,43 +14,43 @@ export const FieldTypes = [
   'select',
   'combobox',
   'character',
-] as const;
+] as const
 
-export type FieldType = typeof FieldTypes[number];
+export type FieldType = typeof FieldTypes[number]
 
 @Entity()
-export class FormField {
-  [OptionalProps]?: 'createdAt' | 'updatedAt';
+export class FormField<T extends FieldType> {
+  [OptionalProps]?: 'createdAt' | 'updatedAt'
 
   @Property({ primary: true })
-  id: string = uuidv4();
+  id: string = uuidv4()
 
   @Property()
-  label!: string;
+  label!: string
 
   @Enum(() => FieldTypes)
-  type!: FieldType;
+  type!: T
 
   @Property({ nullable: true })
-  description?: string;
+  description?: string
 
   @Property({ default: false })
-  required?: boolean;
+  required?: boolean
 
-  @Property({ nullable: true, type: 'json' })
-  options?: CreateFieldOptionsDTO;
+  @Property({ type: 'json' })
+  options!: FormFieldOptionsMap[T]
 
   @Property({ type: 'smallint' })
-  order!: number;
+  order!: number
 
   @Property({ defaultRaw: 'now()' })
-  createdAt!: Date;
+  createdAt!: Date
 
   @Property({ onUpdate: () => new Date(), defaultRaw: 'now()' })
-  updatedAt!: Date;
+  updatedAt!: Date
 
   @ManyToOne(() => Form)
-  form!: Form;
+  form!: Form
 
   /**
    * Validates the answer against the field type.
@@ -75,58 +59,39 @@ export class FormField {
    */
   public isAnswerValid(answer: unknown): boolean {
     // 🤔 Is there some better way to describe the class as a discriminated union?
-    const field = this as FieldDiscriminator;
+    const field = this as DiscriminatedFormField
 
     switch (field.type) {
       case 'text':
-        return isString(answer) && answer.length > 0;
+        return isString(answer) && answer.length > 0
       case 'number':
-        return isNumber(answer);
-      case 'checkbox': {
-        if (field.options?.noFalse) {
-          return answer === true;
-        }
-
-        return isBoolean(answer);
-      }
+        return isNumber(answer)
+      case 'checkbox':
+        return field.options.noFalse ? answer === true : isBoolean(answer)
       case 'radio':
-        return (
-          isString(answer)
-          && field.options.items.some(i => i.value === answer)
-        );
+        return isString(answer) && field.options.items.some((i) => i.value === answer)
       case 'select': {
         if (isString(answer)) {
-          return field.options.items.some(i => i.value === answer);
+          return field.options.items.some((i) => i.value === answer)
+        } else if (isArray(answer) && answer.length && field.options.multiple) {
+          return answer.every((a) => field.options.items.some((i) => i.value === a))
         }
-        else if (isArray(answer) && answer.length && field.options.multiple) {
-          return answer.every(a =>
-            (this.options as CreateRadioFieldOptionsDTO).items.some(
-              i => i.value === a,
-            ),
-          );
-        }
-        return false;
+        return false
       }
       case 'character':
-        return this.isCharacterAnswerValid(field.options || {}, answer);
+        return this.isCharacterAnswerValid(field.options, answer)
       case 'combobox': {
         if (isString(answer)) {
-          return (
-            field.options.custom
-            || field.options.items.some(i => i.value === answer)
-          );
-        }
-        else if (isStringArray(answer)) {
-          return (
-            !!field.options.multiple
-            && (!!field.options.custom
-              || answer.every(a =>
-                field.options.items.some(i => i.value === a),
-              ))
-          );
+          return field.options.custom || field.options.items.some((i) => i.value === answer)
+        } else if (isStringArray(answer)) {
+          return Boolean(
+            field.options.multiple &&
+              (field.options.custom ||
+                answer.every((a) => field.options.items.some((i) => i.value === a)))
+          )
         }
 
-        return false;
+        return false
       }
     }
   }
@@ -138,45 +103,43 @@ export class FormField {
    * to fetch the fields from the database, which is not ideal.
    */
   private isValidCharacter(
-    answer: unknown,
+    answer: unknown
   ): answer is { name: string; realm: RealmSlug; region: Region; main?: true } {
     return (
-      isPOJO(answer)
-      && isString(answer.name)
-      && answer.name.length >= 2 && answer.name.length <= 12
-      && !answer.name.includes(' ')
-      && RealmSlugs.includes(answer.realm as any)
-      && Regions.includes(answer.region as any)
-      && (answer.main === undefined || answer.main === true)
-    );
+      isPOJO(answer) &&
+      isString(answer.name) &&
+      answer.name.length >= 2 &&
+      answer.name.length <= 12 &&
+      !answer.name.includes(' ') &&
+      RealmSlugs.includes(answer.realm as any) &&
+      Regions.includes(answer.region as any) &&
+      (answer.main === undefined || answer.main === true)
+    )
   }
 
-  private isCharacterAnswerValid(
-    options: CreateCharacterFieldOptionsDTO,
-    answer: unknown,
-  ) {
-    const answers = isArray(answer) ? answer : [answer];
+  private isCharacterAnswerValid(options: CharacterFieldOptionsDTO, answer: unknown) {
+    const answers = isArray(answer) ? answer : [answer]
 
     // No characters!
     if (answers.length === 0) {
-      return false;
+      return false
     }
 
     // A. Check if multiple characters are allowed.
     if (!options.multiple && answers.length > 1) {
-      return false;
+      return false
     }
     // B. We _can_ have multiple characters, so make sure each character is sound.
-    else if (!answers.every(a => this.isValidCharacter(a))) {
-      return false;
+    else if (!answers.every((a) => this.isValidCharacter(a))) {
+      return false
     }
 
     // C. Make sure one main is set if required, and we cannot have more than `1` main.
-    const mains = answers.filter(a => a.main);
+    const mains = answers.filter((a) => a.main)
     if ((options.requireMain && mains.length !== 1) || mains.length > 1) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 }

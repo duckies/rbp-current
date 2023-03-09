@@ -1,1 +1,1 @@
-export * from './form-field.interface';
+export * from './discriminated-form-field.interface'

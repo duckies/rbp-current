@@ -4,7 +4,7 @@
 import type { EntityDTO } from '@mikro-orm/core'
 import type { Identity as IdentityEntity } from './auth/identity/identity.entity'
 import type { Character as CharacterEntity } from './character/character.entity'
-import type { FormField as FormFieldEntity } from './form-field/form-field.entity'
+import type { FieldType, FormField as _FormField } from './form-field/form-field.entity'
 import type { FormSubmission as FormSubmissionEntity } from './form-submission/form-submission.entity'
 import type { Form as FormEntity } from './form/form.entity'
 import type { Permission as PermisionEntity } from './permission/permission.entity'
@@ -21,7 +21,7 @@ export * from './form-field/interfaces'
 export type { EntityDTO }
 export type Character = EntityDTO<CharacterEntity>
 export type Form = EntityDTO<FormEntity>
-export type FormField = EntityDTO<FormFieldEntity>
+export type FormField<T extends FieldType> = EntityDTO<_FormField<T>>
 export type FormSubmission = EntityDTO<FormSubmissionEntity>
 export type Permission = EntityDTO<PermisionEntity>
 export type Role = EntityDTO<RoleEntity>

@@ -26,12 +26,6 @@ const nextConfig = {
   },
   experimental: {
     appDir: true,
-    fontLoaders: [
-      {
-        loader: "next/font/google",
-        options: { subsets: ["latin"] },
-      },
-    ],
   },
   webpack: (config) => {
     // Hide the webpack warnings from contentlayer.

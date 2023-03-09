@@ -1,75 +1,69 @@
-import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
-import { ItemsDTO } from './create-field-options.dto';
+import { Type } from 'class-transformer'
+import { IsArray, IsBoolean, IsNumber, IsOptional, ValidateNested } from 'class-validator'
+import { FieldItemsDTO } from './field-items.dto'
 
 export class BaseUpdateOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  required?: boolean;
+  required?: boolean
 }
 
 export class UpdateTextFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  multiline?: boolean;
+  multiline?: boolean
 }
 
 export class UpdateNumberFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsNumber()
-  min?: number;
+  min?: number
 
   @IsOptional()
   @IsNumber()
-  max?: number;
+  max?: number
 }
 
 export class UpdateCheckboxFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  noFalse?: boolean;
+  noFalse?: boolean
 }
 
 export class UpdateSelectFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsArray()
   @ValidateNested()
-  @Type(() => ItemsDTO)
-  items!: ItemsDTO[];
+  @Type(() => FieldItemsDTO)
+  items!: FieldItemsDTO[]
 
   @IsOptional()
   @IsBoolean()
-  multiple?: boolean;
+  multiple?: boolean
 }
 
 export class UpdateComboboxFieldOptionsDTO extends UpdateSelectFieldOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  custom?: boolean;
+  custom?: boolean
 }
 
 export class UpdateRadioFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsArray()
   @ValidateNested()
-  @Type(() => ItemsDTO)
-  items!: ItemsDTO[];
+  @Type(() => FieldItemsDTO)
+  items!: FieldItemsDTO[]
 }
 
 export class UpdateCharacterFieldOptionsDTO extends BaseUpdateOptionsDTO {
   @IsOptional()
   @IsBoolean()
-  multiple?: boolean;
+  multiple?: boolean
 
   @IsOptional()
   @IsBoolean()
-  requireMain?: boolean;
+  requireMain?: boolean
 }
 
 export type UpdateFieldOptionsDTO =
@@ -80,4 +74,4 @@ export type UpdateFieldOptionsDTO =
   | UpdateComboboxFieldOptionsDTO
   | UpdateRadioFieldOptionsDTO
   | UpdateCharacterFieldOptionsDTO
-  | BaseUpdateOptionsDTO;
+  | BaseUpdateOptionsDTO
