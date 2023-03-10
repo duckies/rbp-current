@@ -1,9 +1,24 @@
 import type { ImageProps } from "next/image"
 import Image from "next/image"
-import type { FC } from "react"
+import { cn } from "utils/cn"
 
-export const ProseImage: FC<ImageProps> = (props) => {
-  const { alt = "", ...imageProps } = props
+type ProseImageProps = ImageProps & {
+  float?: "left" | "right"
+}
 
-  return <Image className="select-none rounded-lg shadow-xl" alt={alt} {...imageProps} />
+export function ProseImage(props: ProseImageProps) {
+  const { alt = "", float, className, ...imageProps } = props
+
+  return (
+    <Image
+      className={cn(
+        "select-none rounded-lg shadow-xl [&:not(:first-child)]:my-6",
+        float === "left" && "float-left",
+        float === "right" && "float-right",
+        className
+      )}
+      alt={alt}
+      {...imageProps}
+    />
+  )
 }

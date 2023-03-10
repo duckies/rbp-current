@@ -1,4 +1,4 @@
-import { DM_Mono as FontMono, Inter as FontSans } from "@next/font/google"
+import { DM_Mono as FontMono, Inter as FontSans } from "next/font/google"
 import { cn } from "utils/cn"
 
 import { Providers } from "components/Providers"

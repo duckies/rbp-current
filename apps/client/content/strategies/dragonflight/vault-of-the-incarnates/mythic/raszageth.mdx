@@ -1,0 +1,312 @@
+---
+title: Raszageth the Storm-Eater
+description: Her arms are tiny, but her bite is mighty.
+date: 2023-03-08
+---
+
+## Phase 1
+
+### Mythic Changes
+
+- [Static Charge](https://www.wowhead.com/spell=381615/static-charge) no longer leaves behind slow puddles.
+- The [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing) pushback now lasts longer and increases in duration with each successive cast. Each class has a combination of movement abilities and gateways to counteract it except for priests and paladins, who are saved by Evokers.
+- [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) now creates sparks with 3 stacks, requiring their cast to be stopped 3 times.
+
+### Strategy
+
+The goal of the first phase is to push Raszageth during her 5th cast of [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing), canceling the cast. The remainder of the phase is developing muscle memory for, and surviving different timings of, [Static Charge](https://www.wowhead.com/spell=381615/static-charge), the [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing) pushback, and [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) sparks.
+
+<ProseImage
+  src="/images/strategies/vault/raidplans/raszageth-rp-1.png"
+  height="784"
+  width="1394"
+  alt="Raszageth RaidPlan #1"
+/>
+
+We will start the fight with the tanks maneuvering the boss to the southern edge of the platform. The arcing movement is only to prevent tanks from being within her large hitbox which would stop her before she reaches the edge; melee are free to chase after her as she waddles. The rest of phase 1 is focused on the 3 aforementioned mechanics:
+
+1.  [Static Charge](https://www.wowhead.com/spell=381615/static-charge) is the same as on Heroic, sans miasma, except for the raid positioning being inverted. While facing the boss a WeakAura will tell you to go `Left`, `Back`, or `Right`. In the picture below, getting `Left` means you would to go the rightmost position in the picture (left of Raszageth).
+
+    <ProseImage
+      src="/images/strategies/vault/raidplans/raszageth-rp-2.png"
+      height="784"
+      width="1394"
+      alt="Raszageth RaidPlan #2"
+    />
+
+    There will be situations where some people may be unable to get to the ideal position in time because of the timing of surrounding mechanics, movement utility being reserved for pushbacks, or general slowness, e.g. Priests. The green in the picture indicates a region of acceptability for placing the mechanic in if you cannot reach it in time.
+
+2.  To better organize ourselves for popping sparks, before Raszageth finishes each cast of [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) we will assemble in a delicious raspberry shape. Keep ourselves fairly stacked will maximize the use of area denial abilities like [Ring of Peace](https://www.wowhead.com/spell=116844/ring-of-peace) and [Ring of Frost](https://www.wowhead.com/spell=113724/ring-of-frost) as they eat through all 3 layers of any sparks within them.
+
+    <div className="not-prose">
+
+    <div className="float-left mr-6">
+
+    <ProseImage
+      src="/images/strategies/vault/raidplans/raszageth-rp-3.png"
+      float="left"
+      height="667"
+      width="372"
+      alt="Raszageth RaidPlan #3"
+    />
+
+    </div>
+
+    Specifically, each player will be assigned a numbered position in the picture. Eight of the positions will have 2 players standing on top of each other, and the remaining 4 positions will be solo, squishy players. The outward positions will also be for slower players who are likely late to return from the pushback. When things get messy Shamans and Mages can spam this macro to clean up any remaining sparks.
+
+    </div>
+
+    ```bash
+    /tar boss1
+    /targetenemy
+    /focus
+    /tar player
+    /tar focus
+    /tar boss1
+    /targetlasttarget
+    /cast [harm,nodead] Spellsteal
+    /tar boss1
+    ```
+
+3.  The pushback from [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing) absent the slow miasma will require everyone to memorize a personalized strategy for their class. An example is given below found through resources passed along by the community, but some of it is considered overkill because of the nerfs to the pushback. Remember, the pushbacks increase in duration with each cast, but were nerfed in severity, so the first one may not require much from you.
+
+    Importantly, after each pushback, the boss will cast [Lightning Breath](https://www.wowhead.com/spell=377594/lightning-breath). If we're all stacked behind the boss and are pushed in a line away from her the direction she faces _should_ be consistent, however it's not guaranteed. Regardless, give her a glance and plenty of clearance as dying to the beam is a stupid way to end a pull.
+
+    <Alert type="info">
+
+    Plan on having [Time Spiral](https://www.wowhead.com/spell=374968/time-spiral) on the 3rd and 4th pushback, allowing you to reuse your "major" movement utility a second time for the duration. For example, Warlocks need it to teleport twice in a row, and Monks (who aren't Windwalkers) benefit greatly from a 3rd cast of Torpedo.
+
+    It's recommended to use the gateway on the 2nd pushback whenever possible as there are sparks immediately after the pushback ends, though not overly important thanks to the purge macro. Whatever works best for you and maximizes your uptime and availability for the mechanics is what you should do.
+
+    </Alert>
+
+    <table>
+
+    <tr>
+      <th className="text-left">Class</th>
+      <th className="text-left">Winds 1</th>
+      <th className="text-left">Winds 2</th>
+      <th className="text-left">Winds 3</th>
+      <th className="text-left">Winds 4</th>
+      <th className="text-left">Winds 5*</th>
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-6">Death Knight</span>
+    </th>
+
+    <td>Death's Advance</td>
+    <td>Death's Advance</td>
+    <td>Death's Advance</td>
+    <td>Death's Advance</td>
+    <td>Death's Advance</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-12">Demon Hunter</span>
+    </th>
+
+    <td>Fel Rush (x2)</td>
+    <td>Gate -> Fel Rush (x2)</td>
+    <td>Fel Rush (x2) -> Hunt</td>
+    <td>Fel Rush (x2)</td>
+    <td>Gate -> Fel Rush (x2)</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-11">Druid</span>
+    </th>
+
+    <td>Charge -> Dash</td>
+    <td>Charge -> Gate</td>
+    <td>Charge -> Dash</td>
+    <td>Charge -> Dash</td>
+    <td>Charge -> Gate</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-13">Evoker A</span>
+    </th>
+
+    <td>Dream Flight</td>
+    <td>Rescue</td>
+    <td>Gate -> Breath</td>
+    <td>Rescue</td>
+    <td>Dream Flight</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-13">Evoker B</span>
+    </th>
+
+    <td>Rescue</td>
+    <td>Dream Flight</td>
+    <td>Rescue</td>
+    <td>Gate -> Breath</td>
+    <td>Rescue</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-3">Hunter</span>
+    </th>
+
+    <td>Cheetah -> Disengage</td>
+    <td>Gate -> Disengage</td>
+    <td>Cheetah -> Disengage</td>
+    <td>Turtle</td>
+    <td>Gate -> Disengate</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-8">Mage</span>
+    </th>
+
+    <td>Gate</td>
+    <td>Altar -> Blink (x2)</td>
+    <td>Altar -> Blink (x3)</td>
+    <td>Gate -> Blink (x2)</td>
+    <td>Ice Block</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-10">Monk</span>
+    </th>
+
+    <td>Transcend -> Torpedo</td>
+    <td>Gate -> Torpedo</td>
+    <td>Torpedo (x3)</td>
+    <td>Transcend -> Torpedo (x3)</td>
+    <td>Gate -> Torpedo</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-2">Paladin</span>
+    </th>
+
+    <td>Leap of Faith</td>
+    <td>Gate -> Steed</td>
+    <td>Leap of Faith -> Steed</td>
+    <td>Leap of Faith</td>
+    <td>Leap of Faith</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-5">Priest</span>
+    </th>
+
+    <td>Rescue</td>
+    <td>Rescue</td>
+    <td>Rescue</td>
+    <td>Rescue</td>
+    <td>Rescue</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-4">Rogue</span>
+    </th>
+
+    <td>Step -> Vanish -> Strike</td>
+    <td>Gate -> Step</td>
+    <td>Step -> Vanish -> Strike</td>
+    <td>Cloak</td>
+    <td>Step (x2)</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-7">Shaman</span>
+    </th>
+
+    <td>Lunge</td>
+    <td>Lunge -> Gate</td>
+    <td>Lunge</td>
+    <td>Lunge</td>
+    <td>Lunge -> Gate</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-9">Warlock</span>
+    </th>
+
+    <td>Circle</td>
+    <td>Gate -> Circle</td>
+    <td>Circle (x2)</td>
+    <td>Circle (x2)</td>
+    <td>Gate -> Circle</td>
+
+    </tr>
+
+    <tr>
+
+    <th>
+      <span className="text-class-1">Warrior</span>
+    </th>
+
+    <td>Charge -> Leap</td>
+    <td>Charge -> Leap</td>
+    <td>Charge (x2) -> Leap</td>
+    <td>Charge (x2) -> Leap</td>
+    <td>Charge -> Leap</td>
+
+    </tr>
+
+    </table>
+
+    > \*The plan is to not get the 5th wind but during early progression it's good to have a plan for it so we don't have to wipe because of it.
+
+## Nerf History
+
+There have been two nerfs to Raszageth as far as I'm aware, so be weary when looking at resources that are older than these dates.
+
+### Week of January 31st
+
+- Raszageth's health reduced by 3%.
+- [Static Charge](https://www.wowhead.com/spell=381615/static-charge) damage reduced by 15%.
+- [Static Charge](https://www.wowhead.com/spell=381615/static-charge) is further reduced by distance.
+- Volatile Spark's [Burst](https://www.wowhead.com/spell=388635/burst) cast time increased to 4.5 seconds (was 3.5).
+- Volatile Sparks now spawn with 3 stacks of [Volatile](https://www.wowhead.com/spell=388631/volatile) (was 4).
+
+### Week of February 14th
+
+- Reduced the push effect of Hurricane Wing.
+- Flamesworn Herald's [Flame Shield](https://www.wowhead.com/spell=397387/flame-shield) now absorbs 45% (was 55%) of its maximum health.
+- Frostforged Zealot's [Shattering Shroud](https://www.wowhead.com/spell=397382/shattering-shroud) now absorbs 20% less healing.
+- Stormseeker Acolyte's [Ascension](https://www.wowhead.com/spell=385541/ascension) now increases by 150% (was 300%).
+- [Tempest Wing](https://www.wowhead.com/spell=385574/tempest-wing) periodic damage reduced by 20%.

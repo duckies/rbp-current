@@ -1,25 +1,9 @@
 import { withContentlayer } from "next-contentlayer"
 
-export default withContentlayer({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   pageExtensions: ["tsx", "mdx"],
   reactStrictMode: true,
-  // webpack: (config) => {
-  //   config.module.rules.push({
-  //     test: /\.mdx?$/,
-  //     use: [
-  //       {
-  //         loader: "@mdx-js/loader",
-  //         /** @type {import('@mdx-js/loader').Options} */
-  //         options: {
-  //           remarkPlugins: [frontmatter],
-  //           providerImportSource: "@mdx-js/react",
-  //         },
-  //       },
-  //     ],
-  //   })
-
-  //   return config
-  // },
   images: {
     remotePatterns: [
       {
@@ -44,7 +28,7 @@ export default withContentlayer({
     appDir: true,
     fontLoaders: [
       {
-        loader: "@next/font/google",
+        loader: "next/font/google",
         options: { subsets: ["latin"] },
       },
     ],
@@ -58,4 +42,6 @@ export default withContentlayer({
 
     return config
   },
-})
+}
+
+export default withContentlayer(nextConfig)

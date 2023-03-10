@@ -2,6 +2,7 @@ import { Breadcrumbs } from "components/content/Breadcrumbs"
 import { DifficultyDropdown } from "components/content/custom/DifficultyPicker"
 import { MDX } from "components/content/MDX"
 import Hero from "components/Hero"
+import { WowheadWrapper } from "components/WowheadWrapper"
 import { allStrategies } from "content"
 import { notFound } from "next/navigation"
 
@@ -41,7 +42,9 @@ export default function StrategiesPage({ params }: StrategiesPageProps) {
         </div>
       </Hero>
       <main className="prose prose-invert relative mx-auto max-w-none lg:prose-lg">
-        <MDX code={document.body.code} />
+        <WowheadWrapper>
+          <MDX code={document.body.code} />
+        </WowheadWrapper>
       </main>
     </>
   )

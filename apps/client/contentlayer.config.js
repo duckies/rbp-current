@@ -1,6 +1,8 @@
 import { ExpansionMap, InstanceMap } from "@rbp/battle.net/constants"
 import { capitalize } from "@rbp/shared"
 import { defineDocumentType, defineNestedType, makeSource } from "contentlayer/source-files"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import rehypeSlug from "rehype-slug"
 
 const Slug = defineNestedType(() => ({
   name: "Slug",
@@ -157,4 +159,18 @@ export const Announcement = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Strategy, Announcement],
+  mdx: {
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ["subheading-anchor"],
+            ariaLabel: "Link to section",
+          },
+        },
+      ],
+    ],
+  },
 })

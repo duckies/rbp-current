@@ -15,6 +15,22 @@
     padding-left: inherit !important;
     text-decoration: inherit !important;
   }
+
+  .mdx table {
+    @apply my-6 w-full text-sm;
+  }
+
+  .mdx tr {
+    @apply even:bg-surface-700/70;
+  }
+
+  .mdx th {
+    @apply px-1 py-2 text-left font-semibold;
+  }
+
+  .mdx td {
+    @apply px-1 py-2;
+  }
 }
 
 @layer utilities {

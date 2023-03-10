@@ -3,13 +3,7 @@ const TailwindTypography = require("@tailwindcss/typography")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/app/**/*.{js,ts,jsx,tsx}",
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./src/features/**/*.{js,ts,jsx,tsx}",
-    "./src/styles/**/*.{js,ts}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}", "./content/**/*.mdx"],
   theme: {
     extend: {
       fontFamily: {
@@ -28,8 +22,8 @@ module.exports = {
           2: "#f48cba", // Paladin
           5: "#fffff", // Priest
           4: "#fff468", // Rogue
-          7: "#8788ee", // Shaman
-          9: "#c69b6d", // Warlock
+          7: "#0070DD", // Shaman
+          9: "#8788EE", // Warlock
           1: "#C69B6D", // Warrior
         },
         surface: {
@@ -89,16 +83,16 @@ module.exports = {
             "> ol li > *:last-child": {
               marginBottom: 0,
             },
-            "code::before": null,
-            "code::after": null,
-            "code": {
-              color: "var(--tw-prose-code)",
-              backgroundColor: "rgb(144 144 144 / 25%)",
-              borderRadius: "0.375rem",
-              padding: "3px 6px",
-              fontSize: "0.875rem",
-              fontWeight: "inherit",
-            },
+            // "code::before": null,
+            // "code::after": null,
+            // "code": {
+            //   color: "var(--tw-prose-code)",
+            //   backgroundColor: "rgb(144 144 144 / 25%)",
+            //   borderRadius: "0.375rem",
+            //   padding: "3px 6px",
+            //   fontSize: "0.875rem",
+            //   fontWeight: "inherit",
+            // },
           },
         },
         lg: {
@@ -115,16 +109,16 @@ module.exports = {
             "> ol li > *:last-child": {
               marginBottom: 0,
             },
-            "code::before": null,
-            "code::after": null,
-            "code": {
-              color: "var(--tw-prose-code)",
-              backgroundColor: "rgb(144 144 144 / 25%)",
-              borderRadius: "0.375rem",
-              padding: "3px 6px",
-              fontSize: "0.875rem",
-              fontWeight: "inherit",
-            },
+            // "code::before": null,
+            // "code::after": null,
+            // "code": {
+            //   color: "var(--tw-prose-code)",
+            //   backgroundColor: "rgb(144 144 144 / 25%)",
+            //   borderRadius: "0.375rem",
+            //   padding: "3px 6px",
+            //   fontSize: "0.875rem",
+            //   fontWeight: "inherit",
+            // },
           },
         },
       }),
@@ -190,5 +184,5 @@ module.exports = {
       pattern: /(text-color|bg)-class-(\d)/,
     },
   ],
-  plugins: [TailwindForms(), TailwindTypography()],
+  plugins: [TailwindForms()],
 }

@@ -15,19 +15,25 @@ type MechanicProps = {
   pill?: string
   link: string
   children: React.ReactNode
+  fixed?: boolean
 }
 
-export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function Mechanic({ id, name, caption, pill, fixed = false, children }: MechanicProps) {
+  const [isOpen, setIsOpen] = useState(fixed)
   useWowhead()
 
   const toggle = () => {
+    if (fixed) return
+
     setIsOpen(!isOpen)
   }
 
   return (
-    <div className="relative my-4 max-w-none rounded-lg bg-surface-600 shadow-lg hover:bg-surface">
-      <div className="not-prose flex gap-4 rounded-md p-4 hover:cursor-pointer" onClick={toggle}>
+    <div className="relative my-4 max-w-none rounded-lg bg-surface-700 shadow-lg">
+      <div
+        className={cn("not-prose flex gap-4 rounded-md p-4", !fixed && "hover:cursor-pointer")}
+        onClick={toggle}
+      >
         <div className="flex shrink-0 items-center rounded-md">
           <ProseLink href={`https://wowhead.com/spell=${id}`} styleVariant="plain" icon={false}>
             <WarcraftIcon
@@ -50,14 +56,16 @@ export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
           </div>
         )}
 
-        <div
-          className={cn(
-            "flex items-center p-3 transition-transform duration-[300]",
-            isOpen && "rotate-180"
-          )}
-        >
-          <ChevronDownIcon className="h-5 w-5" />
-        </div>
+        {!fixed && (
+          <div
+            className={cn(
+              "flex items-center p-3 transition-transform duration-[300]",
+              isOpen && "rotate-180"
+            )}
+          >
+            <ChevronDownIcon className="h-5 w-5" />
+          </div>
+        )}
       </div>
 
       <div className="px-5">
@@ -82,7 +90,7 @@ export function Mechanic({ id, name, caption, pill, children }: MechanicProps) {
           className={cn("relative overflow-hidden border-t border-gray-800")}
           aria-expanded={isOpen}
         >
-          {children}
+          <div className="pt-4 pb-5">{children}</div>
         </motion.div>
       </div>
     </div>

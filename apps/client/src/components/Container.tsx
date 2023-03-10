@@ -9,7 +9,7 @@ export function Container<T extends ElementType = "div">(props: ContainerProps<T
   const { as = "div", className, children } = props
   return React.createElement(
     as,
-    { className: cn("max-w-[64rem] mx-auto px-8", className) },
+    { className: cn("max-w-[65rem] mx-auto px-8", className) },
     children
   )
 }
