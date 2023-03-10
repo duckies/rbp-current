@@ -12,19 +12,32 @@ module.exports = {
       },
       colors: {
         class: {
-          6: "#c41e3a", // Death Knight
-          12: "#a330c9", // Demon Hunter
-          11: "#ff7c0a", // Druid
-          13: "#33937f", // Evoker
-          3: "#aad372", // Hunter
-          8: "#3fc7eb", // Mage
-          10: "#00ff96", // Monk
-          2: "#f48cba", // Paladin
-          5: "#fffff", // Priest
-          4: "#fff468", // Rogue
-          7: "#0070DD", // Shaman
-          9: "#8788EE", // Warlock
-          1: "#C69B6D", // Warrior
+          "death-knight": "#c41e3a", // Death Knight
+          "demon-hunter": "#a330c9", // Demon Hunter
+          "druid": "#ff7c0a", // Druid
+          "evoker": "#33937f", // Evoker
+          "hunter": "#aad372", // Hunter
+          "mage": "#3fc7eb", // Mage
+          "monk": "#00ff96", // Monk
+          "paladin": "#f48cba", // Paladin
+          "priest": "#fffff", // Priest
+          "rogue": "#fff468", // Rogue
+          "shaman": "#0070DD", // Shaman
+          "warlock": "#8788EE", // Warlock
+          "warrior": "#C69B6D", // Warrior
+          "6": "#c41e3a", // Death Knight
+          "12": "#a330c9", // Demon Hunter
+          "11": "#ff7c0a", // Druid
+          "13": "#33937f", // Evoker
+          "3": "#aad372", // Hunter
+          "8": "#3fc7eb", // Mage
+          "10": "#00ff96", // Monk
+          "2": "#f48cba", // Paladin
+          "5": "#fffff", // Priest
+          "4": "#fff468", // Rogue
+          "7": "#0070DD", // Shaman
+          "9": "#8788EE", // Warlock
+          "1": "#C69B6D", // Warrior
         },
         surface: {
           DEFAULT: "#1D1921",

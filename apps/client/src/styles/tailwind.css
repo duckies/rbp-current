@@ -16,20 +16,16 @@
     text-decoration: inherit !important;
   }
 
-  .mdx table {
-    @apply my-6 w-full text-sm;
+  .mdx pre code {
+    @apply rounded-none bg-transparent p-0 text-inherit;
   }
 
-  .mdx tr {
-    @apply even:bg-surface-700/70;
+  .mdx figure {
+    @apply mt-6;
   }
 
-  .mdx th {
-    @apply px-1 py-2 text-left font-semibold;
-  }
-
-  .mdx td {
-    @apply px-1 py-2;
+  .mdx figcaption {
+    @apply mt-2 text-sm text-gray-500;
   }
 }
 

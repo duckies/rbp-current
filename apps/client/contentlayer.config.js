@@ -3,6 +3,8 @@ import { capitalize } from "@rbp/shared"
 import { defineDocumentType, defineNestedType, makeSource } from "contentlayer/source-files"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
+import { visit } from "unist-util-visit"
 
 const Slug = defineNestedType(() => ({
   name: "Slug",
@@ -160,6 +162,7 @@ export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Strategy, Announcement],
   mdx: {
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
       [
@@ -171,6 +174,40 @@ export default makeSource({
           },
         },
       ],
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === "element" && node?.tagName === "pre") {
+            const [codeEl] = node.children
+
+            if (codeEl.tagName !== "code") {
+              return
+            }
+
+            node.properties.__rawString__ = codeEl.children?.[0].value
+          }
+        })
+      },
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === "element" && node?.tagName === "div") {
+            if (!("data-rehype-pretty-code-fragment" in node.properties)) {
+              return
+            }
+
+            const preElement = node.children.at(-1)
+            if (preElement.tagName !== "pre") {
+              return
+            }
+
+            preElement.properties.__withMeta__ = node.children.at(0).tagName === "div"
+            preElement.properties.__rawString__ = node.__rawString__
+
+            if (node.__src__) {
+              preElement.properties.__src__ = node.__src__
+            }
+          }
+        })
+      },
     ],
   },
 })

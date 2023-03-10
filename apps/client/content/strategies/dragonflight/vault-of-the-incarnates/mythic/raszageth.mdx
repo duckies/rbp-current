@@ -4,7 +4,7 @@ description: Her arms are tiny, but her bite is mighty.
 date: 2023-03-08
 ---
 
-## Phase 1
+## Phase 1 — The Winds of Change
 
 ### Mythic Changes
 
@@ -38,9 +38,7 @@ We will start the fight with the tanks maneuvering the boss to the southern edge
 
 2.  To better organize ourselves for popping sparks, before Raszageth finishes each cast of [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) we will assemble in a delicious raspberry shape. Keep ourselves fairly stacked will maximize the use of area denial abilities like [Ring of Peace](https://www.wowhead.com/spell=116844/ring-of-peace) and [Ring of Frost](https://www.wowhead.com/spell=113724/ring-of-frost) as they eat through all 3 layers of any sparks within them.
 
-    <div className="not-prose">
-
-    <div className="float-left mr-6">
+    <div className="float-left mr-6 mt-6">
 
     <ProseImage
       src="/images/strategies/vault/raidplans/raszageth-rp-3.png"
@@ -54,9 +52,9 @@ We will start the fight with the tanks maneuvering the boss to the southern edge
 
     Specifically, each player will be assigned a numbered position in the picture. Eight of the positions will have 2 players standing on top of each other, and the remaining 4 positions will be solo, squishy players. The outward positions will also be for slower players who are likely late to return from the pushback. When things get messy Shamans and Mages can spam this macro to clean up any remaining sparks.
 
-    </div>
+    <div className="clear-left" />
 
-    ```bash
+    ```
     /tar boss1
     /targetenemy
     /focus
@@ -80,216 +78,56 @@ We will start the fight with the tanks maneuvering the boss to the southern edge
 
     </Alert>
 
-    <table>
+    | Class                                                         | Winds 1                  | Winds 2               | Winds 3                  | Winds 4                   | Winds 5\*             |
+    | :------------------------------------------------------------ | :----------------------- | :-------------------- | :----------------------- | :------------------------ | :-------------------- |
+    | <span className="text-class-death-knight">Death Knight</span> | Death's Advance          | Death's Advance       | Death's Advance          | Death's Advance           | Death's Advance       |
+    | <span className="text-class-demon-hunter">Demon Hunter</span> | Fel Rush (x2)            | Gate -> Fel Rush (x2) | Fel Rush (x2) -> Hunt    | Fel Rush (x2)             | Gate -> Fel Rush (x2) |
+    | <span className="text-class-druid">Druid</span>               | Charge -> Dash           | Charge -> Gate        | Charge -> Dash           | Charge -> Dash            | Charge -> Gate        |
+    | <span className="text-class-evoker">Evoker A</span>           | Dream Flight             | Rescue                | Gate -> Breath           | Rescue                    | Dream Flight          |
+    | <span className="text-class-evoker">Evoker B</span>           | Rescue                   | Dream Flight          | Rescue                   | Gate -> Breath            | Rescue                |
+    | <span className="text-class-hunter">Hunter</span>             | Cheetah -> Disengage     | Gate -> Disengage     | Cheetah -> Disengage     | Turtle                    | Gate -> Disengage     |
+    | <span className="text-class-mage">Mage</span>                 | Gate                     | Altar -> Blink (x2)   | Altar -> Blink (x3)      | Gate -> Blink (x2)        | Ice Block             |
+    | <span className="text-class-monk">Monk</span>                 | Transcend -> Torpedo     | Gate -> Torpedo       | Torpedo (x3)             | Transcend -> Torpedo (x3) | Gate -> Torpedo       |
+    | <span className="text-class-paladin">Paladin</span>           | Leap of Faith            | Gate -> Steed         | Leap of Faith -> Steed   | Leap of Faith             | Leap of Faith         |
+    | <span className="text-class-priest">Priest</span>             | Rescue                   | Rescue                | Rescue                   | Rescue                    | Rescue                |
+    | <span className="text-class-rogue">Rogue</span>               | Step -> Vanish -> Strike | Gate -> Step          | Step -> Vanish -> Strike | Cloak                     | Step (x2)             |
+    | <span className="text-class-shaman">Shaman</span>             | Lunge                    | Lunge -> Gate         | Lunge                    | Lunge                     | Lunge -> Gate         |
+    | <span className="text-class-warlock">Warlock</span>           | Circle                   | Gate -> Circle        | Circle (x2)              | Circle (x2)               | Gate -> Circle        |
+    | <span className="text-class-warrior">Warrior</span>           | Charge -> Leap           | Charge -> Leap        | Charge (x2) -> Leap      | Charge (x2) -> Leap       | Charge -> Leap        |
 
-    <tr>
-      <th className="text-left">Class</th>
-      <th className="text-left">Winds 1</th>
-      <th className="text-left">Winds 2</th>
-      <th className="text-left">Winds 3</th>
-      <th className="text-left">Winds 4</th>
-      <th className="text-left">Winds 5*</th>
-    </tr>
+    > \*The plan is to not get the 5th wind but it costs nothing to be prepared for it anyway.
 
-    <tr>
+### Timings & Notable Moments
 
-    <th>
-      <span className="text-class-6">Death Knight</span>
-    </th>
+| Time | Mechanic                                                                  | Count | Notes                                                                    |
+| :--: | :------------------------------------------------------------------------ | :---: | :----------------------------------------------------------------------- |
+| 0:23 | [Static Charge](https://www.wowhead.com/spell=381615/static-charge)       |   1   |                                                                          |
+| 0:31 | [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) |   1   |                                                                          |
+| 0:41 | [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing)     |   1   |                                                                          |
+| 0:58 | [Static Charge](https://www.wowhead.com/spell=381615/static-charge)       |   2   |                                                                          |
+| 1:16 | [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing)     |   2   | This ends at `1:20`, giving you 4 seconds to get in position for sparks. |
+| 1:24 | [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) |   2   | Dangerous as healers are doing cardio prior.                             |
+| 1:35 | [Static Charge](https://www.wowhead.com/spell=381615/static-charge)       |   3   |                                                                          |
+| 1:51 | [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing)     |   3   |                                                                          |
+| 2:08 | [Static Charge](https://www.wowhead.com/spell=381615/static-charge)       |   4   | Don't run too far, sparks follow.                                        |
+| 2:10 | [Volatile Current](https://www.wowhead.com/spell=388643/volatile-current) |   3   | Use a personal, the charges just exploded!                               |
+| 2:26 | [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing)     |   4   |                                                                          |
+| 2:43 | [Static Charge](https://www.wowhead.com/spell=381615/static-charge)       |   5   |                                                                          |
+| 3:01 | [Hurricane Wing](https://www.wowhead.com/spell=377612/hurricane-wing)     |   5   | She begins her cast at `2:55` and it's a fixed, 6-second cast.           |
 
-    <td>Death's Advance</td>
-    <td>Death's Advance</td>
-    <td>Death's Advance</td>
-    <td>Death's Advance</td>
-    <td>Death's Advance</td>
+Some notes about these:
 
-    </tr>
+1. She pushes and becomes immune at 65%. We have 6 seconds to push her after `2:55` or she'll finish the 5th winds cast. Pushing her faster does not benefit us as cooldown timings are best milked for later phases.
+2. The danger points are the sparks at `1:24` because healers just came back from winds, and `2:08-10` as the charge explosions go off shortly before sparks. The charge runners _need_ to use a personal, and purge-macro-ers should be ready to look for any outlandish sparks.
+3. [Lightning Breath](https://www.wowhead.com/spell=377594/lightning-breath) is not listed, but WeakAuras can scream at you plenty well enough. They occur after every winds, but there's also a cast between each winds, so the group will need to swivel around her butt. You will be yelled at for dying to this.
 
-    <tr>
+## Intermission 1 — The Primalist Strike
 
-    <th>
-      <span className="text-class-12">Demon Hunter</span>
-    </th>
+## Phase 2 — Surging Power
 
-    <td>Fel Rush (x2)</td>
-    <td>Gate -> Fel Rush (x2)</td>
-    <td>Fel Rush (x2) -> Hunt</td>
-    <td>Fel Rush (x2)</td>
-    <td>Gate -> Fel Rush (x2)</td>
+## Intermission 2 — The Vault Falters
 
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-11">Druid</span>
-    </th>
-
-    <td>Charge -> Dash</td>
-    <td>Charge -> Gate</td>
-    <td>Charge -> Dash</td>
-    <td>Charge -> Dash</td>
-    <td>Charge -> Gate</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-13">Evoker A</span>
-    </th>
-
-    <td>Dream Flight</td>
-    <td>Rescue</td>
-    <td>Gate -> Breath</td>
-    <td>Rescue</td>
-    <td>Dream Flight</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-13">Evoker B</span>
-    </th>
-
-    <td>Rescue</td>
-    <td>Dream Flight</td>
-    <td>Rescue</td>
-    <td>Gate -> Breath</td>
-    <td>Rescue</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-3">Hunter</span>
-    </th>
-
-    <td>Cheetah -> Disengage</td>
-    <td>Gate -> Disengage</td>
-    <td>Cheetah -> Disengage</td>
-    <td>Turtle</td>
-    <td>Gate -> Disengate</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-8">Mage</span>
-    </th>
-
-    <td>Gate</td>
-    <td>Altar -> Blink (x2)</td>
-    <td>Altar -> Blink (x3)</td>
-    <td>Gate -> Blink (x2)</td>
-    <td>Ice Block</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-10">Monk</span>
-    </th>
-
-    <td>Transcend -> Torpedo</td>
-    <td>Gate -> Torpedo</td>
-    <td>Torpedo (x3)</td>
-    <td>Transcend -> Torpedo (x3)</td>
-    <td>Gate -> Torpedo</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-2">Paladin</span>
-    </th>
-
-    <td>Leap of Faith</td>
-    <td>Gate -> Steed</td>
-    <td>Leap of Faith -> Steed</td>
-    <td>Leap of Faith</td>
-    <td>Leap of Faith</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-5">Priest</span>
-    </th>
-
-    <td>Rescue</td>
-    <td>Rescue</td>
-    <td>Rescue</td>
-    <td>Rescue</td>
-    <td>Rescue</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-4">Rogue</span>
-    </th>
-
-    <td>Step -> Vanish -> Strike</td>
-    <td>Gate -> Step</td>
-    <td>Step -> Vanish -> Strike</td>
-    <td>Cloak</td>
-    <td>Step (x2)</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-7">Shaman</span>
-    </th>
-
-    <td>Lunge</td>
-    <td>Lunge -> Gate</td>
-    <td>Lunge</td>
-    <td>Lunge</td>
-    <td>Lunge -> Gate</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-9">Warlock</span>
-    </th>
-
-    <td>Circle</td>
-    <td>Gate -> Circle</td>
-    <td>Circle (x2)</td>
-    <td>Circle (x2)</td>
-    <td>Gate -> Circle</td>
-
-    </tr>
-
-    <tr>
-
-    <th>
-      <span className="text-class-1">Warrior</span>
-    </th>
-
-    <td>Charge -> Leap</td>
-    <td>Charge -> Leap</td>
-    <td>Charge (x2) -> Leap</td>
-    <td>Charge (x2) -> Leap</td>
-    <td>Charge -> Leap</td>
-
-    </tr>
-
-    </table>
-
-    > \*The plan is to not get the 5th wind but during early progression it's good to have a plan for it so we don't have to wipe because of it.
+## Phase 3 — Storm Incarnate
 
 ## Nerf History
 
