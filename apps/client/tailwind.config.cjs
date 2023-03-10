@@ -1,5 +1,4 @@
 const TailwindForms = require("@tailwindcss/forms")
-const TailwindTypography = require("@tailwindcss/typography")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -79,62 +78,6 @@ module.exports = {
           900: "#402f02",
         },
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            "color": "#fff",
-            "--tw-prose-invert-counters": theme("colors.yellow[300]"),
-            "> ul li > *:first-child": {
-              marginTop: 0,
-            },
-            "> ol li > *:first-child": {
-              marginTop: 0,
-            },
-            "> ul li > *:last-child": {
-              marginBottom: 0,
-            },
-            "> ol li > *:last-child": {
-              marginBottom: 0,
-            },
-            // "code::before": null,
-            // "code::after": null,
-            // "code": {
-            //   color: "var(--tw-prose-code)",
-            //   backgroundColor: "rgb(144 144 144 / 25%)",
-            //   borderRadius: "0.375rem",
-            //   padding: "3px 6px",
-            //   fontSize: "0.875rem",
-            //   fontWeight: "inherit",
-            // },
-          },
-        },
-        lg: {
-          css: {
-            "> ul li > *:first-child": {
-              marginTop: 0,
-            },
-            "> ol li > *:first-child": {
-              marginTop: 0,
-            },
-            "> ul li > *:last-child": {
-              marginBottom: 0,
-            },
-            "> ol li > *:last-child": {
-              marginBottom: 0,
-            },
-            // "code::before": null,
-            // "code::after": null,
-            // "code": {
-            //   color: "var(--tw-prose-code)",
-            //   backgroundColor: "rgb(144 144 144 / 25%)",
-            //   borderRadius: "0.375rem",
-            //   padding: "3px 6px",
-            //   fontSize: "0.875rem",
-            //   fontWeight: "inherit",
-            // },
-          },
-        },
-      }),
       keyframes: {
         "enter-from-right": {
           "0%": { opacity: 0, transform: "translateX(200px)" },
