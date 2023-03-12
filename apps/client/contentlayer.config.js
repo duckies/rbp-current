@@ -187,27 +187,6 @@ export default makeSource({
           }
         })
       },
-      () => (tree) => {
-        visit(tree, (node) => {
-          if (node?.type === "element" && node?.tagName === "div") {
-            if (!("data-rehype-pretty-code-fragment" in node.properties)) {
-              return
-            }
-
-            const preElement = node.children.at(-1)
-            if (preElement.tagName !== "pre") {
-              return
-            }
-
-            preElement.properties.__withMeta__ = node.children.at(0).tagName === "div"
-            preElement.properties.__rawString__ = node.__rawString__
-
-            if (node.__src__) {
-              preElement.properties.__src__ = node.__src__
-            }
-          }
-        })
-      },
     ],
   },
 })
