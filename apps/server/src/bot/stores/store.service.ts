@@ -28,10 +28,13 @@ export class StoreService {
     key: K,
     defaultValue?: D
   ) {
-    const store = await this.repository.findOne({
-      scope,
-      key,
-    })
+    const store = await this.repository.findOne(
+      {
+        scope,
+        key,
+      },
+      { refresh: true }
+    )
 
     return store ? store.value : typeof defaultValue !== 'undefined' ? defaultValue : undefined
   }
