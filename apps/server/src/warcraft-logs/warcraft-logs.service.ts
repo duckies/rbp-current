@@ -1,6 +1,6 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common'
 import { HTTPClient } from '@rbp/http'
-import { Report, ReportIndex, ReportResponse, ReportsResponse } from './interfaces/report.interface'
+import { Report, ReportIndex, ReportResponse } from './interfaces/report.interface'
 import { ZonesResponse } from './interfaces/zones.interface'
 import { WarcraftLogsConfig } from './warcraft-logs.config'
 
@@ -78,31 +78,47 @@ export class WarcraftLogsService {
     return response.data.reportData.report
   }
 
-  async getReports<T extends { fights?: boolean; limit?: number }>({ limit = 5 }: T) {
-    return this.http.post<
-      T extends { fights: true } ? ReportsResponse<Report> : ReportsResponse<ReportIndex>
-    >({
+  async getReports<T extends { fights: true; limit?: number }>(options: T): Promise<Report[]>
+  async getReports<T extends { fights?: false; limit?: number }>(options: T): Promise<ReportIndex[]>
+  async getReports({ fights, limit = 5 }: { fights?: boolean; limit?: number } = {}) {
+    const response = await this.http.post<any>({
       url: 'https://www.warcraftlogs.com/api/v2/client',
       json: {
         query: `{
         reportData {
           reports (guildName: "Really Bad Players", guildServerSlug: "area-52", guildServerRegion: "us", limit: ${limit}, ) {
-           data {
-             code,
-             title,
-             startTime,
-             endTime,
-             zone {
-               id,
-               name,
-             }
-           },
+            data {
+              code,
+              title,
+              startTime,
+              endTime,
+              ${
+                fights &&
+                `fights(killType: Encounters) {
+                id,
+                encounterID,
+                kill,
+                name,
+                difficulty,
+                bossPercentage,
+                keystoneBonus,
+                keystoneLevel,
+                keystoneTime,
+              },`
+              }
+              zone {
+                id,
+                name,
+              }
+            },
           }
         }
       }`,
       },
       resolveBodyOnly: true,
     })
+
+    return response.data.reportData.reports.data
   }
 
   async getZones() {

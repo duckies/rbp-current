@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import {
   ActionRowBuilder,
@@ -25,6 +25,8 @@ const regex = /https:\/\/www\.warcraftlogs\.com\/reports\/([a-zA-Z0-9]+)/
 @SubGroup('settings', 'WarcraftLogs configuration')
 @Group('logs', 'WarcraftLogs tools and resources')
 export class WarcraftLogsCommands {
+  private readonly logger = new Logger('WarcraftLogs')
+
   constructor(
     private readonly wclService: WarcraftLogsService,
     private readonly store: StoreService,
@@ -39,11 +41,21 @@ export class WarcraftLogsCommands {
   ) {
     await interaction.deferReply({ ephemeral: true })
 
-    const report = await this.wclService.getReport('3AvqtNJYWrVHPkCd')
+    const reports = await this.wclService.getReports({ limit, fights: true })
 
-    const { embed, components } = await this.buildReportEmbed(report)
+    if (reports.length === 0) {
+      return interaction.editReply({ content: 'No reports found 😥' })
+    }
 
-    await interaction.editReply({ embeds: [embed], components })
+    if (limit === 1 || reports.length === 1) {
+      const { embed, components } = await this.buildReportEmbed(reports.at(0)!)
+
+      return interaction.editReply({ embeds: [embed], components })
+    } else {
+      const embeds = await Promise.all(reports.map((r) => this.buildReportEmbed(r!)))
+
+      return interaction.editReply({ embeds: embeds.map((e) => e.embed) })
+    }
   }
 
   @UseGroups('logs', 'settings')
@@ -256,6 +268,11 @@ export class WarcraftLogsCommands {
 
         // If last updated an hour ago, it's stale.
         if (new Date(report.endTime).getTime() < new Date().getTime() - 1000 * 60 * 60) {
+          this.logger.log({
+            event: 'monitoring-ended',
+            id,
+          })
+
           delete monitoring[id]
           embed.footer = {
             text: 'Monitoring Ended',
@@ -270,7 +287,10 @@ export class WarcraftLogsCommands {
         await message.edit({ embeds: [embed], components })
       } catch (error) {
         if (error instanceof NotFoundException) {
+          this.logger.error({ event: 'report-error', error, id, message: 'Report not found.' })
           delete monitoring[id]
+        } else {
+          this.logger.error({ event: 'report-error', error, id, message: 'Unexpected error.' })
         }
       }
     }
