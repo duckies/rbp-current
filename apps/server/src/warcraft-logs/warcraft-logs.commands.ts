@@ -251,50 +251,54 @@ export class WarcraftLogsCommands {
 
   @Cron(CronExpression.EVERY_MINUTE)
   async scan() {
-    const monitoring = await this.store.get('wcl', 'monitoring')
+    try {
+      const monitoring = await this.store.get('wcl', 'monitoring')
 
-    if (!monitoring || !Object.keys(monitoring).length) {
-      return
-    }
+      if (!monitoring || !Object.keys(monitoring).length) {
+        return
+      }
 
-    const channel = this.bot.channels.cache.get(`291817201055432704`)
+      const channel = this.bot.channels.cache.get(`291817201055432704`)
 
-    if (!channel || channel.type !== ChannelType.GuildText) return
+      if (!channel || channel.type !== ChannelType.GuildText) return
 
-    for (const [id, messageId] of Object.entries(monitoring)) {
-      try {
-        const report = await this.wclService.getReport(id)
-        const { embed, components } = await this.buildReportEmbed(report)
+      for (const [id, messageId] of Object.entries(monitoring)) {
+        try {
+          const report = await this.wclService.getReport(id)
+          const { embed, components } = await this.buildReportEmbed(report)
 
-        // If last updated an hour ago, it's stale.
-        if (new Date(report.endTime).getTime() < new Date().getTime() - 1000 * 60 * 60) {
-          this.logger.log({
-            event: 'monitoring-ended',
-            id,
-          })
+          // If last updated an hour ago, it's stale.
+          if (new Date(report.endTime).getTime() < new Date().getTime() - 1000 * 60 * 60) {
+            this.logger.log({
+              event: 'monitoring-ended',
+              id,
+            })
 
-          delete monitoring[id]
-          embed.footer = {
-            text: 'Monitoring Ended',
+            delete monitoring[id]
+            embed.footer = {
+              text: 'Monitoring Ended',
+            }
+          } else {
+            embed.footer = {
+              text: 'Monitoring Log',
+            }
           }
-        } else {
-          embed.footer = {
-            text: 'Monitoring Log',
-          }
-        }
 
-        const message = await channel.messages.fetch(messageId)
-        await message.edit({ embeds: [embed], components })
-      } catch (error) {
-        if (error instanceof NotFoundException) {
-          this.logger.error({ event: 'report-error', error, id, message: 'Report not found.' })
-          delete monitoring[id]
-        } else {
-          this.logger.error({ event: 'report-error', error, id, message: 'Unexpected error.' })
+          const message = await channel.messages.fetch(messageId)
+          await message.edit({ embeds: [embed], components })
+        } catch (error) {
+          if (error instanceof NotFoundException) {
+            this.logger.error({ event: 'report-error', error, id, message: 'Report not found.' })
+            delete monitoring[id]
+          } else {
+            this.logger.error({ event: 'report-error', error, id, message: 'Unexpected error.' })
+          }
         }
       }
-    }
 
-    await this.store.set('wcl', 'monitoring', monitoring)
+      await this.store.set('wcl', 'monitoring', monitoring)
+    } catch (error) {
+      this.logger.error({ event: 'monitoring-error', error })
+    }
   }
 }
