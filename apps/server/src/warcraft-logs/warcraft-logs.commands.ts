@@ -19,7 +19,7 @@ import { Fight, Report } from './interfaces/report.interface'
 import { Difficulty, Expansion, Zone } from './interfaces/zones.interface'
 import { WarcraftLogsService } from './warcraft-logs.service'
 
-const regex = /https:\/\/www\.warcraftlogs\.com\/reports\/([a-zA-Z0-9]+)/
+const regex = /\/reports\/([a-zA-Z0-9]+)$/
 
 @Injectable()
 @SubGroup('settings', 'WarcraftLogs configuration')
@@ -223,15 +223,22 @@ export class WarcraftLogsCommands {
     }
   }
 
+  private getMessageEmbedReportId(message: Message): string | undefined {
+    if (!message.author.bot) return
+
+    const url = message.embeds.at(0)?.url
+
+    if (!url?.startsWith('https://www.warcraftlogs.com/reports/')) return
+
+    return url.match(regex)?.[1]
+  }
+
   @OnEvent('messageCreate')
   async onMessageCreate(message: Message) {
-    if (
-      message.author.bot &&
-      message.author.username === 'WarcraftLogs' &&
-      message.embeds[0]?.url?.includes('https://www.warcraftlogs.com/reports/')
-    ) {
-      const url = message.embeds[0].url
-      const id = url.match(regex)?.[1] as string
+    try {
+      const id = this.getMessageEmbedReportId(message)
+
+      if (!id) return
 
       const report = await this.wclService.getReport(id)
       const { embed, components } = await this.buildReportEmbed(report)
@@ -246,6 +253,11 @@ export class WarcraftLogsCommands {
         const monitoring = (await this.store.get('wcl', 'monitoring')) || {}
         await this.store.set('wcl', 'monitoring', { ...monitoring, [id]: embedMessage.id })
       }
+    } catch (error) {
+      this.logger.error({
+        event: 'report-webhook',
+        error,
+      })
     }
   }
 
