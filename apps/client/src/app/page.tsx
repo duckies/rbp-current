@@ -4,11 +4,8 @@ import { Container } from "components/Container"
 import { Footer } from "components/Footer"
 import { Header } from "components/Header"
 import { allAnnouncements } from "content"
-import { getSlides } from "lib/slides"
 
 export default async function IndexPage() {
-  const slides = await getSlides()
-
   const latestPosts = [...allAnnouncements]
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 5)
@@ -17,7 +14,7 @@ export default async function IndexPage() {
     <>
       <Header className="fixed" />
 
-      <Carousel slides={slides} />
+      <Carousel />
 
       <Container className="mb-[90px]">
         <div className="grid grid-cols-12">

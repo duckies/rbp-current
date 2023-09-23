@@ -2,10 +2,7 @@ import { DM_Mono as FontMono, Inter as FontSans } from "next/font/google"
 import { cn } from "utils/cn"
 
 import { Providers } from "components/Providers"
-import { SessionProvider } from "components/providers/SessionProvider"
-import { getServerSession } from "next-auth"
 import Script from "next/script"
-import { options } from "pages/api/auth/[...nextauth]"
 import "styles/global.css"
 
 type RootLayoutProps = {
@@ -28,7 +25,7 @@ const fontMono = FontMono({
 const wowheadScript = `var wowhead_tooltips = {"colorlinks": false, "iconizelinks": true, "renamelinks": false};`
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const session = await getServerSession(options)
+  // const session = await getServerSession(options)
 
   return (
     <>
@@ -44,9 +41,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             fontMono.variable
           )}
         >
-          <SessionProvider session={session}>
-            <Providers>{children}</Providers>
-          </SessionProvider>
+          <Providers>{children}</Providers>
         </body>
       </html>
     </>

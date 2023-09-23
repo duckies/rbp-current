@@ -7,11 +7,38 @@ import { Container } from "components/Container"
 import Image from "next/image"
 import "swiper/css"
 
-type CarouselProps = {
-  slides: Slide[]
-}
+// type CarouselProps = {
+//   slides: Slide[]
+// }
 
-export function Carousel({ slides }: CarouselProps) {
+const slides: Slide[] = [
+  {
+    id: 10,
+    title: "Mythic Kurog Defeated",
+    caption: "He died on accident, bless him.",
+    url: "/images/slides/kurog-kill.jpg",
+    createdAt: new Date("2023-02-07T02:37:18.000Z"),
+    updatedAt: new Date("2023-02-07T02:37:18.000Z"),
+  },
+  {
+    id: 20,
+    title: "Mythic Sennarth Defeated",
+    caption: "A fight fitting our guild name.",
+    url: "/images/slides/sennarth-kill.jpg",
+    createdAt: new Date("2023-01-28T05:25:29.000Z"),
+    updatedAt: new Date("2023-01-28T05:25:29.000Z"),
+  },
+  {
+    id: 30,
+    title: "Mythic Terros Defeated",
+    caption: "We have yet to find his legs.",
+    url: "/images/slides/terros-kill.jpg",
+    createdAt: new Date("2023-01-28T06:25:20.000Z"),
+    updatedAt: new Date("2023-01-28T06:25:20.000Z"),
+  },
+]
+
+export function Carousel() {
   return (
     <Swiper className="h-[500px] ">
       {slides.map((slide, i) => (

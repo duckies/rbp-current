@@ -1,19 +1,9 @@
 "use client"
 
-import { Avatar } from "components/Avatar"
-import Button from "components/Button"
 import { Container } from "components/Container"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/Dropdown"
 import Logo from "components/icons/Logo"
 import { Link } from "components/Link"
 import { NavigationMenu } from "components/navigation/NavigationMenu"
-import { signIn, signOut, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { cn } from "utils/cn"
 
 type HeaderProps = {
@@ -21,8 +11,9 @@ type HeaderProps = {
 }
 
 export function Header({ className }: HeaderProps) {
-  const { data } = useSession()
-  const router = useRouter()
+  // Disabling auth.
+  // const { data } = useSession()
+  // const router = useRouter()
 
   return (
     <header
@@ -93,7 +84,7 @@ export function Header({ className }: HeaderProps) {
             </NavigationMenu.List>
           </NavigationMenu>
         </nav>
-
+        {/* 
         <div className="relative flex items-center gap-1.5">
           {data && data.user?.avatar ? (
             <>
@@ -117,7 +108,7 @@ export function Header({ className }: HeaderProps) {
               Login
             </Button>
           )}
-        </div>
+        </div> */}
       </Container>
     </header>
   )

@@ -1,22 +1,22 @@
 "use client"
 
-import Button from "components/Button"
-import { signOut, useSession } from "next-auth/react"
-import { useCallback } from "react"
+// import Button from "components/Button"
+// import { signOut, useSession } from "next-auth/react"
+// import { useCallback } from "react"
 
 export function Dashboard() {
-  const { data } = useSession()
+  // const { data } = useSession()
 
-  const onSignOut = useCallback(() => {
-    signOut({
-      redirect: false,
-      callbackUrl: "/",
-    })
-  }, [])
+  // const onSignOut = useCallback(() => {
+  //   signOut({
+  //     redirect: false,
+  //     callbackUrl: "/",
+  //   })
+  // }, [])
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3">
+      {/* <div className="grid grid-cols-2 gap-3">
         <div className="rounded-md bg-surface-800 p-7 shadow-lg">
           <h2 className="text-xl font-semibold">Discord</h2>
           <p className="mb-4"></p>
@@ -35,7 +35,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <Button onClick={onSignOut}>Sign Out</Button>
+      <Button onClick={onSignOut}>Sign Out</Button> */}
     </div>
   )
 }
